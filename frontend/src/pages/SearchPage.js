@@ -1,12 +1,25 @@
-import {useState} from "react";
+import {useRef, useState} from "react";
+import axios from "axios";
 
 export default function SearchPage(){
 
     const [searchString, setSearchString] = useState("")
     const [searchType, setSearchType] = useState("movie")
+    const timerId = useRef(0)
 
     const clickHandler = (searchString, searchType) => {
         console.log("String: " + searchString + " Type: " + searchType)
+        if (searchString !== ""){
+            if(searchType === "movie") {
+                timerId.current = setTimeout(() => {
+                    axios
+                        .get(`/api/movie?searchString=${searchString}`)
+                        .then(response => response.data)
+                        .then((data) => console.log((data)))
+                        .catch(error => console.log(error))
+                }, 600)
+            }
+        }
     }
 
     return(

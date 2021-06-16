@@ -8,7 +8,6 @@ export default function SearchPage(){
     const timerId = useRef(0)
 
     const clickHandler = (searchString, searchType) => {
-        console.log("String: " + searchString + " Type: " + searchType)
         if (searchString !== ""){
             if(searchType === "movie") {
                 timerId.current = setTimeout(() => {

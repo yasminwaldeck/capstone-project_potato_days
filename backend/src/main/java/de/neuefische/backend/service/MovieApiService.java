@@ -25,9 +25,7 @@ public class MovieApiService {
     public List<Movie> searchMovies(String searchString){
         String url = BASE_URL_WITH_KEY_ANNOTATION + omDbConfig.getOmdbKey() + "&s=" + searchString;
         ResponseEntity<OmdbResponseDto> response = restTemplate.getForEntity(url, OmdbResponseDto.class);
-        if(response.getBody() != null){
-            System.out.println(Arrays.asList(response.getBody().getMovieList()));
-            System.out.println(Arrays.asList(response.getBody().getTotalResults()));
+        if(response.getBody() != null && response.getBody().getMovieList() != null){
             return response.getBody().getMovieList();
         }
         return List.of();

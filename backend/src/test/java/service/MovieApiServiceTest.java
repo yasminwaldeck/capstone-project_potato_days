@@ -1,7 +1,8 @@
 package service;
 
 import de.neuefische.backend.config.OMDbConfig;
-import de.neuefische.backend.model.Movie;
+import de.neuefische.backend.model.MovieOmdbOverview;
+import de.neuefische.backend.model.MovieOmdbOverviewDto;
 import de.neuefische.backend.model.OmdbResponseDto;
 import de.neuefische.backend.service.MovieApiService;
 import org.junit.jupiter.api.Test;
@@ -24,10 +25,16 @@ public class MovieApiServiceTest {
     public void searchMoviesShouldReturnAListWithMovies(){
 
         //GIVEN
-        List<Movie> movies = List.of(
-                new Movie("title", "year", "imdb", "url"),
-                new Movie("title2", "year2", "imdb2", "url2"),
-                new Movie("title3", "year3", "imdb3", "url3")
+        List<MovieOmdbOverviewDto> movies = List.of(
+                new MovieOmdbOverviewDto("title", "year", "imdb", "url"),
+                new MovieOmdbOverviewDto("title2", "year2", "imdb2", "url2"),
+                new MovieOmdbOverviewDto("title3", "year3", "imdb3", "url3")
+        );
+
+        List<MovieOmdbOverview> expected = List.of(
+                new MovieOmdbOverview("title", "year", "imdb", "url"),
+                new MovieOmdbOverview("title2", "year2", "imdb2", "url2"),
+                new MovieOmdbOverview("title3", "year3", "imdb3", "url3")
         );
 
         OmdbResponseDto omdbResponseDto = new OmdbResponseDto(movies, 3);
@@ -38,11 +45,11 @@ public class MovieApiServiceTest {
 
         //WHEN
 
-        List<Movie> actual = movieApiService.searchMovies("title");
+        List<MovieOmdbOverview> actual = movieApiService.searchMovies("title");
 
         //THEN
 
-        assertThat(actual, is(movies));
+        assertThat(actual, is(expected));
         verify(mockedTemplate).getForEntity(
                 ("https://www.omdbapi.com/?type=movie&apikey=" + omDbConfig.getOmdbKey() + "&s=title"),
                 OmdbResponseDto.class);
@@ -62,7 +69,7 @@ public class MovieApiServiceTest {
 
         //WHEN
 
-        List<Movie> actual = movieApiService.searchMovies("title");
+        List<MovieOmdbOverview> actual = movieApiService.searchMovies("title");
 
         //THEN
 

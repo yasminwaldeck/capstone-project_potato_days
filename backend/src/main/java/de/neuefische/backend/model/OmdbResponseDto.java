@@ -12,6 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 public class OmdbResponseDto {
     @JsonProperty("Search")
-    private List<Movie> movieList;
+    private List<MovieOmdbOverviewDto> movieList;
     private int totalResults;
 }

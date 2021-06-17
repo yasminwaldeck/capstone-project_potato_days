@@ -1,6 +1,7 @@
 package de.neuefische.backend.controller;
 
 import de.neuefische.backend.model.MovieOmdbOverview;
+import de.neuefische.backend.model.OmdbDetails;
 import de.neuefische.backend.service.MovieApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,5 @@ public class MovieController {
     public List<MovieOmdbOverview> searchMovies(@RequestParam String searchString){
         return movieApiService.searchMovies(searchString);
     }
-
 
 }

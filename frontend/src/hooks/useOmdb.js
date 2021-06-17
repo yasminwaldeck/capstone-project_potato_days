@@ -2,15 +2,15 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 
 export default function useOmdb(id){
-    const [movie, setMovie] = useState({});
+    const [item, setItem] = useState({});
 
     useEffect(() => {
         axios
-            .get(`/api/movie/${id}`)
+            .get(`/api/details/${id}`)
             .then((response) => response.data)
-            .then(setMovie)
+            .then(setItem)
             .catch((error) => console.error(error.message));
     }, [id]);
 
-    return { movie }
+    return { item }
 }

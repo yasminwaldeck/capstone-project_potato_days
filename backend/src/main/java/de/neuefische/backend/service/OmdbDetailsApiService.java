@@ -11,18 +11,18 @@ import java.util.stream.Collectors;
 
 @Service
 public class OmdbDetailsApiService {
-    private final OMDbConfig omDbConfig;
+    private final OMDbConfig omdbConfig;
     private final RestTemplate restTemplate;
     private final String BASE_URL_WITH_KEY_ANNOTATION = "https://www.omdbapi.com/" + "?apikey=";
 
-    public OmdbDetailsApiService(OMDbConfig omDbConfig, RestTemplate restTemplate){
-        this.omDbConfig = omDbConfig;
+    public OmdbDetailsApiService(OMDbConfig omdbConfig, RestTemplate restTemplate){
+        this.omdbConfig = omdbConfig;
         this.restTemplate = restTemplate;
     }
 
-    public OmdbDetails searchMovies(String id){
+    public OmdbDetails getDetails(String id){
 
-        String url = BASE_URL_WITH_KEY_ANNOTATION + omDbConfig.getKey() + "&i=" + id;
+        String url = BASE_URL_WITH_KEY_ANNOTATION + omdbConfig.getKey() + "&i=" + id;
         ResponseEntity<OmdbDetailsDto> response = restTemplate.getForEntity(url, OmdbDetailsDto.class);
         OmdbDetailsDto movie = response.getBody();
 
@@ -46,6 +46,5 @@ public class OmdbDetailsApiService {
                         .collect(Collectors.toList()))
                 .totalSeasons(movie.getTotalSeasons())
                 .build();
-
     }
 }

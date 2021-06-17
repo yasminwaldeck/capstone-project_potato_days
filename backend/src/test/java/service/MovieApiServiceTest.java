@@ -1,9 +1,7 @@
 package service;
 
 import de.neuefische.backend.config.OMDbConfig;
-import de.neuefische.backend.model.OmdbOverview;
-import de.neuefische.backend.model.OmdbOverviewDto;
-import de.neuefische.backend.model.OmdbResponseDto;
+import de.neuefische.backend.model.*;
 import de.neuefische.backend.service.OmdbApiService;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +17,7 @@ public class MovieApiServiceTest {
 
     private final RestTemplate mockedTemplate = mock(RestTemplate.class);
     private final OMDbConfig omDbConfig = new OMDbConfig();
-    private final OmdbApiService movieApiService = new OmdbApiService(omDbConfig, mockedTemplate);
+    private final OmdbApiService omdbApiService = new OmdbApiService(omDbConfig, mockedTemplate);
 
     @Test
     public void searchMoviesShouldReturnAListWithMovies(){
@@ -45,7 +43,7 @@ public class MovieApiServiceTest {
 
         //WHEN
 
-        List<OmdbOverview> actual = movieApiService.searchByString("title", "movie");
+        List<OmdbOverview> actual = omdbApiService.searchByString("title", "movie");
 
         //THEN
 
@@ -69,7 +67,7 @@ public class MovieApiServiceTest {
 
         //WHEN
 
-        List<OmdbOverview> actual = movieApiService.searchByString("title", "movie");
+        List<OmdbOverview> actual = omdbApiService.searchByString("title", "movie");
 
         //THEN
 
@@ -77,6 +75,41 @@ public class MovieApiServiceTest {
         verify(mockedTemplate).getForEntity(
                 ("https://www.omdbapi.com/?apikey=" + omDbConfig.getKey() + "&s=title&type=movie"),
                 OmdbResponseDto.class);
+
+    }
+
+    @Test
+    public void getDetailsShouldReturnAllTheDetails(){
+
+        //GIVEN
+        OmdbDetailsDto omdbDetailsDto = new OmdbDetailsDto(
+                "title", "year", "imdbId", "poster", "runtime", "genre",
+                "director", "writer", "actors", "country",
+                List.of(new OmdbRatingDto("source", "value")),
+                3
+        );
+
+        OmdbDetails expected = new OmdbDetails(
+                "title", "year", "imdbId", "poster", "runtime", "genre",
+                "director", "writer", "actors", "country",
+                List.of(new OmdbRating("source", "value")),
+                3
+        );
+
+        when(mockedTemplate.getForEntity(
+                "https://www.omdbapi.com/?apikey=" + omDbConfig.getKey() + "&i=someId", OmdbDetailsDto.class))
+                .thenReturn(ResponseEntity.ok(omdbDetailsDto));
+
+        //WHEN
+
+        OmdbDetails actual = omdbApiService.getDetails("someId");
+
+        //THEN
+
+        assertThat(actual, is(expected));
+        verify(mockedTemplate).getForEntity(
+                ("https://www.omdbapi.com/?apikey=" + omDbConfig.getKey() + "&i=someId"),
+                OmdbDetailsDto.class);
 
     }
 

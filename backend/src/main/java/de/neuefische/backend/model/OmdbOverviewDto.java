@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MovieOmdbOverviewDto {
+public class OmdbOverviewDto {
 
     @JsonProperty("Title")
     private String title;

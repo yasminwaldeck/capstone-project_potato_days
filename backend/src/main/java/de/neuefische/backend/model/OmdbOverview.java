@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MovieOmdbOverview {
+public class OmdbOverview {
 
     private String title;
     private String year;

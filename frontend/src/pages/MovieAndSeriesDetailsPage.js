@@ -17,9 +17,9 @@ export default function MovieAndSeriesDetailsPage(){
             <p>Writer: {item.writer}</p>
             <p>Actors: {item.actors}</p>
             <p>Country: {item.country}</p>
-            {item.ratings && <p>Ratings: {item.ratings.map((rating) => (
-                <p>{rating.source}: {rating.value}</p>
-            ))}</p>}
+            {item.ratings && <div>Ratings: {item.ratings.map((rating) => (
+                <p key={rating.source}>{rating.source}: {rating.value}</p>
+            ))}</div>}
             {(item.totalSeasons > 0) && <p>Total Seasons: {item.totalSeasons}</p>}
         </div>
     )

@@ -10,9 +10,9 @@ import org.springframework.context.annotation.Configuration;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ConfigurationProperties(prefix = "omdb.key")
+@ConfigurationProperties(prefix = "omdb")
 public class OMDbConfig {
 
-    private String omdbKey;
+    private String key;
 
 }

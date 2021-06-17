@@ -40,7 +40,7 @@ public class MovieApiServiceTest {
         OmdbResponseDto omdbResponseDto = new OmdbResponseDto(movies, 3);
 
         when(mockedTemplate.getForEntity(
-                "https://www.omdbapi.com/?type=movie&apikey=" + omDbConfig.getOmdbKey() + "&s=title", OmdbResponseDto.class))
+                "https://www.omdbapi.com/?type=movie&apikey=" + omDbConfig.getKey() + "&s=title", OmdbResponseDto.class))
                 .thenReturn(ResponseEntity.ok(omdbResponseDto));
 
         //WHEN
@@ -51,7 +51,7 @@ public class MovieApiServiceTest {
 
         assertThat(actual, is(expected));
         verify(mockedTemplate).getForEntity(
-                ("https://www.omdbapi.com/?type=movie&apikey=" + omDbConfig.getOmdbKey() + "&s=title"),
+                ("https://www.omdbapi.com/?type=movie&apikey=" + omDbConfig.getKey() + "&s=title"),
                 OmdbResponseDto.class);
 
     }
@@ -64,7 +64,7 @@ public class MovieApiServiceTest {
         OmdbResponseDto omdbResponseDto = new OmdbResponseDto(null, 3);
 
         when(mockedTemplate.getForEntity(
-                "https://www.omdbapi.com/?type=movie&apikey=" + omDbConfig.getOmdbKey() + "&s=title", OmdbResponseDto.class))
+                "https://www.omdbapi.com/?type=movie&apikey=" + omDbConfig.getKey() + "&s=title", OmdbResponseDto.class))
                 .thenReturn(ResponseEntity.ok(omdbResponseDto));
 
         //WHEN
@@ -75,7 +75,7 @@ public class MovieApiServiceTest {
 
         assertThat(actual, is(List.of()));
         verify(mockedTemplate).getForEntity(
-                ("https://www.omdbapi.com/?type=movie&apikey=" + omDbConfig.getOmdbKey() + "&s=title"),
+                ("https://www.omdbapi.com/?type=movie&apikey=" + omDbConfig.getKey() + "&s=title"),
                 OmdbResponseDto.class);
 
     }

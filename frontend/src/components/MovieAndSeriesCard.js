@@ -1,15 +1,15 @@
 import {NavLink} from "react-router-dom";
 
-export default function MovieAndSeriesCard({result}){
+export default function MovieAndSeriesCard({item}){
 
 
 
     return(
         <div>
-            <img src={result.poster}/>
-            <h3>{result.title} ({result.year})</h3>
+            <img src={item.poster}/>
+            <h3>{item.title} ({item.year})</h3>
             <div>
-                <NavLink to={("/details/" + result.imdbID)}>Details!</NavLink>
+                <NavLink to={("/details/" + item.imdbID)}>Details!</NavLink>
             </div>
         </div>
     )

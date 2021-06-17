@@ -1,21 +1,15 @@
 import './App.css';
 import SearchPage from "./pages/SearchPage";
 import Header from "./components/Header";
-import {Switch, Route} from "react-router-dom";
+import TypeProvider from "./context/TypeProvider";
 
 function App() {
   return (
     <div className="App">
+        <TypeProvider>
         <Header/>
-        <Switch>
-            <Route path={'/search'} exact>
-                <SearchPage/>
-            </Route>
-            <Route path={'/movie/:id'} exact>
-                <SearchPage/>
-            </Route>
-
-        </Switch>
+        <SearchPage/>
+    </TypeProvider>
     </div>
   );
 }

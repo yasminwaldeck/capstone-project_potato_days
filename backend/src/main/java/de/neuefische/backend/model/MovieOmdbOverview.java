@@ -13,6 +13,6 @@ public class MovieOmdbOverview {
 
     private String title;
     private String year;
-    private String imdbId;
+    private String imdbID;
     private String poster;
 }

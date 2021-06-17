@@ -13,7 +13,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.mockito.Mockito.*;
 
-public class MovieApiServiceTest {
+public class OmdbApiServiceTest {
 
     private final RestTemplate mockedTemplate = mock(RestTemplate.class);
     private final OMDbConfig omDbConfig = new OMDbConfig();

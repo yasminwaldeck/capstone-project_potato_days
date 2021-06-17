@@ -38,9 +38,8 @@ public class MovieApiService {
                     .map(movie -> MovieOmdbOverview.builder()
                     .title(movie.getTitle())
                     .year(movie.getYear())
-                    .imdbId(movie.getImdbID())
+                    .imdbID(movie.getImdbID())
                     .poster(movie.getPoster()).build())
                     .collect(Collectors.toList());
-
     }
 }

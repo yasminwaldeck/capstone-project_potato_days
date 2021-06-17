@@ -7,9 +7,9 @@ function App() {
   return (
     <div className="App">
         <TypeProvider>
-        <Header/>
-        <SearchPage/>
-    </TypeProvider>
+            <Header/>
+            <SearchPage/>
+        </TypeProvider>
     </div>
   );
 }

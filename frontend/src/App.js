@@ -17,7 +17,7 @@ function App() {
                 <Route path={"/details/:id"}>
                     <MovieAndSeriesDetailsPage/>
                 </Route>
-        </Switch>
+            </Switch>
         </TypeProvider>
     </div>
   );

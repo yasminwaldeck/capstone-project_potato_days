@@ -4,6 +4,8 @@ import Header from "./components/Header";
 import TypeProvider from "./context/TypeProvider";
 import {Switch, Route} from "react-router-dom";
 import MovieAndSeriesDetailsPage from "./pages/MovieAndSeriesDetailsPage";
+import LandingPage from "./pages/LandingPage";
+import WatchlistPage from "./pages/WatchlistPage";
 
 function App() {
   return (
@@ -16,6 +18,12 @@ function App() {
                 </Route>
                 <Route path={"/details/:id"}>
                     <MovieAndSeriesDetailsPage/>
+                </Route>
+                <Route path={"/watchlist"}>
+                    <WatchlistPage/>
+                </Route>
+                <Route path={"/"}>
+                    <LandingPage/>
                 </Route>
             </Switch>
         </TypeProvider>

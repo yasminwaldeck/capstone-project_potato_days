@@ -35,8 +35,8 @@ export default function SearchPage(){
                 <input type="radio" name="search_type" onChange={() => setSearchType(SERIES)}/> Series
             </div>
             <button disabled={searchString === ""} onClick={() => clickHandler(searchString, searchType)}>Search</button>
-            {searchResults.map((result) => (
-                <MovieAndSeriesCard key={result.imdbID} result={result}/>
+            {searchResults.map((item) => (
+                <MovieAndSeriesCard key={item.imdbID} item={item}/>
             ))}
         </div>
     )

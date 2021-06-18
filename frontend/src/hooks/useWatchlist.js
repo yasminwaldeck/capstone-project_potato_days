@@ -7,5 +7,10 @@ export default function useWatchlist(){
             .catch((error) => console.error(error.message))
     }
 
-    return { addToWatchlist }
+    const removeFromWatchlist = (imdbID) =>{
+        axios.delete("/api/watchlist", {data: imdbID})
+            .catch((error) => console.error(error.message))
+    }
+
+    return { addToWatchlist, removeFromWatchlist }
 }

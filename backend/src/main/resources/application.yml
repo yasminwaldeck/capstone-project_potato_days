@@ -1,0 +1,7 @@
+spring:
+  data:
+    mongodb:
+      database: potato-days
+server:
+  error:
+    include-message: always

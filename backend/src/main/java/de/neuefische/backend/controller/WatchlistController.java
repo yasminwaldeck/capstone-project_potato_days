@@ -21,12 +21,12 @@ public class WatchlistController {
     }
 
     @GetMapping
-    public List<OmdbOverview> getWatchlistByType(@RequestParam String type){
+    public List<OmdbOverview> getWatchlistByType(@RequestParam Optional<String> type){
         return watchlistService.getWatchlistByType(type);
     }
 
     @PostMapping
-    public MovieAndSeries addToWatchlist(@RequestBody MovieAndSeries itemToAdd){
+    public OmdbOverview addToWatchlist(@RequestBody MovieAndSeries itemToAdd){
         return watchlistService.addToWatchlist(itemToAdd);
     }
 

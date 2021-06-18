@@ -30,6 +30,10 @@ public class WatchlistServiceTest {
         //GIVEN
         MovieAndSeries itemToAdd = MovieAndSeries.builder().imdbID("imdbID").type("type").build();
 
+        when(mockedTemplate.getForEntity(
+                "https://www.omdbapi.com/?apikey=" + omDbConfig.getKey() + "&i=imdbID", OmdbOverviewDto.class))
+                .thenReturn(ResponseEntity.ok(OmdbOverviewDto.builder().imdbID("imdbID").build()));
+
         //WHEN
         watchlistService.addToWatchlist(itemToAdd);
 
@@ -40,7 +44,7 @@ public class WatchlistServiceTest {
     @Test
     public void deleteMovieToDatabaseTest(){
         //GIVEN
-        MovieAndSeries itemToRemove = MovieAndSeries.builder().imdbID("imdbID").type("type").build();
+
 
         //WHEN
         watchlistService.removeFromWatchlist("imdbID");
@@ -73,7 +77,7 @@ public class WatchlistServiceTest {
                 .thenReturn(ResponseEntity.ok(omdbOverviewDto2));
 
         // WHEN
-        List<OmdbOverview> items = watchlistService.getWatchlistByType("type");
+        List<OmdbOverview> items = watchlistService.getWatchlistByType(Optional.of("type"));
 
         // THEN
         assertThat(items, is(List.of(
@@ -84,6 +88,7 @@ public class WatchlistServiceTest {
                         "title", "year", "id2", "poster", "type"
                 )
         )));
+        verify(watchlistRepo).findByType("type");
     }
 
 

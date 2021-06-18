@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,15 +22,21 @@ public class WatchlistService {
         this.omdbApiService = omdbApiService;
     }
 
-    public List<OmdbOverview> getWatchlistByType(String type){
-        return watchlistRepo.findByType(type)
+    public List<OmdbOverview> getWatchlistByType(Optional<String> type){
+        if(type.isEmpty()){
+            return watchlistRepo.findAll().stream()
+                    .map(item -> omdbApiService.getOverviewById(item.getImdbID()))
+                    .collect(Collectors.toList());
+        }
+        return watchlistRepo.findByType(type.get())
                 .stream()
                 .map(item -> omdbApiService.getOverviewById(item.getImdbID()))
                 .collect(Collectors.toList());
     }
 
-    public MovieAndSeries addToWatchlist(MovieAndSeries itemToAdd){
-        return watchlistRepo.save(itemToAdd);
+    public OmdbOverview addToWatchlist(MovieAndSeries itemToAdd){
+        watchlistRepo.save(itemToAdd);
+        return omdbApiService.getOverviewById(itemToAdd.getImdbID());
     }
 
     public void removeFromWatchlist(String imdbId){

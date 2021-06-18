@@ -2,6 +2,7 @@ import {useContext, useRef, useState} from "react";
 import axios from "axios";
 import MovieAndSeriesCard from "../components/MovieAndSeriesCard";
 import TypeContext from "../context/TypeContext";
+import useWatchlist from "../hooks/useWatchlist";
 
 export default function SearchPage(){
 
@@ -9,6 +10,7 @@ export default function SearchPage(){
     const [searchString, setSearchString] = useState("")
     const [searchType, setSearchType] = useState(MOVIE)
     const [searchResults, setSearchResults] = useState([])
+    const { watchlist } = useWatchlist();
     const timerId = useRef(0)
 
 
@@ -36,7 +38,7 @@ export default function SearchPage(){
             </div>
             <button disabled={searchString === ""} onClick={() => clickHandler(searchString, searchType)}>Search</button>
             {searchResults.map((item) => (
-                <MovieAndSeriesCard key={item.imdbID} item={item}/>
+                <MovieAndSeriesCard key={item.imdbID} item={item} watched={watchlist.find(watchedItem => watchedItem.imdbID === item.imdbID)}/>
             ))}
         </div>
     )

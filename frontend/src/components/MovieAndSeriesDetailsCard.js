@@ -1,13 +1,22 @@
 import { useParams } from "react-router-dom";
 import useOmdb from "../hooks/useOmdb";
 import useWatchlist from "../hooks/useWatchlist";
+import {useState} from "react";
 
-export default function MovieAndSeriesDetailsPage(){
+export default function MovieAndSeriesDetailsCard(){
 
     const { id } = useParams();
     const { item } = useOmdb(id);
-    const { addToWatchlist } = useWatchlist();
+    const { addToWatchlist, removeFromWatchlist, watchlist } = useWatchlist();
 
+    const add = () => {
+        addToWatchlist(item.imdbID, item.type)
+    }
+
+    const remove = () => {
+        removeFromWatchlist(item)
+        setList(watchlist)
+    }
 
     return (
         <div>
@@ -24,7 +33,9 @@ export default function MovieAndSeriesDetailsPage(){
                 <p key={rating.source}>{rating.source}: {rating.value}</p>
             ))}</div>}
             {(item.totalSeasons > 0) && <p>Total Seasons: {item.totalSeasons}</p>}
-            <button onClick={() => addToWatchlist(item.imdbID, item.type)}>Add to watchlist></button>
+
+            {!watchlist.find(watchedItem => watchedItem.imdbID === item.imdbID) && <button onClick={add}>Add to watchlist</button>}
+            {watchlist.find(watchedItem => watchedItem.imdbID === item.imdbID) && <button onClick={remove}>Remove from watchlist!</button>}
         </div>
     )
 

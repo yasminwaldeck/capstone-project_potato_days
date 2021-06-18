@@ -9,7 +9,8 @@ export default function WatchlistPage(){
     const [type, setType] = useState();
     const {MOVIE, SERIES, BOTH} = useContext(TypeContext)
     const { watchlistitems } = useWatchlistByType(type);
-    const { removeFromWatchlist } = useWatchlist();
+    const { watchlist } = useWatchlist();
+
 
 
     return (
@@ -19,10 +20,7 @@ export default function WatchlistPage(){
             <button onClick={() => setType(BOTH)}>See everything!</button>
             {(type !== null) &&
                 watchlistitems.map((item) => (
-                    <>
-                        <MovieAndSeriesCard key={item.imdbID} item={item}/>
-                        <button onClick={() => removeFromWatchlist(item.imdbID)}>Remove from watchlist!</button>
-                    </>
+                    <MovieAndSeriesCard key={item.imdbID} item={item} watched={watchlist.find(watchedItem => watchedItem.imdbID === item.imdbID)}/>
                 ))
             }
         </div>

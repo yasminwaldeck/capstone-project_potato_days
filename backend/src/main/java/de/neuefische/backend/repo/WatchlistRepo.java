@@ -12,4 +12,6 @@ public interface WatchlistRepo extends PagingAndSortingRepository<MovieAndSeries
     List<MovieAndSeries> findAll();
 
     List<MovieAndSeries> findByType(String type);
+
+    void deleteByImdbID(String imdbID);
 }

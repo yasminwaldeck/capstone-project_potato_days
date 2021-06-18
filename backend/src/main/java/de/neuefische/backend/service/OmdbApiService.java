@@ -38,7 +38,8 @@ public class OmdbApiService {
                     .title(movie.getTitle())
                     .year(movie.getYear())
                     .imdbID(movie.getImdbID())
-                    .poster(movie.getPoster()).build())
+                    .poster(movie.getPoster())
+                    .type(movie.getType()).build())
                     .collect(Collectors.toList());
     }
 
@@ -66,6 +67,7 @@ public class OmdbApiService {
                                 .value(rating.getValue())
                                 .build())
                         .collect(Collectors.toList()))
+                .type(movie.getType())
                 .totalSeasons(movie.getTotalSeasons())
                 .build();
     }
@@ -83,6 +85,8 @@ public class OmdbApiService {
                         .title(responseBody.getTitle())
                         .year(responseBody.getYear())
                         .imdbID(responseBody.getImdbID())
-                        .poster(responseBody.getPoster()).build();
+                        .poster(responseBody.getPoster())
+                        .type(responseBody.getType())
+                        .build();
     }
 }

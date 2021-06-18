@@ -1,5 +1,6 @@
 package de.neuefische.backend.service;
 
+import de.neuefische.backend.model.ImdbID;
 import de.neuefische.backend.model.MovieAndSeries;
 import de.neuefische.backend.model.OmdbOverview;
 import de.neuefische.backend.repo.WatchlistRepo;
@@ -29,5 +30,9 @@ public class WatchlistService {
 
     public MovieAndSeries addToWatchlist(MovieAndSeries itemToAdd){
         return watchlistRepo.save(itemToAdd);
+    }
+
+    public void removeFromWatchlist(String imdbId){
+        watchlistRepo.deleteByImdbID(imdbId);
     }
 }

@@ -10,7 +10,6 @@ import static org.hamcrest.Matchers.is;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.mockito.Mockito.*;
 
 public class OmdbApiServiceTest {
@@ -24,15 +23,15 @@ public class OmdbApiServiceTest {
 
         //GIVEN
         List<OmdbOverviewDto> movies = List.of(
-                new OmdbOverviewDto("title", "year", "imdb", "url"),
-                new OmdbOverviewDto("title2", "year2", "imdb2", "url2"),
-                new OmdbOverviewDto("title3", "year3", "imdb3", "url3")
+                new OmdbOverviewDto("title", "year", "imdb", "url", "movie"),
+                new OmdbOverviewDto("title2", "year2", "imdb2", "url2", "movie"),
+                new OmdbOverviewDto("title3", "year3", "imdb3", "url3", "movie")
         );
 
         List<OmdbOverview> expected = List.of(
-                new OmdbOverview("title", "year", "imdb", "url"),
-                new OmdbOverview("title2", "year2", "imdb2", "url2"),
-                new OmdbOverview("title3", "year3", "imdb3", "url3")
+                new OmdbOverview("title", "year", "imdb", "url", "movie"),
+                new OmdbOverview("title2", "year2", "imdb2", "url2", "movie"),
+                new OmdbOverview("title3", "year3", "imdb3", "url3", "movie")
         );
 
         OmdbResponseDto omdbResponseDto = new OmdbResponseDto(movies, 3);
@@ -85,14 +84,14 @@ public class OmdbApiServiceTest {
         OmdbDetailsDto omdbDetailsDto = new OmdbDetailsDto(
                 "title", "year", "imdbId", "poster", "runtime", "genre",
                 "director", "writer", "actors", "country",
-                List.of(new OmdbRatingDto("source", "value")),
+                List.of(new OmdbRatingDto("source", "value")), "series",
                 3
         );
 
         OmdbDetails expected = new OmdbDetails(
                 "title", "year", "imdbId", "poster", "runtime", "genre",
                 "director", "writer", "actors", "country",
-                List.of(new OmdbRating("source", "value")),
+                List.of(new OmdbRating("source", "value")), "series",
                 3
         );
 
@@ -110,6 +109,36 @@ public class OmdbApiServiceTest {
         verify(mockedTemplate).getForEntity(
                 ("https://www.omdbapi.com/?apikey=" + omDbConfig.getKey() + "&i=someId"),
                 OmdbDetailsDto.class);
+
+    }
+
+
+    @Test
+    public void getOverviewByIdShouldReturnOverview(){
+
+        //GIVEN
+        OmdbOverviewDto omdbOverviewDto = new OmdbOverviewDto(
+                "title", "year", "imdbId", "poster", "type"
+        );
+
+        OmdbOverview expected = new OmdbOverview(
+                "title", "year", "imdbId", "poster", "type"
+        );
+
+        when(mockedTemplate.getForEntity(
+                "https://www.omdbapi.com/?apikey=" + omDbConfig.getKey() + "&i=someId", OmdbOverviewDto.class))
+                .thenReturn(ResponseEntity.ok(omdbOverviewDto));
+
+        //WHEN
+
+        OmdbOverview actual = omdbApiService.getOverviewById("someId");
+
+        //THEN
+
+        assertThat(actual, is(expected));
+        verify(mockedTemplate).getForEntity(
+                ("https://www.omdbapi.com/?apikey=" + omDbConfig.getKey() + "&i=someId"),
+                OmdbOverviewDto.class);
 
     }
 

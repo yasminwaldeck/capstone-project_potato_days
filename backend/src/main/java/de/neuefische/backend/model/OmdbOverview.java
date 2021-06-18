@@ -1,5 +1,6 @@
 package de.neuefische.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,4 +16,5 @@ public class OmdbOverview {
     private String year;
     private String imdbID;
     private String poster;
+    private String type;
 }

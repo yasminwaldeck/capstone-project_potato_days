@@ -1,5 +1,6 @@
 package de.neuefische.backend.controller;
 
+import de.neuefische.backend.model.ImdbID;
 import de.neuefische.backend.model.MovieAndSeries;
 import de.neuefische.backend.model.OmdbOverview;
 import de.neuefische.backend.service.WatchlistService;
@@ -27,5 +28,10 @@ public class WatchlistController {
     @PostMapping
     public MovieAndSeries addToWatchlist(@RequestBody MovieAndSeries itemToAdd){
         return watchlistService.addToWatchlist(itemToAdd);
+    }
+
+    @DeleteMapping
+    public void removeFromWatchlist(@RequestBody String imdbID){
+        watchlistService.removeFromWatchlist(imdbID);
     }
 }

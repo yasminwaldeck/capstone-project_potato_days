@@ -18,5 +18,7 @@ public class OmdbOverviewDto {
     private String imdbID;
     @JsonProperty("Poster")
     private String poster;
+    @JsonProperty("Type")
+    private String type;
 
 }

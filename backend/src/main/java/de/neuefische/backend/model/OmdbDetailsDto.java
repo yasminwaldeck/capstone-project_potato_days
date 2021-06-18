@@ -33,6 +33,8 @@ public class OmdbDetailsDto {
     private String country;
     @JsonProperty("Ratings")
     private List<OmdbRatingDto> ratings;
+    @JsonProperty("Type")
+    private String type;
     private int totalSeasons;
 }
 

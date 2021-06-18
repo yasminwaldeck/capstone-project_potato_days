@@ -1,10 +1,13 @@
 import { useParams } from "react-router-dom";
 import useOmdb from "../hooks/useOmdb";
+import useWatchlist from "../hooks/useWatchlist";
 
 export default function MovieAndSeriesDetailsPage(){
 
     const { id } = useParams();
     const { item } = useOmdb(id);
+    const { addToWatchlist } = useWatchlist();
+
 
     return (
         <div>
@@ -21,6 +24,7 @@ export default function MovieAndSeriesDetailsPage(){
                 <p key={rating.source}>{rating.source}: {rating.value}</p>
             ))}</div>}
             {(item.totalSeasons > 0) && <p>Total Seasons: {item.totalSeasons}</p>}
+            <button onClick={() => addToWatchlist(item.imdbID, item.type)}>Add to watchlist></button>
         </div>
     )
 

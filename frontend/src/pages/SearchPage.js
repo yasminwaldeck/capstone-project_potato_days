@@ -10,6 +10,7 @@ export default function SearchPage(){
     const [searchString, setSearchString] = useState("")
     const [searchType, setSearchType] = useState(MOVIE)
     const [searchResults, setSearchResults] = useState([])
+    const [search, setSearch] = useState()
     const { watchlist } = useWatchlist();
     const timerId = useRef(0)
 
@@ -22,6 +23,7 @@ export default function SearchPage(){
                         .then((data) => (
                             setSearchResults(data)
                         ))
+                        .then(() => setSearch("searched"))
                         .catch(error => console.log(error))
                 }, 600)
     }
@@ -40,6 +42,7 @@ export default function SearchPage(){
             {searchResults.map((item) => (
                 <MovieAndSeriesCard key={item.imdbID} item={item} watched={watchlist.find(watchedItem => watchedItem.imdbID === item.imdbID)}/>
             ))}
+            {search && <p>If you have not found what you have been looking for, try to be more specific.</p>}
         </div>
     )
 }

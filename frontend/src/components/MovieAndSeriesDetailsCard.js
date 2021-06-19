@@ -8,14 +8,16 @@ export default function MovieAndSeriesDetailsCard(){
     const { id } = useParams();
     const { item } = useOmdb(id);
     const { addToWatchlist, removeFromWatchlist, watchlist } = useWatchlist();
+    const [watch, setWatch] = useState(watchlist.find(watchedItem => watchedItem.imdbID === item.imdbID))
 
     const add = () => {
         addToWatchlist(item.imdbID, item.type)
+        setWatch("watched")
     }
 
     const remove = () => {
         removeFromWatchlist(item)
-        setList(watchlist)
+        setWatch(null)
     }
 
     return (
@@ -34,8 +36,8 @@ export default function MovieAndSeriesDetailsCard(){
             ))}</div>}
             {(item.totalSeasons > 0) && <p>Total Seasons: {item.totalSeasons}</p>}
 
-            {!watchlist.find(watchedItem => watchedItem.imdbID === item.imdbID) && <button onClick={add}>Add to watchlist</button>}
-            {watchlist.find(watchedItem => watchedItem.imdbID === item.imdbID) && <button onClick={remove}>Remove from watchlist!</button>}
+            {!watch && <button onClick={add}>Add to watchlist</button>}
+            {watch && <button onClick={remove}>Remove from watchlist!</button>}
         </div>
     )
 

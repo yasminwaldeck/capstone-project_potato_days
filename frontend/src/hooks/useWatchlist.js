@@ -21,7 +21,7 @@ export default function useWatchlist(){
 
     const removeFromWatchlist = (item) =>{
         axios.delete("/api/watchlist", {data: item.imdbID})
-            .then(() => watchlist.delete(item))
+            .then(() => setWatchlist(watchlist.delete(item)))
             .catch((error) => console.error(error.message))
     }
 

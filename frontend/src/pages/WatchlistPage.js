@@ -14,6 +14,7 @@ export default function WatchlistPage(){
 
 
     return (
+
         <div>
             <button onClick={() => setType(MOVIE)}>See all movies!</button>
             <button onClick={() => setType(SERIES)}>See all series!</button>

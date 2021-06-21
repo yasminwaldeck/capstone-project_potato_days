@@ -21,7 +21,11 @@ export default function MovieAndSeriesDetailsCard(){
     }
 
     return (
+        <>
+
         <div>
+            { item && (
+                <>
             <img src={item.poster}/>
             <h3>{item.title}</h3>
             <p>Year: {item.year}</p>
@@ -35,10 +39,12 @@ export default function MovieAndSeriesDetailsCard(){
                 <p key={rating.source}>{rating.source}: {rating.value}</p>
             ))}</div>}
             {(item.totalSeasons > 0) && <p>Total Seasons: {item.totalSeasons}</p>}
-
+                </>)}
             {!watch && <button onClick={add}>Add to watchlist</button>}
             {watch && <button onClick={remove}>Remove from watchlist!</button>}
+
         </div>
+    </>
     )
 
 }

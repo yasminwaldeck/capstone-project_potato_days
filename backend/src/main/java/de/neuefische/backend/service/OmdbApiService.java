@@ -25,6 +25,10 @@ public class OmdbApiService {
 
     public List<OmdbOverview> searchByString(String searchString, String type){
 
+        if(searchString.isEmpty() || type.isEmpty()){
+            return null;
+        }
+
         String url = BASE_URL_WITH_KEY_ANNOTATION + omdbConfig.getKey() + "&s=" + searchString + "&type=" + type;
         ResponseEntity<OmdbResponseDto> response = restTemplate.getForEntity(url, OmdbResponseDto.class);
 

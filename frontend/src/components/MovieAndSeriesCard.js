@@ -74,7 +74,7 @@ const OverviewCard = styled.div`
     font-size: inherit;
     color: white;
     cursor: pointer;
-    padding: 10px 10px;
+    padding: 10px 20px;
     margin: 15px 30px;
     text-transform: uppercase;
     font-weight: 700;
@@ -105,13 +105,11 @@ const OverviewCard = styled.div`
   .btn:before {
     line-height: 1;
     position: relative;
-
   }
 
 
   .btn-add {
     background: #00916E;
-    color: #fff;
   }
 
   .btn-add:hover {
@@ -126,7 +124,6 @@ const OverviewCard = styled.div`
 
   .btn-remove {
     background: #66000E;
-    color: #fff;
   }
 
   .btn-remove:hover {

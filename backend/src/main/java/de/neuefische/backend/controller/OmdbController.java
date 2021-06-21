@@ -25,10 +25,5 @@ public class OmdbController {
     }
 
 
-    @GetMapping("/details/{id}")
-    public OmdbDetails getDetails(@PathVariable String id){
-        return omdbApiService.getDetails(id);
-    }
-
 
 }

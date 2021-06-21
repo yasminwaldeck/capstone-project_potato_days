@@ -13,7 +13,7 @@ import java.util.List;
 @Builder
 public class OmdbDetails {
 
-    //Should be deleted soon
+
     private String title;
     private String year;
     private String imdbID;

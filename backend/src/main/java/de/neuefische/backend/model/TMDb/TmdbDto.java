@@ -1,8 +1,5 @@
 package de.neuefische.backend.model.TMDb;
 
-import de.neuefische.backend.model.Genre;
-import de.neuefische.backend.model.OMDb.OmdbRatingDto;
-import de.neuefische.backend.model.Season;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

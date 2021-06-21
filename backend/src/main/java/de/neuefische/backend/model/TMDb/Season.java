@@ -1,4 +1,4 @@
-package de.neuefische.backend.model;
+package de.neuefische.backend.model.TMDb;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,26 +1,27 @@
-package de.neuefische.backend.model;
+package de.neuefische.backend.model.OMDb;
 
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class OmdbOverviewDto {
+public class OmdbDetails {
 
-    @JsonProperty("Title")
     private String title;
-    @JsonProperty("Year")
     private String year;
     private String imdbID;
-    @JsonProperty("Poster")
     private String poster;
-    @JsonProperty("Type")
+    private String runtime;
+    private String director;
+    private String writer;
+    private String actors;
+    private String country;
+    private List<OmdbRating> ratings;
     private String type;
-
 }

@@ -1,7 +1,7 @@
 package service;
 
 import de.neuefische.backend.config.OMDbConfig;
-import de.neuefische.backend.model.*;
+import de.neuefische.backend.model.OMDb.*;
 import de.neuefische.backend.service.OmdbApiService;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;

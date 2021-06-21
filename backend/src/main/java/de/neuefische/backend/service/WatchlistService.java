@@ -1,8 +1,7 @@
 package de.neuefische.backend.service;
 
-import de.neuefische.backend.model.ImdbID;
 import de.neuefische.backend.model.MovieAndSeries;
-import de.neuefische.backend.model.OmdbOverview;
+import de.neuefische.backend.model.OMDb.OmdbOverview;
 import de.neuefische.backend.repo.WatchlistRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

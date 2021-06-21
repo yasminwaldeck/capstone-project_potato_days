@@ -13,14 +13,12 @@ import java.util.List;
 @Builder
 public class OmdbDetails {
 
+    //Should be deleted soon
     private String title;
     private String year;
     private String imdbID;
     private String poster;
     private String runtime;
-    private String director;
-    private String writer;
-    private String actors;
     private String country;
     private List<OmdbRating> ratings;
     private String type;

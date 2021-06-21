@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class OmdbOverviewDto {
 
+    //Should be deleted soon
     @JsonProperty("Title")
     private String title;
     @JsonProperty("Year")

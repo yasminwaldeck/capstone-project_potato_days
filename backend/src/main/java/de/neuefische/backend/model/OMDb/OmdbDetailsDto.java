@@ -21,12 +21,6 @@ public class OmdbDetailsDto {
     private String poster;
     @JsonProperty("Runtime")
     private String runtime;
-    @JsonProperty("Director")
-    private String director;
-    @JsonProperty("Writer")
-    private String writer;
-    @JsonProperty("Actors")
-    private String actors;
     @JsonProperty("Country")
     private String country;
     @JsonProperty("Ratings")

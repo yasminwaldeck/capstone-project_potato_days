@@ -81,19 +81,28 @@ public class OmdbApiServiceTest {
     public void getDetailsShouldReturnAllTheDetails(){
 
         //GIVEN
-        OmdbDetailsDto omdbDetailsDto = new OmdbDetailsDto(
-                "title", "year", "imdbId", "poster", "runtime", "genre",
-                "director", "writer", "actors", "country",
-                List.of(new OmdbRatingDto("source", "value")), "series",
-                3
-        );
 
-        OmdbDetails expected = new OmdbDetails(
-                "title", "year", "imdbId", "poster", "runtime", "genre",
-                "director", "writer", "actors", "country",
-                List.of(new OmdbRating("source", "value")), "series",
-                3
-        );
+        OmdbDetailsDto omdbDetailsDto = OmdbDetailsDto.builder()
+                .imdbID("imdbID")
+                .country("country")
+                .poster("poster")
+                .ratings(List.of(new OmdbRatingDto("source", "value")))
+                .runtime("runtime")
+                .title("title")
+                .type("type")
+                .year("year")
+                .build();
+
+        OmdbDetails expected = OmdbDetails.builder()
+                .imdbID("imdbID")
+                .country("country")
+                .poster("poster")
+                .ratings(List.of(new OmdbRating("source", "value")))
+                .runtime("runtime")
+                .title("title")
+                .type("type")
+                .year("year")
+                .build();
 
         when(mockedTemplate.getForEntity(
                 "https://www.omdbapi.com/?apikey=" + omDbConfig.getKey() + "&i=someId", OmdbDetailsDto.class))

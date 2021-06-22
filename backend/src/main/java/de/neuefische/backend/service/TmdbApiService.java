@@ -4,15 +4,19 @@ import de.neuefische.backend.config.TMDbConfig;
 import de.neuefische.backend.model.OMDb.OmdbDetails;
 import de.neuefische.backend.model.OMDb.OmdbDetailsDto;
 import de.neuefische.backend.model.TMDb.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+@Service
 public class TmdbApiService {
 
     private final RestTemplate restTemplate;
     private final TMDbConfig tmdbConfig;
     private final String BASE_URL = "https://api.themoviedb.org/3/";
 
+    @Autowired
     public TmdbApiService(RestTemplate restTemplate, TMDbConfig tmdbConfig) {
         this.restTemplate = restTemplate;
         this.tmdbConfig = tmdbConfig;

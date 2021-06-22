@@ -6,6 +6,7 @@ import de.neuefische.backend.model.TMDb.TmdbCreditDto;
 import de.neuefische.backend.model.TMDb.TmdbDto;
 import de.neuefische.backend.model.TMDb.TmdbOTTDto;
 import de.neuefische.backend.model.TMDb.TmdbOTTbyCountryResponseDto;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +39,16 @@ public class MovieAndSeriesDetailsService {
         TmdbDto tmdbDto = tmdbApiService.getDetails(tmdbId, omdbDetails.getType());
         TmdbOTTbyCountryResponseDto tmdbOTTbyCountryResponseDto = tmdbApiService.getOTT(tmdbId, omdbDetails.getType());
         TmdbCreditDto tmdbCreditDto = tmdbApiService.getCredits(tmdbId, omdbDetails.getType());
-        return null;
+
+
+        MovieAndSeriesDetails movieAndSeriesDetails = new MovieAndSeriesDetails();
+
+        BeanUtils.copyProperties(omdbDetails, movieAndSeriesDetails);
+        BeanUtils.copyProperties(tmdbDto, movieAndSeriesDetails);
+        BeanUtils.copyProperties(tmdbOTTbyCountryResponseDto, movieAndSeriesDetails);
+        BeanUtils.copyProperties(tmdbCreditDto, movieAndSeriesDetails);
+
+        return movieAndSeriesDetails;
 
     }
 }

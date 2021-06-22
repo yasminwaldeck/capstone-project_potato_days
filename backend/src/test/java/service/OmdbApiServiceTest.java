@@ -15,8 +15,8 @@ import static org.mockito.Mockito.*;
 public class OmdbApiServiceTest {
 
     private final RestTemplate mockedTemplate = mock(RestTemplate.class);
-    private final OMDbConfig omDbConfig = new OMDbConfig();
-    private final OmdbApiService omdbApiService = new OmdbApiService(omDbConfig, mockedTemplate);
+    private final OMDbConfig omdbconfig = new OMDbConfig();
+    private final OmdbApiService omdbApiService = new OmdbApiService(omdbconfig, mockedTemplate);
 
     @Test
     public void searchMoviesShouldReturnAListWithMovies(){
@@ -37,7 +37,7 @@ public class OmdbApiServiceTest {
         OmdbResponseDto omdbResponseDto = new OmdbResponseDto(movies, 3);
 
         when(mockedTemplate.getForEntity(
-                "https://www.omdbapi.com/?apikey=" + omDbConfig.getKey() + "&s=title&type=movie", OmdbResponseDto.class))
+                "https://www.omdbapi.com/?apikey=" + omdbconfig.getKey() + "&s=title&type=movie", OmdbResponseDto.class))
                 .thenReturn(ResponseEntity.ok(omdbResponseDto));
 
         //WHEN
@@ -48,7 +48,7 @@ public class OmdbApiServiceTest {
 
         assertThat(actual, is(expected));
         verify(mockedTemplate).getForEntity(
-                ("https://www.omdbapi.com/?apikey=" + omDbConfig.getKey() + "&s=title&type=movie"),
+                ("https://www.omdbapi.com/?apikey=" + omdbconfig.getKey() + "&s=title&type=movie"),
                 OmdbResponseDto.class);
 
     }
@@ -61,7 +61,7 @@ public class OmdbApiServiceTest {
         OmdbResponseDto omdbResponseDto = new OmdbResponseDto(null, 3);
 
         when(mockedTemplate.getForEntity(
-                "https://www.omdbapi.com/?apikey=" + omDbConfig.getKey() + "&s=title&type=movie", OmdbResponseDto.class))
+                "https://www.omdbapi.com/?apikey=" + omdbconfig.getKey() + "&s=title&type=movie", OmdbResponseDto.class))
                 .thenReturn(ResponseEntity.ok(omdbResponseDto));
 
         //WHEN
@@ -72,7 +72,7 @@ public class OmdbApiServiceTest {
 
         assertThat(actual, is(List.of()));
         verify(mockedTemplate).getForEntity(
-                ("https://www.omdbapi.com/?apikey=" + omDbConfig.getKey() + "&s=title&type=movie"),
+                ("https://www.omdbapi.com/?apikey=" + omdbconfig.getKey() + "&s=title&type=movie"),
                 OmdbResponseDto.class);
 
     }
@@ -105,7 +105,7 @@ public class OmdbApiServiceTest {
                 .build();
 
         when(mockedTemplate.getForEntity(
-                "https://www.omdbapi.com/?apikey=" + omDbConfig.getKey() + "&i=someId", OmdbDetailsDto.class))
+                "https://www.omdbapi.com/?apikey=" + omdbconfig.getKey() + "&i=someId", OmdbDetailsDto.class))
                 .thenReturn(ResponseEntity.ok(omdbDetailsDto));
 
         //WHEN
@@ -116,7 +116,7 @@ public class OmdbApiServiceTest {
 
         assertThat(actual, is(expected));
         verify(mockedTemplate).getForEntity(
-                ("https://www.omdbapi.com/?apikey=" + omDbConfig.getKey() + "&i=someId"),
+                ("https://www.omdbapi.com/?apikey=" + omdbconfig.getKey() + "&i=someId"),
                 OmdbDetailsDto.class);
 
     }
@@ -135,7 +135,7 @@ public class OmdbApiServiceTest {
         );
 
         when(mockedTemplate.getForEntity(
-                "https://www.omdbapi.com/?apikey=" + omDbConfig.getKey() + "&i=someId", OmdbOverviewDto.class))
+                "https://www.omdbapi.com/?apikey=" + omdbconfig.getKey() + "&i=someId", OmdbOverviewDto.class))
                 .thenReturn(ResponseEntity.ok(omdbOverviewDto));
 
         //WHEN
@@ -146,7 +146,7 @@ public class OmdbApiServiceTest {
 
         assertThat(actual, is(expected));
         verify(mockedTemplate).getForEntity(
-                ("https://www.omdbapi.com/?apikey=" + omDbConfig.getKey() + "&i=someId"),
+                ("https://www.omdbapi.com/?apikey=" + omdbconfig.getKey() + "&i=someId"),
                 OmdbOverviewDto.class);
 
     }

@@ -92,7 +92,7 @@ public class TmbdApiServiceTest {
     public void getDetailsShouldReturnDetailsForSeries(){
 
         //GIVEN
-        TmdbDto response = TmdbDto.builder()
+        TmdbDto tmdbDto = TmdbDto.builder()
                 .first_air_date("first_air_date")
                 .id("id")
                 .genres(List.of(Genre.builder().name("name").build()))
@@ -140,7 +140,7 @@ public class TmbdApiServiceTest {
 
         when(mockedTemplate.getForEntity(
                 "https://api.themoviedb.org/3/tv/id?api_key=" + tmdbConfig.getKey(), TmdbDto.class))
-                .thenReturn(ResponseEntity.ok(response));
+                .thenReturn(ResponseEntity.ok(tmdbDto));
 
         //WHEN
 
@@ -294,6 +294,42 @@ public class TmbdApiServiceTest {
         verify(mockedTemplate).getForEntity(
                 ("https://api.themoviedb.org/3/movie/id/watch/providers?api_key=" + tmdbConfig.getKey()),
                 TmdbResponseDto.class);
+    }
+
+
+    @Test
+    public void getCreditsShouldGetCreduts() {
+
+        //GIVEN
+
+        TmdbCreditDto response = TmdbCreditDto.builder()
+                .crew(
+                        List.of(Credit.builder().name("name").department("department").profile_path("profile_path").build()))
+                .cast(
+                        List.of(Credit.builder().name("name").character("character").profile_path("profile_path").build()))
+                .build();
+
+        TmdbCreditDto expected = TmdbCreditDto.builder()
+                .crew(
+                        List.of(Credit.builder().name("name").department("department").profile_path("profile_path").build()))
+                .cast(
+                        List.of(Credit.builder().name("name").character("character").profile_path("profile_path").build()))
+                .build();
+
+        when(mockedTemplate.getForEntity(
+                "https://api.themoviedb.org/3/movie/id/credits?api_key=" + tmdbConfig.getKey(), TmdbCreditDto.class))
+                .thenReturn(ResponseEntity.ok(response));
+
+        //WHEN
+
+        TmdbCreditDto actual = tmdbApiService.getCredits("id", "movie");
+
+        //THEN
+
+        assertThat(actual, is(expected));
+        verify(mockedTemplate).getForEntity(
+                ("https://api.themoviedb.org/3/movie/id/credits?api_key=" + tmdbConfig.getKey()),
+                TmdbCreditDto.class);
     }
 
 }

@@ -24,10 +24,6 @@ public class MovieAndSeriesDetailsService {
         this.tmdbApiService = tmdbApiService;
     }
 
-    public MovieAndSeriesDetailsService(OmdbApiService omdbApiService) {
-        this.omdbApiService = omdbApiService;
-    }
-
     public MovieAndSeriesDetails getDetails(String imdbId){
 
         if (imdbId == null){

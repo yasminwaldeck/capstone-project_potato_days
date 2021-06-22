@@ -1,18 +1,21 @@
 import { useParams } from "react-router-dom";
 import useOmdb from "../hooks/useOmdb";
 import useWatchlist from "../hooks/useWatchlist";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import Cast from "./Cast";
 import Crew from "./Crew";
 import ProviderElement from "./ProviderElement";
 import styled from "styled-components";
 import MovieInfo from "./MovieInfo";
 import Ratings from "./Ratings";
+import TypeContext from "../context/TypeContext";
+import SeriesInfo from "./SeriesInfo";
 
 export default function MovieAndSeriesDetailsCard(){
 
     const { id } = useParams();
     const { item } = useOmdb(id);
+    const {MOVIE, SERIES} = useContext(TypeContext)
     const { addToWatchlist, removeFromWatchlist, watchlist } = useWatchlist();
     const [watch, setWatch] = useState(watchlist.find(watchedItem => watchedItem.imdbID === item.imdbID))
 
@@ -33,16 +36,13 @@ export default function MovieAndSeriesDetailsCard(){
                     <img src={item.poster}/>
                     <h3>{item.title}</h3>
                     <p id="tagline">{item.tagline}</p>
-                    <MovieInfo info={item}/>
-                    <p>First aired: {item.first_air_date}</p>
-                    <p>Last aired: {item.last_air_date}</p>
+                    {(item.type === MOVIE) && <MovieInfo info={item}/>}
+                    {(item.type === SERIES) && <SeriesInfo info={item}/>}
                     {item.genres &&
                     <><h3>Genres:</h3>
                     <div id={"genre"}>{item.genres.map((genre) => (
                         <p key={genre.id}>{genre.name}</p>
                     ))}</div></>}
-                    <p>Number of episodes: {item.number_of_episodes}</p>
-                    <p>Number of seaons: {item.number_of_seasons}</p>
                     {item.in_production && <p>In Production!</p>}
 
                     {item.seasons && <div>Seasons: {item.seasons.map((season) => (
@@ -82,8 +82,9 @@ const MovieAndSeriesDetails = styled.div`
     }
   
   #genre{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    min-width: 20vh;
+    justify-content: space-evenly;
   }
 `

@@ -14,5 +14,5 @@ public class Credit {
     private String profile_path;
     private String character;
     private String department;
-
+    private String id;
 }

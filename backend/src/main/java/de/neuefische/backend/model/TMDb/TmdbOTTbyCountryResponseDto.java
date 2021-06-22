@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class TmdbOTTbyCountryResponseDto {
-
     @JsonProperty("DE")
     private TmdbOTTDto de;
     @JsonProperty("FR")
@@ -20,5 +19,4 @@ public class TmdbOTTbyCountryResponseDto {
     private TmdbOTTDto gb;
     @JsonProperty("US")
     private TmdbOTTDto us;
-
 }

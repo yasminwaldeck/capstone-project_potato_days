@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class OmdbOverview {
-
     //Should be deleted soon
     private String title;
     private String year;

@@ -12,7 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class TmdbCreditDto {
-
     private List<Credit> cast;
     private List<Credit> crew;
 }

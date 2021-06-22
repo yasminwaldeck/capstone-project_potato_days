@@ -12,8 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class OmdbDetails {
-
-
     private String title;
     private String year;
     private String imdbID;

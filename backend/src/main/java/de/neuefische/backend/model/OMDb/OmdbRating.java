@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class OmdbRating {
-
     private String source;
     private String value;
 }

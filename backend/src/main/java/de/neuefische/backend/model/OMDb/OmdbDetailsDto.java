@@ -13,7 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class OmdbDetailsDto {
-
     @JsonProperty("Title")
     private String title;
     @JsonProperty("Year")

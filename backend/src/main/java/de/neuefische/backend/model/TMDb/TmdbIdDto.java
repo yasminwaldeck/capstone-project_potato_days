@@ -13,7 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class TmdbIdDto {
-
     private List<TmdbDto> movie_results;
     private List<TmdbDto> tv_results;
 }

@@ -12,7 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class TmdbDto {
-
     private String first_air_date;
     private String last_air_date;
     private String release_date;
@@ -24,5 +23,4 @@ public class TmdbDto {
     private List<Season> seasons;
     private String status;
     private String tagline;
-
 }

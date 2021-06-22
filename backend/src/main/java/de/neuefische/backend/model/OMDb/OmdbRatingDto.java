@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OmdbRatingDto {
-
     @JsonProperty("Source")
     private String source;
     @JsonProperty("Value")

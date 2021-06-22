@@ -2,6 +2,12 @@ import { useParams } from "react-router-dom";
 import useOmdb from "../hooks/useOmdb";
 import useWatchlist from "../hooks/useWatchlist";
 import {useState} from "react";
+import Cast from "./Cast";
+import Crew from "./Crew";
+import ProviderElement from "./ProviderElement";
+import styled from "styled-components";
+import MovieInfo from "./MovieInfo";
+import Ratings from "./Ratings";
 
 export default function MovieAndSeriesDetailsCard(){
 
@@ -21,31 +27,24 @@ export default function MovieAndSeriesDetailsCard(){
     }
 
     return (
-        <>
-            {console.log(item)}
-
-        <div>
+        <MovieAndSeriesDetails>
             { item && (
                 <>
                     <img src={item.poster}/>
                     <h3>{item.title}</h3>
-                    <p>{item.tagline}</p>
-                    <p>Year: {item.year}</p>
-                    <p>Runtime: {item.runtime}</p>
-                    <p>Country: {item.country}</p>
-                    {item.ratings && <div>Ratings: {item.ratings.map((rating) => (
-                        <p key={rating.source}>{rating.source}: {rating.value}</p>
-                    ))}</div>}
+                    <p id="tagline">{item.tagline}</p>
+                    <MovieInfo info={item}/>
                     <p>First aired: {item.first_air_date}</p>
                     <p>Last aired: {item.last_air_date}</p>
-                    <p>Released: {item.release_date}</p>
-                    {item.genres && <div>Grenres: {item.genres.map((genre) => (
+                    {item.genres &&
+                    <><h3>Genres:</h3>
+                    <div id={"genre"}>{item.genres.map((genre) => (
                         <p key={genre.id}>{genre.name}</p>
-                    ))}</div>}
+                    ))}</div></>}
                     <p>Number of episodes: {item.number_of_episodes}</p>
                     <p>Number of seaons: {item.number_of_seasons}</p>
-                    <p>In Production: {item.in_production}</p>
-                    <p>Status: {item.status}</p>
+                    {item.in_production && <p>In Production!</p>}
+
                     {item.seasons && <div>Seasons: {item.seasons.map((season) => (
                         <div key={season.id}>
                         <p>Season {season.season_number}: {season.name}</p>
@@ -55,39 +54,36 @@ export default function MovieAndSeriesDetailsCard(){
                             <img src={"https://image.tmdb.org/t/p/w500" + season.poster_path}/>
                         </div>
                         ))}</div>}
-                    {item.cast &&  <div>Cast: {item.cast.map((cast) => (
-                        <div key={cast.id}>
-                            <p>{cast.name} as {cast.character}</p>
-                            <img src={"https://image.tmdb.org/t/p/w500" + cast.profile_path}/>
-                        </div>
-                    ))}</div>}
-                    {item.crew &&  <div>Crew: {item.crew.map((crew) => (
-                        <div key={crew.id}>
-                            <p>{crew.name}, {crew.department}</p>
-                            <img src={"https://image.tmdb.org/t/p/w500" + crew.profile_path}/>
-                        </div>
-                    ))}</div>}
-                    {item.de &&  <div>Streamable at: {item.de.flatrate.map((provider) => (
-                        <div key={provider.provider_name}>
-                            <p>{provider.provider_name}</p>
-                            <img src={"https://image.tmdb.org/t/p/original" + provider.provider_path}/>
-                        </div>
-                    ))}</div>}
-                    {item.de &&  <div>Buy at: {item.de.buy.map((provider) => (
-                        <div key={provider.provider_name}>
-                            <p>{provider.provider_name}</p>
-                            <img src={"https://image.tmdb.org/t/p/original" + provider.provider_path}/>
-                        </div>
-                    ))}</div>}
+                    {item.cast &&  <Cast castlist={item.cast}/>}
+                    {item.crew &&  <Crew crewlist={item.crew}/>}
+                    {item.de &&  (<div>
+                        <h3>Streamable at:</h3>
+                        <ProviderElement list={item.de.flatrate}/>
+                        <h3>Buy at:</h3>
+                        <ProviderElement list={item.de.buy}/>
+                    </div>)}
 
-            </>)
-            }
+            </>)}
 
             {!watch && <button onClick={add}>Add to watchlist</button>}
             {watch && <button onClick={remove}>Remove from watchlist!</button>}
-
-        </div>
-    </>
+    </MovieAndSeriesDetails>
     )
 
 }
+
+const MovieAndSeriesDetails = styled.div`
+
+  width: 90vw;
+  margin: 0 auto 5vh auto;
+  
+    #tagline{
+      font-style: italic;
+    }
+  
+  #genre{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+  }
+`

@@ -41,6 +41,7 @@ public class MovieAndSeriesDetails {
     private List<Season> seasons;
     private String status;
     private String tagline;
+    private String overview;
 
     //From tmdb (credits)
 

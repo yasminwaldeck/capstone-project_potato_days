@@ -25,5 +25,6 @@ public class OmdbDetails {
     private String actors;
     private String country;
     private List<OmdbRating> ratings;
+    private String type;
     private int totalSeasons;
 }

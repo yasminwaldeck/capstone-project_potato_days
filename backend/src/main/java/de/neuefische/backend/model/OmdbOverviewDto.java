@@ -3,12 +3,14 @@ package de.neuefische.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class OmdbOverviewDto {
 
     @JsonProperty("Title")
@@ -18,5 +20,7 @@ public class OmdbOverviewDto {
     private String imdbID;
     @JsonProperty("Poster")
     private String poster;
+    @JsonProperty("Type")
+    private String type;
 
 }

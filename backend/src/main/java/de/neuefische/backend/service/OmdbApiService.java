@@ -2,9 +2,11 @@ package de.neuefische.backend.service;
 
 import de.neuefische.backend.config.OMDbConfig;
 import de.neuefische.backend.model.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,6 +25,10 @@ public class OmdbApiService {
 
     public List<OmdbOverview> searchByString(String searchString, String type){
 
+        if(searchString.isEmpty() || type.isEmpty()){
+            return null;
+        }
+
         String url = BASE_URL_WITH_KEY_ANNOTATION + omdbConfig.getKey() + "&s=" + searchString + "&type=" + type;
         ResponseEntity<OmdbResponseDto> response = restTemplate.getForEntity(url, OmdbResponseDto.class);
 
@@ -36,7 +42,8 @@ public class OmdbApiService {
                     .title(movie.getTitle())
                     .year(movie.getYear())
                     .imdbID(movie.getImdbID())
-                    .poster(movie.getPoster()).build())
+                    .poster(movie.getPoster())
+                    .type(movie.getType()).build())
                     .collect(Collectors.toList());
     }
 
@@ -64,7 +71,26 @@ public class OmdbApiService {
                                 .value(rating.getValue())
                                 .build())
                         .collect(Collectors.toList()))
+                .type(movie.getType())
                 .totalSeasons(movie.getTotalSeasons())
                 .build();
+    }
+
+    public OmdbOverview getOverviewById(String imdbID){
+
+        String url = BASE_URL_WITH_KEY_ANNOTATION + omdbConfig.getKey() + "&i=" + imdbID;
+        ResponseEntity<OmdbOverviewDto> response = restTemplate.getForEntity(url, OmdbOverviewDto.class);
+
+        if(response.getBody() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        OmdbOverviewDto responseBody = response.getBody();
+        return OmdbOverview.builder()
+                        .title(responseBody.getTitle())
+                        .year(responseBody.getYear())
+                        .imdbID(responseBody.getImdbID())
+                        .poster(responseBody.getPoster())
+                        .type(responseBody.getType())
+                        .build();
     }
 }

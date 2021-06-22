@@ -3,7 +3,9 @@ import SearchPage from "./pages/SearchPage";
 import Header from "./components/Header";
 import TypeProvider from "./context/TypeProvider";
 import {Switch, Route} from "react-router-dom";
-import MovieAndSeriesDetailsPage from "./pages/MovieAndSeriesDetailsPage";
+import MovieAndSeriesDetailsCard from "./components/MovieAndSeriesDetailsCard";
+import LandingPage from "./pages/LandingPage";
+import WatchlistPage from "./pages/WatchlistPage";
 
 function App() {
   return (
@@ -15,7 +17,13 @@ function App() {
                     <SearchPage/>
                 </Route>
                 <Route path={"/details/:id"}>
-                    <MovieAndSeriesDetailsPage/>
+                    <MovieAndSeriesDetailsCard/>
+                </Route>
+                <Route path={"/watchlist"}>
+                    <WatchlistPage/>
+                </Route>
+                <Route path={"/"}>
+                    <LandingPage/>
                 </Route>
             </Switch>
         </TypeProvider>

@@ -1,45 +1,44 @@
 import {useContext, useRef, useState} from "react";
 import axios from "axios";
-import MovieCard from "../components/MovieCard";
+import MovieAndSeriesCard from "../components/MovieAndSeriesCard";
 import TypeContext from "../context/TypeContext";
+import useWatchlist from "../hooks/useWatchlist";
+import useSearch from "../hooks/useSearch";
+import styled from "styled-components";
 
 export default function SearchPage(){
 
     const {MOVIE, SERIES} = useContext(TypeContext)
     const [searchString, setSearchString] = useState("")
     const [searchType, setSearchType] = useState(MOVIE)
-    const [searchResults, setSearchResults] = useState([])
-    const timerId = useRef(0)
-
-
-    const clickHandler = (searchString, searchType) => {
-        if(searchType === MOVIE) {
-                timerId.current = setTimeout(() => {
-                    axios
-                        .get(`/api/movie?searchString=${searchString}`)
-                        .then(response => response.data)
-                        .then((data) => (
-                            setSearchResults(data)
-                        ))
-                        .catch(error => console.log(error))
-                }, 600)
-        }
-    }
+    const { watchlist } = useWatchlist();
+    const { searchResults } = useSearch(searchString, searchType);
 
     return(
-        <div>
+        <Search>
             <input type="text"
                    value={searchString}
                    onChange={(event) => setSearchString(event.target.value)}
             />
             <div>
-                <input type="radio" name="movie" onChange={() => setSearchType(MOVIE)} defaultChecked/> Movie
-                <input type="radio" name="series" onChange={() => setSearchType(SERIES)}/> Series
+                <input type="radio" name="search_type" onChange={() => setSearchType(MOVIE)} defaultChecked/> Movie
+                <input type="radio" name="search_type" onChange={() => setSearchType(SERIES)}/> Series
             </div>
-            <button disabled={searchString === ""} onClick={() => clickHandler(searchString, searchType)}>Search</button>
-            {searchResults.map((movie) => (
-                <MovieCard key={movie.imdbID} movie={movie}/>
+            {searchResults && searchResults.map((item) => (
+                <MovieAndSeriesCard key={item.imdbID} item={item} watched={watchlist.find(watchedItem => watchedItem.imdbID === item.imdbID)}/>
             ))}
-        </div>
+            {<p>If you have not found what you have been looking for, try to be more specific.</p>}
+        </Search>
     )
 }
+
+const Search = styled.div`
+  input {
+    margin-bottom: 2vh;
+  }
+
+  p {
+    width: 80vw;
+    margin: auto auto 3vh;
+  }
+`

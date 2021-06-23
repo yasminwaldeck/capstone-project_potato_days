@@ -10,12 +10,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/omdb")
-public class OmdbController {
+public class SearchController {
 
     private OmdbApiService omdbApiService;
 
     @Autowired
-    public OmdbController(OmdbApiService omdbApiService){
+    public SearchController(OmdbApiService omdbApiService){
         this.omdbApiService = omdbApiService;
     }
 

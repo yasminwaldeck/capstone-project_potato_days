@@ -9,6 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class TmdbApiService {
 
@@ -48,7 +51,7 @@ public class TmdbApiService {
                 break;
         }
 
-        String url = BASE_URL + urlpart + id + "?api_key=" + tmdbConfig.getKey();
+        String url = BASE_URL + urlpart + id + "?api_key=" + tmdbConfig.getKey() + "&append_to_response=external_ids";
 
         ResponseEntity<TmdbDto> response = restTemplate.getForEntity(url, TmdbDto.class);
         return response.getBody();
@@ -92,5 +95,26 @@ public class TmdbApiService {
         return response.getBody();
     }
 
+    public List<String> getTrending(String timewindow, String type){
+
+        String urlpart = "";
+
+        switch(type) {
+            case "movie":
+                urlpart = "movie/";
+                break;
+            case "series":
+                urlpart = "tv/";
+                break;
+        }
+        String url = BASE_URL + "trending/" + urlpart + timewindow + "?api_key=" + tmdbConfig.getKey();
+
+        ResponseEntity<TmdbTrendingResponseDto> response = restTemplate.getForEntity(url, TmdbTrendingResponseDto.class);
+        return response.getBody().getResults().stream().map(result -> result.getId()).collect(Collectors.toList());
+    }
+
+    public String getImdbId(String tmdbId, String type){
+        return getDetails(tmdbId, type).getExternal_ids().getImdb_id();
+    }
 
 }

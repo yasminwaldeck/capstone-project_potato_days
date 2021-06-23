@@ -14,9 +14,6 @@ export default function SearchPage(){
     const { watchlist } = useWatchlist();
     const { searchResults } = useSearch(searchString, searchType);
 
-
-
-
     return(
         <Search>
             <input type="text"
@@ -27,7 +24,6 @@ export default function SearchPage(){
                 <input type="radio" name="search_type" onChange={() => setSearchType(MOVIE)} defaultChecked/> Movie
                 <input type="radio" name="search_type" onChange={() => setSearchType(SERIES)}/> Series
             </div>
-            {/*<button disabled={searchString === ""} onClick={() => clickHandler(searchString, searchType)}>Search</button>*/}
             {searchResults && searchResults.map((item) => (
                 <MovieAndSeriesCard key={item.imdbID} item={item} watched={watchlist.find(watchedItem => watchedItem.imdbID === item.imdbID)}/>
             ))}

@@ -8,12 +8,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class RecommendationService {
+public class TrendingService {
 
     private TmdbApiService tmdbApiService;
     private OmdbApiService omdbApiService;
 
-    public RecommendationService(TmdbApiService tmdbApiService, OmdbApiService omdbApiService) {
+    public TrendingService(TmdbApiService tmdbApiService, OmdbApiService omdbApiService) {
         this.tmdbApiService = tmdbApiService;
         this.omdbApiService = omdbApiService;
     }

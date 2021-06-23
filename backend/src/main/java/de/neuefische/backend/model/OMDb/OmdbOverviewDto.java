@@ -1,4 +1,4 @@
-package de.neuefische.backend.model;
+package de.neuefische.backend.model.OMDb;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class OmdbOverviewDto {
-
+    //Should be deleted soon
     @JsonProperty("Title")
     private String title;
     @JsonProperty("Year")

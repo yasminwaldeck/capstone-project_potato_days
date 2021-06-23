@@ -12,5 +12,5 @@ export default function useWatchlist(type){
             .catch((error) => console.error(error.message));
     }, [type]);
 
-    return { watchlistitems }
+    return { watchlistitems, setWatchlistitems }
 }

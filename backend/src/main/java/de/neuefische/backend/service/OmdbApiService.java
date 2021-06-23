@@ -1,7 +1,7 @@
 package de.neuefische.backend.service;
 
 import de.neuefische.backend.config.OMDbConfig;
-import de.neuefische.backend.model.*;
+import de.neuefische.backend.model.OMDb.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -59,10 +59,6 @@ public class OmdbApiService {
                 .imdbID(movie.getImdbID())
                 .poster(movie.getPoster())
                 .runtime(movie.getRuntime())
-                .genre(movie.getGenre())
-                .director(movie.getDirector())
-                .writer(movie.getWriter())
-                .actors(movie.getActors())
                 .country(movie.getCountry())
                 .ratings(movie.getRatings()
                         .stream()
@@ -72,7 +68,6 @@ public class OmdbApiService {
                                 .build())
                         .collect(Collectors.toList()))
                 .type(movie.getType())
-                .totalSeasons(movie.getTotalSeasons())
                 .build();
     }
 

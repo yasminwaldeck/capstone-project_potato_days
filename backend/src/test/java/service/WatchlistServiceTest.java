@@ -2,6 +2,8 @@ package service;
 
 import de.neuefische.backend.config.OMDbConfig;
 import de.neuefische.backend.model.*;
+import de.neuefische.backend.model.OMDb.OmdbOverview;
+import de.neuefische.backend.model.OMDb.OmdbOverviewDto;
 import de.neuefische.backend.repo.WatchlistRepo;
 import de.neuefische.backend.service.OmdbApiService;
 import de.neuefische.backend.service.WatchlistService;

@@ -6,7 +6,7 @@ export default function useOmdb(id){
 
     useEffect(() => {
         axios
-            .get(`/api/omdb/details/${id}`)
+            .get(`/api/details/${id}`)
             .then((response) => response.data)
             .then(setItem)
             .catch((error) => console.error(error.message));

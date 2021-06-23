@@ -16,7 +16,7 @@ public class OmdbApiService {
 
     private final OMDbConfig omdbConfig;
     private final RestTemplate restTemplate;
-    private final String BASE_URL_WITH_KEY_ANNOTATION = "https://www.omdbapi.com/" +"?apikey=";
+    private final String BASE_URL_WITH_KEY_ANNOTATION = "https://www.omdbapi.com/?apikey=";
 
     public OmdbApiService(OMDbConfig omdbConfig, RestTemplate restTemplate){
         this.omdbConfig = omdbConfig;

@@ -10,10 +10,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Document(collection="moviesAndSeries")
-public class MovieAndSeries {
+@Document(collection="watchHistory")
+public class MovieAndSeriesWatched {
 
     private String type;
     private String imdbID;
     private String recommendedBy;
 }
+

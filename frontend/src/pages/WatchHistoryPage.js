@@ -5,13 +5,15 @@ import useOmdb from "../hooks/useOmdb";
 import useWatchlistByType from "../hooks/useWatchlistByType";
 import useWatchlist from "../hooks/useWatchlist";
 import useWatchHistory from "../hooks/useWatchHistory";
+import useWatchHistoryByType from "../hooks/useWatchHistoryByType";
 
-export default function WatchlistPage(){
+export default function WatchHistoryPage(){
     const [type, setType] = useState();
     const {MOVIE, SERIES, BOTH} = useContext(TypeContext)
-    const { watchlistitems, setWatchlistitems } = useWatchlistByType(type);
-    const { watchlist } = useWatchlist();
+    const { watchHistoryItems, setWatchHistoryItems } = useWatchHistoryByType(type);
     const { watchHistory } = useWatchHistory();
+    const { watchlist } = useWatchlist();
+
 
 
     return (
@@ -19,11 +21,11 @@ export default function WatchlistPage(){
         <div>
             <button onClick={() => setType(MOVIE)}>See all movies!</button>
             <button onClick={() => setType(SERIES)}>See all series!</button>
-            <button onClick={() => {setWatchlistitems(watchlist)}}>See everything!</button>
+            <button onClick={() => {setWatchHistoryItems(watchHistory)}}>See everything!</button>
 
             {(type !== null) && (
-                watchlistitems.map((item) => (
-                <MovieAndSeriesCard key={item.imdbID} item={item} onWatchlist={watchlist.find(watchedItem => watchedItem.imdbID === item.imdbID)} onWatchHistory={watchHistory.find(watchedItem => watchedItem.imdbID === item.imdbID)}/>
+                watchHistoryItems.map((item) => (
+                    <MovieAndSeriesCard key={item.imdbID} item={item} onWatchlist={watchlist.find(watchedItem => watchedItem.imdbID === item.imdbID)} onWatchHistory={watchHistory.find(watchedItem => watchedItem.imdbID === item.imdbID)}/>
                 )))}
 
         </div>

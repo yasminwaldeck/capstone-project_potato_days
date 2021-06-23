@@ -25,7 +25,7 @@ export default function SearchPage(){
                 <input type="radio" name="search_type" onChange={() => setSearchType(SERIES)}/> Series
             </div>
             {searchResults && searchResults.map((item) => (
-                <MovieAndSeriesCard key={item.imdbID} item={item} watched={watchlist.find(watchedItem => watchedItem.imdbID === item.imdbID)}/>
+                <MovieAndSeriesCard key={item.imdbID} item={item} onWatchlist={watchlist.find(watchedItem => watchedItem.imdbID === item.imdbID)}/>
             ))}
             {<p>If you have not found what you have been looking for, try to be more specific.</p>}
         </Search>

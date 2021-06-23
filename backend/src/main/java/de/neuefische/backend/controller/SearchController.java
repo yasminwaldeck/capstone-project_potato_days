@@ -1,6 +1,5 @@
 package de.neuefische.backend.controller;
 
-import de.neuefische.backend.model.OMDb.OmdbDetails;
 import de.neuefische.backend.model.OMDb.OmdbOverview;
 import de.neuefische.backend.service.OmdbApiService;
 import org.springframework.beans.factory.annotation.Autowired;

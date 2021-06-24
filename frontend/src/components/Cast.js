@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import Portrait from "../resources/Portrait_Placeholder.png";
 
-export default function Cast({castlist}){
+export default function Cast({castlist}) {
 
-    return(
+    return (
         <>
             <h3>Cast:</h3>
             <CastCard>
@@ -11,8 +11,8 @@ export default function Cast({castlist}){
                     <div key={cast.id}>
                         <p>{cast.name} as {cast.character}</p>
                         {cast.profile_path ?
-                            <img src={"https://image.tmdb.org/t/p/w500" + cast.profile_path}/>
-                        : <img src={Portrait}/>}
+                            <img src={"https://image.tmdb.org/t/p/w500" + cast.profile_path} alt={"Profile"}/>
+                            : <img src={Portrait} alt={"Alternative profile"}/>}
                     </div>
                 ))}
             </CastCard>

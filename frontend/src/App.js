@@ -8,6 +8,7 @@ import LandingPage from "./pages/LandingPage";
 import WatchlistPage from "./pages/WatchlistPage";
 import TrendingMovieAndSeriesPage from "./pages/TrendingMovieAndSeriesPage";
 import WatchHistoryPage from "./pages/WatchHistoryPage";
+import StatsPage from "./pages/StatsPage";
 
 function App() {
   return (
@@ -29,6 +30,9 @@ function App() {
                     </Route>
                     <Route path={"/history"}>
                         <WatchHistoryPage/>
+                    </Route>
+                    <Route path={"/stats"}>
+                        <StatsPage/>
                     </Route>
                     <Route path={"/"}>
                         <LandingPage/>

@@ -2,13 +2,13 @@ package de.neuefische.backend.service;
 
 import de.neuefische.backend.model.MovieAndSeries;
 import de.neuefische.backend.model.OMDb.OmdbOverview;
+import de.neuefische.backend.model.Stats;
 import de.neuefische.backend.repo.MovieAndSeriesRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.rmi.NoSuchObjectException;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -81,5 +81,24 @@ public class WatchlistService {
         MovieAndSeries movieAndSeries = movieAndSeriesRepo.findByImdbID(imdbId);
         movieAndSeries.setRecommendedBy(null);
         movieAndSeriesRepo.save(movieAndSeries);
+    }
+
+    public List<Stats> getRecommendedByStats(){
+        List<MovieAndSeries> movieAndSeriesList = movieAndSeriesRepo.findAll();
+        Map<String, Stats> stats = new HashMap();
+        for(MovieAndSeries item : movieAndSeriesList){
+            if(item.getRecommendedBy() != null){
+                String name = item.getRecommendedBy();
+                if (stats.containsKey(name)){
+                    List<String> imdbIDs = new ArrayList<>(stats.get(name).getRecommendations());
+                    imdbIDs.add(item.getImdbID());
+                    stats.put(name, Stats.builder().name(name).recommendations(imdbIDs).number(imdbIDs.size()).build());
+                } else {
+                    stats.put(name, Stats.builder().name(name).recommendations(List.of(item.getImdbID())).number(1).build());
+                }
+            }
+        }
+        System.out.println(new ArrayList<>(stats.values()));
+        return new ArrayList<>(stats.values());
     }
 }

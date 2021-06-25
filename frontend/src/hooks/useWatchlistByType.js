@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 
-export default function useWatchlist(type){
+export default function useWatchlistByType(type){
     const [watchlistitems, setWatchlistitems] = useState([])
 
     useEffect(() => {

@@ -1,10 +1,7 @@
 package de.neuefische.backend.controller;
 
 import de.neuefische.backend.model.MovieAndSeriesDetails;
-import de.neuefische.backend.model.OMDb.OmdbDetails;
 import de.neuefische.backend.service.MovieAndSeriesDetailsService;
-import de.neuefische.backend.service.OmdbApiService;
-import de.neuefische.backend.service.TmdbApiService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

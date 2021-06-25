@@ -1,7 +1,6 @@
 package de.neuefische.backend.service;
 
 import de.neuefische.backend.model.OMDb.OmdbOverview;
-import de.neuefische.backend.model.TMDb.TmdbDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

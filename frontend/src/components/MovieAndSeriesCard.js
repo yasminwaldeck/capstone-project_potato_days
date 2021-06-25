@@ -4,22 +4,34 @@ import {useState} from "react";
 import styled from "styled-components";
 import {ReactComponent as Add} from "../resources/plus-lg.svg"
 import {ReactComponent as Remove} from "../resources/dash-lg.svg"
+import useWatchHistory from "../hooks/useWatchHistory";
 
-export default function MovieAndSeriesCard({item, watched}){
+export default function MovieAndSeriesCard({item, onWatchlist, onWatchHistory}){
 
-    const [watch, setWatch] = useState(watched)
+    const [watch, setWatch] = useState(onWatchlist)
+    const [watchHistory, setWatchHistory] = useState(onWatchHistory)
     const { addToWatchlist, removeFromWatchlist } = useWatchlist();
+    const { addToHistory, removeFromHistory } = useWatchHistory();
 
-    const add = () => {
+    const addList = () => {
         addToWatchlist(item.imdbID, item.type)
         setWatch("watched")
     }
 
-    const remove = () => {
+    const removeList = () => {
         removeFromWatchlist(item)
         setWatch(null)
     }
 
+    const addHistory = () => {
+        addToHistory(item.imdbID, item.type)
+        setWatchHistory("watched")
+    }
+
+    const removeHistory = () => {
+        removeFromHistory(item)
+        setWatchHistory(null)
+    }
 
     return(
         <OverviewCard>
@@ -28,8 +40,10 @@ export default function MovieAndSeriesCard({item, watched}){
                 <h3>{item.title} ({item.year})</h3>
                 <div id="buttons">
                     <NavLink to={("/details/" + item.imdbID)}><button>Details!</button></NavLink>
-                    {!watch && <button className="btn btn-add" onClick={add}> <Add class="icon"/> Add to watchlist</button>}
-                    {watch && <button className="btn btn-remove" onClick={remove}><Remove/> Remove from watchlist</button>}
+                    {!watch && <button className="btn btn-add" onClick={addList}> <Add class="icon"/> Add to watchlist</button>}
+                    {watch && <button className="btn btn-remove" onClick={removeList}><Remove/> Remove from watchlist</button>}
+                    {!watchHistory && <button className="btn btn-add" onClick={addHistory}> <Add class="icon"/> Add to watchhistory</button>}
+                    {watchHistory && <button className="btn btn-remove" onClick={removeHistory}><Remove/> Remove from watchhistory</button>}
                 </div>
 
         </OverviewCard>

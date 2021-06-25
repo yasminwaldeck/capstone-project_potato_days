@@ -7,6 +7,7 @@ import MovieAndSeriesDetailsCard from "./components/MovieAndSeriesDetailsCard";
 import LandingPage from "./pages/LandingPage";
 import WatchlistPage from "./pages/WatchlistPage";
 import TrendingMovieAndSeriesPage from "./pages/TrendingMovieAndSeriesPage";
+import WatchHistoryPage from "./pages/WatchHistoryPage";
 
 function App() {
   return (
@@ -25,6 +26,9 @@ function App() {
                     </Route>
                     <Route path={"/trending"}>
                         <TrendingMovieAndSeriesPage/>
+                    </Route>
+                    <Route path={"/history"}>
+                        <WatchHistoryPage/>
                     </Route>
                     <Route path={"/"}>
                         <LandingPage/>

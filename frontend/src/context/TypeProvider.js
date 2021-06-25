@@ -7,7 +7,6 @@ export default function TypeProvider({children}){
     const DAY = "day"
     const WEEK = "week"
 
-
     return (
         <TypeContext.Provider value={{MOVIE, SERIES, BOTH, DAY, WEEK}}>
             {children}

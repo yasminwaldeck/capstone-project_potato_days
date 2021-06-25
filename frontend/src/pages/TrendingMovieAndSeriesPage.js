@@ -3,6 +3,7 @@ import useWatchlist from "../hooks/useWatchlist";
 import {useContext, useState} from "react";
 import useTrending from "../hooks/useTrending";
 import MovieAndSeriesCard from "../components/MovieAndSeriesCard";
+import useWatchHistory from "../hooks/useWatchHistory";
 
 
 export default function TrendingMovieAndSeriesPage(){
@@ -13,6 +14,7 @@ export default function TrendingMovieAndSeriesPage(){
     const [timewindow, setTimewindow] = useState(DAY)
     const { watchlist } = useWatchlist();
     const { searchResults } = useTrending(timewindow, searchType);
+    const { watchHistory } = useWatchHistory();
 
 
     return(
@@ -26,7 +28,12 @@ export default function TrendingMovieAndSeriesPage(){
                 <input type="radio" name="timewindow" onChange={() => setTimewindow(WEEK)}/> Week
             </div>
             {searchResults && searchResults.map((item) => (
-                <MovieAndSeriesCard key={item.imdbID} item={item} watched={watchlist.find(watchedItem => watchedItem.imdbID === item.imdbID)}/>
+                <MovieAndSeriesCard
+                    key={item.imdbID}
+                    item={item}
+                    onWatchlist={watchlist.find(watchedItem => watchedItem.imdbID === item.imdbID)}
+                    onWatchHistory={watchHistory.find(watchedItem => watchedItem.imdbID === item.imdbID)}
+                />
             ))}
             {console.log("time: " + timewindow + "type: " + searchType)}
         </div>

@@ -1,39 +1,30 @@
 import { useParams } from "react-router-dom";
 import useOmdb from "../hooks/useOmdb";
 import useWatchlist from "../hooks/useWatchlist";
-import {useContext, useState} from "react";
+import {useContext} from "react";
 import Cast from "./Cast";
 import Crew from "./Crew";
 import ProviderElement from "./ProviderElement";
 import styled from "styled-components";
 import MovieInfo from "./MovieInfo";
-import Ratings from "./Ratings";
 import TypeContext from "../context/TypeContext";
 import SeriesInfo from "./SeriesInfo";
+import AddRemoveWatchButtons from "./AddRemoveWatchButtons";
+import useWatchHistory from "../hooks/useWatchHistory";
 
 export default function MovieAndSeriesDetailsCard(){
 
     const { id } = useParams();
     const { item } = useOmdb(id);
-    const {MOVIE, SERIES} = useContext(TypeContext)
-    const { addToWatchlist, removeFromWatchlist, watchlist } = useWatchlist();
-    const [watch, setWatch] = useState(watchlist.find(watchedItem => watchedItem.imdbID === item.imdbID))
-
-    const add = () => {
-        addToWatchlist(item.imdbID, item.type)
-        setWatch("watched")
-    }
-
-    const remove = () => {
-        removeFromWatchlist(item)
-        setWatch(null)
-    }
+    const { MOVIE, SERIES } = useContext(TypeContext)
+    const { watchlist} = useWatchlist();
+    const { watchHistory } = useWatchHistory();
 
     return (
         <MovieAndSeriesDetails>
             { item && (
                 <>
-                    <img src={item.poster}/>
+                    <img src={item.poster} alt={"Poster"}/>
                     <h3>{item.title}</h3>
                     <p id="tagline">{item.tagline}</p>
                     {(item.type === MOVIE) && <MovieInfo info={item}/>}
@@ -51,22 +42,28 @@ export default function MovieAndSeriesDetailsCard(){
                         <p>Number of episodes: {season.episode_count}</p>
                         <p>{season.air_date}</p>
                         <p>Overview: {season.overview}</p>
-                            <img src={"https://image.tmdb.org/t/p/w500" + season.poster_path}/>
+                            <img src={"https://image.tmdb.org/t/p/w500" + season.poster_path} alt={"Poster"}/>
                         </div>
                         ))}</div>}
                     {item.cast &&  <Cast castlist={item.cast}/>}
                     {item.crew &&  <Crew crewlist={item.crew}/>}
                     {item.de &&  (<div>
-                        <h3>Streamable at:</h3>
-                        <ProviderElement list={item.de.flatrate}/>
-                        <h3>Buy at:</h3>
-                        <ProviderElement list={item.de.buy}/>
+                            {item.de.flatrate && <>
+                            <h3>Streamable at:</h3>
+                            <ProviderElement list={item.de.flatrate}/>
+                            </>}
+                            {item.de.buy &&
+                            <>
+                            <h3>Buy at:</h3>
+                            <ProviderElement list={item.de.buy}/>
+                            </>}
                     </div>)}
-
+                    {item && <AddRemoveWatchButtons
+                        onWatchlist={watchlist.find(watchedItem => watchedItem.imdbID === item.imdbID)}
+                        onWatchHistory={watchHistory.find(watchedItem => watchedItem.imdbID === item.imdbID)}
+                        item={item}/>}
             </>)}
 
-            {!watch && <button onClick={add}>Add to watchlist</button>}
-            {watch && <button onClick={remove}>Remove from watchlist!</button>}
     </MovieAndSeriesDetails>
     )
 

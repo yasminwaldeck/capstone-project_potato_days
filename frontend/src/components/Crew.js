@@ -10,8 +10,8 @@ export default function Crew({crewlist}){
                 {crewlist.slice(0, 6).map((crew) => (
                     <div key={crew.id}>
                         <p>{crew.name}, {crew.department}</p>
-                        {crew.profile_path ? <img src={"https://image.tmdb.org/t/p/w500" + crew.profile_path}/>
-                        : <img src={Portrait}/>}
+                        {crew.profile_path ? <img src={"https://image.tmdb.org/t/p/w500" + crew.profile_path} alt={"Profile"}/>
+                        : <img src={Portrait} alt={"Alternative profile"}/>}
                     </div>
                 ))}
             </CrewCard>

@@ -1,8 +1,6 @@
 import MovieAndSeriesCard from "../components/MovieAndSeriesCard";
 import {useContext, useState} from "react";
 import TypeContext from "../context/TypeContext";
-import useOmdb from "../hooks/useOmdb";
-import useWatchlistByType from "../hooks/useWatchlistByType";
 import useWatchlist from "../hooks/useWatchlist";
 import useWatchHistory from "../hooks/useWatchHistory";
 import useWatchHistoryByType from "../hooks/useWatchHistoryByType";
@@ -25,7 +23,12 @@ export default function WatchHistoryPage(){
 
             {(type !== null) && (
                 watchHistoryItems.map((item) => (
-                    <MovieAndSeriesCard key={item.imdbID} item={item} onWatchlist={watchlist.find(watchedItem => watchedItem.imdbID === item.imdbID)} onWatchHistory={watchHistory.find(watchedItem => watchedItem.imdbID === item.imdbID)}/>
+                    <MovieAndSeriesCard
+                        key={item.imdbID}
+                        item={item}
+                        onWatchlist={watchlist.find(watchedItem => watchedItem.imdbID === item.imdbID)}
+                        onWatchHistory={watchHistory.find(watchedItem => watchedItem.imdbID === item.imdbID)}
+                    />
                 )))}
 
         </div>

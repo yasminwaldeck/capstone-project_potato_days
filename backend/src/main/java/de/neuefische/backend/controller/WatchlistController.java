@@ -33,4 +33,19 @@ public class WatchlistController {
     public void removeFromWatchlist(@RequestBody String imdbID){
         watchlistService.removeFromWatchlist(imdbID);
     }
+
+    @GetMapping("/name")
+    public String getRecommendedByFromWatchlist(@RequestParam String imdbID){
+        return watchlistService.getNameFromWatchlist(imdbID);
+    }
+
+    @PostMapping("/name")
+    public String addNameToWatchlist(@RequestBody MovieAndSeries itemToAdd){
+        return watchlistService.addNameToWatchlist(itemToAdd);
+    }
+
+    @DeleteMapping("/name")
+    public void removeNameFromWatchlist(@RequestParam String imdbID){
+        watchlistService.removeNameFromWatchlist(imdbID);
+    }
 }

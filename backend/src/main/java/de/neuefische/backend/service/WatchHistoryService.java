@@ -1,8 +1,9 @@
 package de.neuefische.backend.service;
 
-import de.neuefische.backend.model.MovieAndSeriesWatched;
+import de.neuefische.backend.model.MovieAndSeries;
 import de.neuefische.backend.model.OMDb.OmdbOverview;
-import de.neuefische.backend.repo.WatchHistoryRepo;
+import de.neuefische.backend.repo.MovieAndSeriesRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,32 +13,48 @@ import java.util.stream.Collectors;
 @Service
 public class WatchHistoryService {
 
-    private final WatchHistoryRepo watchHistoryRepo;
+    private final MovieAndSeriesRepo movieAndSeriesRepo;
     private final OmdbApiService omdbApiService;
 
-    public WatchHistoryService(WatchHistoryRepo watchHistoryRepo, OmdbApiService omdbApiService) {
-        this.watchHistoryRepo = watchHistoryRepo;
+    @Autowired
+    public WatchHistoryService(MovieAndSeriesRepo movieAndSeriesRepo, OmdbApiService omdbApiService) {
+        this.movieAndSeriesRepo = movieAndSeriesRepo;
         this.omdbApiService = omdbApiService;
     }
 
-    public OmdbOverview addToWatchHistory(MovieAndSeriesWatched itemToAdd){
-        watchHistoryRepo.save(itemToAdd);
-        return omdbApiService.getOverviewById(itemToAdd.getImdbID());
+    public OmdbOverview addToWatchHistory(MovieAndSeries itemToAdd){
+        MovieAndSeries movieAndSeries = movieAndSeriesRepo.findByImdbID(itemToAdd.getImdbID());
+        if(movieAndSeries == null) {
+            itemToAdd.setWatchHistory(true);
+            movieAndSeriesRepo.save(itemToAdd);
+        } else {
+            movieAndSeries.setWatchHistory(true);
+            movieAndSeriesRepo.save(movieAndSeries);
+        }
+        return omdbApiService.getOverview(movieAndSeriesRepo.findByImdbID(itemToAdd.getImdbID()));
     }
 
     public void removeFromWatchHistory(String imdbId){
-        watchHistoryRepo.deleteByImdbID(imdbId);
+        MovieAndSeries movieAndSeries = movieAndSeriesRepo.findByImdbID(imdbId);
+        if(movieAndSeries != null) {
+            if (!movieAndSeries.isWatchlist()) {
+                movieAndSeriesRepo.deleteByImdbID(imdbId);
+            } else {
+                movieAndSeries.setWatchHistory(false);
+                movieAndSeriesRepo.save(movieAndSeries);
+            }
+        }
     }
 
     public List<OmdbOverview> getWatchHistoryByType(Optional<String> type){
         if(type.isEmpty()){
-            return watchHistoryRepo.findAll().stream()
-                    .map(item -> omdbApiService.getOverviewById(item.getImdbID()))
+            return movieAndSeriesRepo.findMovieAndSeriesByWatchHistoryIsTrue().stream()
+                    .map(item -> omdbApiService.getOverview(item))
                     .collect(Collectors.toList());
         }
-        return watchHistoryRepo.findByType(type.get())
+        return movieAndSeriesRepo.findMovieAndSeriesByWatchHistoryIsTrueAndType(type.get())
                 .stream()
-                .map(item -> omdbApiService.getOverviewById(item.getImdbID()))
+                .map(item -> omdbApiService.getOverview(item))
                 .collect(Collectors.toList());
     }
 

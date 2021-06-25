@@ -108,7 +108,7 @@ public class MovieAndSeriesDetailServiceTest {
                 .build();
 
         when(mockedTemplate.getForEntity(
-                "https://api.themoviedb.org/3/movie/id?api_key=" + tmdbConfig.getKey(), TmdbDto.class))
+                "https://api.themoviedb.org/3/movie/id?api_key=" + tmdbConfig.getKey() + "&append_to_response=external_ids", TmdbDto.class))
                 .thenReturn(ResponseEntity.ok(tmdbDto));
 
         //FOR TmdbOTTbyCountryResponseDto

@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 
-export default function useOmdb(id){
+export default function useDetails(id){
     const [item, setItem] = useState({});
 
     useEffect(() => {

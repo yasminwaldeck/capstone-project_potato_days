@@ -4,6 +4,8 @@ import {ReactComponent as Add} from "../resources/plus-lg.svg";
 import {ReactComponent as Remove} from "../resources/dash-lg.svg";
 import styled from "styled-components";
 import useWatchHistory from "../hooks/useWatchHistory";
+import RecommendedInputElement from "./RecommendedInputElement";
+import useRecommendedBy from "../hooks/useRecommendedBy";
 
 export default function AddRemoveWatchButtons({item, onWatchlist, onWatchHistory}){
 
@@ -11,6 +13,7 @@ export default function AddRemoveWatchButtons({item, onWatchlist, onWatchHistory
     const [watchHistory, setWatchHistory] = useState(onWatchHistory)
     const { addToWatchlist, removeFromWatchlist } = useWatchlist();
     const { addToHistory, removeFromHistory } = useWatchHistory();
+    const { name } = useRecommendedBy(item.imdbID)
 
     useEffect(() => {setWatch(onWatchlist)
         setWatchHistory(onWatchHistory)},[onWatchlist, onWatchHistory])
@@ -37,6 +40,7 @@ export default function AddRemoveWatchButtons({item, onWatchlist, onWatchHistory
 
 return (
     <Buttons>
+        {watch && <RecommendedInputElement imdbID={item.imdbID} preSetName={name}/>}
         {!watch && <button className={"btn btn-add"} onClick={addList}> <Add class="icon"/> Add to watchlist</button>}
         {watch && <button className="btn btn-remove" onClick={removeList}><Remove/> Remove from watchlist</button>}
         {!watchHistory && <button className="btn btn-add" onClick={addHistory}> <Add class="icon"/> Add to watchhistory</button>}

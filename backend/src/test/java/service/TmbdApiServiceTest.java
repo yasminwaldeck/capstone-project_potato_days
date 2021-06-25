@@ -72,7 +72,7 @@ public class TmbdApiServiceTest {
                 .build();
 
         when(mockedTemplate.getForEntity(
-                "https://api.themoviedb.org/3/movie/id?api_key=" + tmdbConfig.getKey(), TmdbDto.class))
+                "https://api.themoviedb.org/3/movie/id?api_key=" + tmdbConfig.getKey() + "&append_to_response=external_ids", TmdbDto.class))
                 .thenReturn(ResponseEntity.ok(response));
 
         //WHEN
@@ -83,7 +83,7 @@ public class TmbdApiServiceTest {
 
         assertThat(actual, is(expected));
         verify(mockedTemplate).getForEntity(
-                ("https://api.themoviedb.org/3/movie/id?api_key=" + tmdbConfig.getKey()),
+                ("https://api.themoviedb.org/3/movie/id?api_key=" + tmdbConfig.getKey() + "&append_to_response=external_ids"),
                 TmdbDto.class);
 
     }
@@ -139,7 +139,7 @@ public class TmbdApiServiceTest {
                 .build();
 
         when(mockedTemplate.getForEntity(
-                "https://api.themoviedb.org/3/tv/id?api_key=" + tmdbConfig.getKey(), TmdbDto.class))
+                "https://api.themoviedb.org/3/tv/id?api_key=" + tmdbConfig.getKey() + "&append_to_response=external_ids", TmdbDto.class))
                 .thenReturn(ResponseEntity.ok(tmdbDto));
 
         //WHEN
@@ -150,7 +150,7 @@ public class TmbdApiServiceTest {
 
         assertThat(actual, is(expected));
         verify(mockedTemplate).getForEntity(
-                ("https://api.themoviedb.org/3/tv/id?api_key=" + tmdbConfig.getKey()),
+                ("https://api.themoviedb.org/3/tv/id?api_key=" + tmdbConfig.getKey() + "&append_to_response=external_ids"),
                 TmdbDto.class);
 
     }

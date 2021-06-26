@@ -36,13 +36,13 @@ public class WatchlistServiceTest {
                 "https://www.omdbapi.com/?apikey=" + omDbConfig.getKey() + "&i=imdbID", OmdbOverviewDto.class))
                 .thenReturn(ResponseEntity.ok(OmdbOverviewDto.builder().imdbID("imdbID").build()));
 
-        when(movieAndSeriesRepo.findByImdbID("imdbID")).thenReturn(MovieAndSeries.builder().imdbID("imdbID").watchHistory(true).watchlist(false).build());
+        when(movieAndSeriesRepo.findByImdbID("imdbID")).thenReturn(MovieAndSeries.builder().imdbID("imdbID").type("type").watchHistory(true).watchlist(false).build());
 
         //WHEN
         watchlistService.addToWatchlist(itemToAdd);
 
         //THEN
-        verify(movieAndSeriesRepo).save(MovieAndSeries.builder().imdbID("imdbID").type("type").watchlist(true).build());
+        verify(movieAndSeriesRepo).save(MovieAndSeries.builder().imdbID("imdbID").type("type").watchHistory(true).watchlist(true).build());
     }
 
     @Test

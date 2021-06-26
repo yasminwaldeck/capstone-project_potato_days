@@ -9,7 +9,10 @@ export default function useStats(){
     useEffect( () => {
         axios.get("/api/watchlist/name/stats")
             .then(response => response.data)
-            .then((response) => {setStats(response); console.log(response)})
+            .then((response) => {
+                setStats(response);
+            console.log(response);}
+            )
             .catch((error) => console.error(error.message));
     }, [])
 

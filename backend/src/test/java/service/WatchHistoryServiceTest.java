@@ -35,7 +35,7 @@ public class WatchHistoryServiceTest {
                 "https://www.omdbapi.com/?apikey=" + omDbConfig.getKey() + "&i=imdbID", OmdbOverviewDto.class))
                 .thenReturn(ResponseEntity.ok(OmdbOverviewDto.builder().imdbID("imdbID").build()));
 
-        when(movieAndSeriesRepo.findByImdbID("imdbID")).thenReturn(MovieAndSeries.builder().imdbID("imdbID").watchHistory(true).watchlist(false).build());
+        when(movieAndSeriesRepo.findByImdbID("imdbID")).thenReturn(MovieAndSeries.builder().imdbID("imdbID").type("type").watchHistory(true).watchlist(false).build());
 
         //WHEN
         watchHistoryService.addToWatchHistory(itemToAdd);

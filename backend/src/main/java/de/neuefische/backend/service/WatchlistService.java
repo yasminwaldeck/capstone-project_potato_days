@@ -98,7 +98,9 @@ public class WatchlistService {
                 }
             }
         }
-        System.out.println(new ArrayList<>(stats.values()));
-        return new ArrayList<>(stats.values());
+        List<Stats> result = new ArrayList<>(stats.values());
+        result.sort(Comparator.comparing(Stats::getNumber));
+        Collections.reverse(result);
+        return result;
     }
 }

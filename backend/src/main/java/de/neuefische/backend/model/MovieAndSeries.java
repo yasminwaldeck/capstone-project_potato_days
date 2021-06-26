@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
@@ -13,7 +14,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection="moviesAndSeries")
 public class MovieAndSeries {
 
-    private String type;
+    @Id
     private String imdbID;
+    private String type;
     private String recommendedBy;
+    private boolean watchHistory;
+    private boolean watchlist;
 }

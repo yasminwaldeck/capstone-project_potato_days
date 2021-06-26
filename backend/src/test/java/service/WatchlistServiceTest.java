@@ -4,7 +4,7 @@ import de.neuefische.backend.config.OMDbConfig;
 import de.neuefische.backend.model.*;
 import de.neuefische.backend.model.OMDb.OmdbOverview;
 import de.neuefische.backend.model.OMDb.OmdbOverviewDto;
-import de.neuefische.backend.repo.WatchlistRepo;
+import de.neuefische.backend.repo.MovieAndSeriesRepo;
 import de.neuefische.backend.service.OmdbApiService;
 import de.neuefische.backend.service.WatchlistService;
 import org.junit.jupiter.api.Test;
@@ -21,11 +21,11 @@ import static org.mockito.Mockito.*;
 
 public class WatchlistServiceTest {
 
-    private final WatchlistRepo watchlistRepo = mock(WatchlistRepo.class);
+    private final MovieAndSeriesRepo movieAndSeriesRepo = mock(MovieAndSeriesRepo.class);
     private final OMDbConfig omDbConfig = new OMDbConfig();
     private final RestTemplate mockedTemplate = mock(RestTemplate.class);
     private final OmdbApiService omdbApiService = new OmdbApiService(omDbConfig, mockedTemplate);
-    private final WatchlistService watchlistService = new WatchlistService(watchlistRepo, omdbApiService);
+    private final WatchlistService watchlistService = new WatchlistService(movieAndSeriesRepo, omdbApiService);
 
     @Test
     public void addMovieToDatabaseTest(){
@@ -36,29 +36,45 @@ public class WatchlistServiceTest {
                 "https://www.omdbapi.com/?apikey=" + omDbConfig.getKey() + "&i=imdbID", OmdbOverviewDto.class))
                 .thenReturn(ResponseEntity.ok(OmdbOverviewDto.builder().imdbID("imdbID").build()));
 
+        when(movieAndSeriesRepo.findByImdbID("imdbID")).thenReturn(MovieAndSeries.builder().imdbID("imdbID").type("type").watchHistory(true).watchlist(false).build());
+
         //WHEN
         watchlistService.addToWatchlist(itemToAdd);
 
         //THEN
-        verify(watchlistRepo).save(MovieAndSeries.builder().imdbID("imdbID").type("type").build());
+        verify(movieAndSeriesRepo).save(MovieAndSeries.builder().imdbID("imdbID").type("type").watchHistory(true).watchlist(true).build());
     }
 
     @Test
     public void deleteMovieToDatabaseTest(){
         //GIVEN
 
+        when(movieAndSeriesRepo.findByImdbID("imdbID")).thenReturn(MovieAndSeries.builder().imdbID("imdbID").watchHistory(false).watchlist(true).build());
+
 
         //WHEN
         watchlistService.removeFromWatchlist("imdbID");
 
         //THEN
-        verify(watchlistRepo).deleteByImdbID("imdbID");
+        verify(movieAndSeriesRepo).deleteByImdbID("imdbID");
+    }
+
+    @Test
+    public void updateInsteadOfDeletingMovieToDatabaseTest(){
+        //GIVEN
+        when(movieAndSeriesRepo.findByImdbID("imdbID")).thenReturn(MovieAndSeries.builder().imdbID("imdbID").watchHistory(true).watchlist(true).build());
+
+        //WHEN
+        watchlistService.removeFromWatchlist("imdbID");
+
+        //THEN
+        verify(movieAndSeriesRepo).save(MovieAndSeries.builder().imdbID("imdbID").watchHistory(true).watchlist(false).build());
     }
 
     @Test
     public void getWatchlistByTypeShouldReturnWatchlistByType() {
         // GIVEN
-        when(watchlistRepo.findByType("type")).thenReturn(List.of(
+        when(movieAndSeriesRepo.findMovieAndSeriesByWatchlistIsTrueAndType("type")).thenReturn(List.of(
                 MovieAndSeries.builder().imdbID("id1").type("type").build(),
                 MovieAndSeries.builder().imdbID("id2").type("type").build()
         ));
@@ -90,7 +106,7 @@ public class WatchlistServiceTest {
                         "title", "year", "id2", "poster", "type"
                 )
         )));
-        verify(watchlistRepo).findByType("type");
+        verify(movieAndSeriesRepo).findMovieAndSeriesByWatchlistIsTrueAndType("type");
     }
 
 

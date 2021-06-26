@@ -35,8 +35,6 @@ public class MovieAndSeriesDetailsService {
         TmdbDto tmdbDto = tmdbApiService.getDetails(tmdbId, omdbDetails.getType());
         TmdbOTTbyCountryResponseDto tmdbOTTbyCountryResponseDto = tmdbApiService.getOTT(tmdbId, omdbDetails.getType());
         TmdbCreditDto tmdbCreditDto = tmdbApiService.getCredits(tmdbId, omdbDetails.getType());
-
-
         MovieAndSeriesDetails movieAndSeriesDetails = new MovieAndSeriesDetails();
 
         BeanUtils.copyProperties(omdbDetails, movieAndSeriesDetails);

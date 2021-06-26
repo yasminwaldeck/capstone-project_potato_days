@@ -1,6 +1,7 @@
 package de.neuefische.backend.service;
 
 import de.neuefische.backend.config.OMDbConfig;
+import de.neuefische.backend.model.MovieAndSeries;
 import de.neuefische.backend.model.OMDb.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -71,6 +73,25 @@ public class OmdbApiService {
                 .build();
     }
 
+    public OmdbOverview getOverview(MovieAndSeries movieAndSeries){
+
+        String url = BASE_URL_WITH_KEY_ANNOTATION + omdbConfig.getKey() + "&i=" + movieAndSeries.getImdbID();
+        ResponseEntity<OmdbOverviewDto> response = restTemplate.getForEntity(url, OmdbOverviewDto.class);
+
+        if(response.getBody() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        } else {
+            OmdbOverviewDto responseBody = response.getBody();
+            return OmdbOverview.builder()
+                    .title(responseBody.getTitle())
+                    .year(responseBody.getYear())
+                    .imdbID(responseBody.getImdbID())
+                    .poster(responseBody.getPoster())
+                    .type(responseBody.getType())
+                    .build();
+        }
+    }
+
     public OmdbOverview getOverviewById(String imdbID){
 
         String url = BASE_URL_WITH_KEY_ANNOTATION + omdbConfig.getKey() + "&i=" + imdbID;
@@ -81,11 +102,11 @@ public class OmdbApiService {
         }
         OmdbOverviewDto responseBody = response.getBody();
         return OmdbOverview.builder()
-                        .title(responseBody.getTitle())
-                        .year(responseBody.getYear())
-                        .imdbID(responseBody.getImdbID())
-                        .poster(responseBody.getPoster())
-                        .type(responseBody.getType())
-                        .build();
+                .title(responseBody.getTitle())
+                .year(responseBody.getYear())
+                .imdbID(responseBody.getImdbID())
+                .poster(responseBody.getPoster())
+                .type(responseBody.getType())
+                .build();
     }
 }

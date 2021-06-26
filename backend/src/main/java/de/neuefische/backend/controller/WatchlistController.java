@@ -2,11 +2,13 @@ package de.neuefische.backend.controller;
 
 import de.neuefische.backend.model.MovieAndSeries;
 import de.neuefische.backend.model.OMDb.OmdbOverview;
+import de.neuefische.backend.model.Stats;
 import de.neuefische.backend.service.WatchlistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -32,5 +34,25 @@ public class WatchlistController {
     @DeleteMapping
     public void removeFromWatchlist(@RequestBody String imdbID){
         watchlistService.removeFromWatchlist(imdbID);
+    }
+
+    @GetMapping("/name")
+    public String getRecommendedByFromWatchlist(@RequestParam String imdbID){
+        return watchlistService.getNameFromWatchlist(imdbID);
+    }
+
+    @GetMapping("/name/stats")
+    public List<Stats> getRecommendedByStats(){
+        return watchlistService.getRecommendedByStats();
+    }
+
+    @PostMapping("/name")
+    public String addNameToWatchlist(@RequestBody MovieAndSeries itemToAdd){
+        return watchlistService.addNameToWatchlist(itemToAdd);
+    }
+
+    @DeleteMapping("/name")
+    public void removeNameFromWatchlist(@RequestParam String imdbID){
+        watchlistService.removeNameFromWatchlist(imdbID);
     }
 }

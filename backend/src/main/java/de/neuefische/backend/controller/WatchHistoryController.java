@@ -1,5 +1,6 @@
 package de.neuefische.backend.controller;
 
+import de.neuefische.backend.model.MovieAndSeries;
 import de.neuefische.backend.model.MovieAndSeriesWatched;
 import de.neuefische.backend.model.OMDb.OmdbOverview;
 import de.neuefische.backend.service.WatchHistoryService;
@@ -20,17 +21,17 @@ public class WatchHistoryController {
     }
 
     @GetMapping
-    public List<OmdbOverview> getWatchlistByType(@RequestParam Optional<String> type){
+    public List<OmdbOverview> getWatchHistoryType(@RequestParam Optional<String> type){
         return watchHistoryService.getWatchHistoryByType(type);
     }
 
     @PostMapping
-    public OmdbOverview addToWatchlist(@RequestBody MovieAndSeriesWatched itemToAdd){
+    public OmdbOverview addToWatchHistory(@RequestBody MovieAndSeries itemToAdd){
         return watchHistoryService.addToWatchHistory(itemToAdd);
     }
 
     @DeleteMapping
-    public void removeFromWatchlist(@RequestBody String imdbID){
+    public void removeFromWatchHistory(@RequestBody String imdbID){
         watchHistoryService.removeFromWatchHistory(imdbID);
     }
 }

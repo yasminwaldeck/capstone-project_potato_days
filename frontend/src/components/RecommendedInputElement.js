@@ -16,36 +16,34 @@ export default function RecommendedInputElement({imdbID, preSetName}){
     return(
         <RecommendedField>
 
+            <p>Recommended by:</p>
             {
                 ((!sent && preSetName === "") || (deleted)) &&
-                <div>
-                    <p>Recommended by:</p>
-                <input type="text"
-                value={input}
-                onChange={(event) => setInput(event.target.value)}/>
-                <button onClick={() => {
-                    setRecommendedBy(imdbID, input);
-                    setSent(true);
-                    setDeleted(false);
-                    setName(input)
-                    }}
-                        className={"btn add"}
-                >
-                    <Add id="addicon"/>
-                </button>
+                <div id={"input"}>
+                    <input type="text"
+                    value={input}
+                    onChange={(event) => setInput(event.target.value)}/>
+                    <button onClick={() => {
+                        setRecommendedBy(imdbID, input);
+                        setSent(true);
+                        setDeleted(false);
+                        setName(input)
+                        }} className={"btn_small add"}>
+                        <Add/>
+                    </button>
                 </div>
             }
             {
                 ((preSetName !== "" || name !== "")  || sent ) && !deleted &&
-                <div>
-            {sent ? <p>Recommended by: {input}</p> : <p>Recommended by: {preSetName}</p>}
-                <button onClick={() => {
-                    setSent(false);
-                    setDeleted(true);
-                    deleteRecommendedBy(imdbID);}}
-                    className={"btn remove"}>
-                    <Remove id={"icon"}/>
-                </button>
+                <div  id={"text"}>
+                    {sent ? <p>{input}</p> : <p>{preSetName}</p>}
+                    <button onClick={() => {
+                        setSent(false);
+                        setDeleted(true);
+                        deleteRecommendedBy(imdbID);}}
+                        className={"btn_small remove"}>
+                        <Remove/>
+                    </button>
                 </div>
             }
 
@@ -55,7 +53,7 @@ export default function RecommendedInputElement({imdbID, preSetName}){
 
 
 const RecommendedField = styled.div`
-  .btn {
+  .btn_small {
     border: none;
     font-size: inherit;
     color: white;
@@ -63,7 +61,7 @@ const RecommendedField = styled.div`
     height: 20px;
     width: 20px;
     padding: 5px;
-    margin: 15px auto 15px auto;
+    margin: 15px auto 15px 10px;
     text-transform: uppercase;
     font-weight: 700;
     outline: none;
@@ -102,10 +100,21 @@ const RecommendedField = styled.div`
     top: 2px;
   }
   
-  .icon{
-    width: 15px;
-    height: auto;
+  #text{
+    display: inline-flex;
+    font-size: 20px;
+    align-items: center;
+    height: 5vh;
   }
 
-  
+  #input{
+    display: inline-flex;
+    align-items: center;
+    height: 5vh;
+    
+    input {
+      height: 30px;
+      width: 50vw;
+    }
+  }
 `

@@ -5,7 +5,6 @@ export default function useWatchHistory(){
 
     const [watchHistory, setWatchHistory] = useState([]);
 
-
     useEffect( () => {
         axios.get("/api/watchhistory/")
             .then(response => response.data)

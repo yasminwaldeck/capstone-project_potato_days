@@ -69,25 +69,29 @@ const Nav = styled.nav`
 
   #menuToggle span:first-child {
     transform-origin: 0% 0%;
+    background: #ffffff;
   }
 
   #menuToggle span:nth-last-child(2) {
     transform-origin: 0% 100%;
+    background: #ffffff;
   }
 
   #menuToggle input:checked ~ span {
     opacity: 1;
     transform: rotate(45deg) translate(-3px, -1px);
-    background: #36383F;
+    background: #ffffff;
   }
 
   #menuToggle input:checked ~ span:nth-last-child(3) {
     opacity: 0;
     transform: rotate(0deg) scale(0.2, 0.2);
+    background: #ffffff;
   }
 
   #menuToggle input:checked ~ span:nth-last-child(2) {
     transform: rotate(-45deg) translate(0, -1px);
+    background: #ffffff;
   }
 
   #menu {
@@ -97,7 +101,7 @@ const Nav = styled.nav`
     box-shadow: 0 0 10px #85888C;
     margin: -50px 0 0 -50px;
     padding: 125px 50px 50px;
-    background-color: #F5F6FA;
+    background-color: #454546;
     -webkit-font-smoothing: antialiased;
     transform-origin: 0% 0%;
     transform: translate(-100%, 0);
@@ -117,11 +121,11 @@ const Nav = styled.nav`
   const StyledNavLink = styled(NavLink)`
     text-decoration: none;
     font-size: 3vh;
-    color: black;  
+    color: #eae9f1;  
     margin-left: 10vw;
     
     &:focus, &:hover, &:visited, &:link, &:active {
         text-decoration: none;
-      color: black;
+      color: #eae9f1;
     
     `

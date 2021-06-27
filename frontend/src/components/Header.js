@@ -18,7 +18,7 @@ export default function Header(){
 const Title = styled.div`
   margin: 0 0 5vh;
   width: 100%;
-  background: #AD343E;
+  background: #454546;
   color: white;
   display: grid;
   align-items: center;

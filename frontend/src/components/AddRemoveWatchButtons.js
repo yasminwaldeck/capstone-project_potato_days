@@ -41,9 +41,9 @@ export default function AddRemoveWatchButtons({item, onWatchlist, onWatchHistory
 return (
     <Buttons>
         {watch && <RecommendedInputElement imdbID={item.imdbID} preSetName={name}/>}
-        {!watch && <button className={"btn btn-add"} onClick={addList}> <Add class="icon"/> Add to watchlist</button>}
+        {!watch && <button className={"btn btn-add"} onClick={addList}> <Add className="icon"/> Add to watchlist</button>}
         {watch && <button className="btn btn-remove" onClick={removeList}><Remove/> Remove from watchlist</button>}
-        {!watchHistory && <button className="btn btn-add" onClick={addHistory}> <Add class="icon"/> Add to watchhistory</button>}
+        {!watchHistory && <button className="btn btn-add" onClick={addHistory}> <Add className="icon"/> Add to watchhistory</button>}
         {watchHistory && <button className="btn btn-remove" onClick={removeHistory}><Remove/> Remove from watchhistory</button>}
     </Buttons>
 )

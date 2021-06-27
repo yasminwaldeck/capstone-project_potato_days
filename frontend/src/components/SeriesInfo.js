@@ -13,8 +13,8 @@ export default function SeriesInfo({info}){
                         <div><p>Country:</p><p>{info.country}</p></div>
                     </div>
                     <div className={"episodeInfo"}>
-                        <div><p>Seasons:</p><p>{info.number_of_episodes}</p></div>
-                        <div><p>Episodes:</p><p>{info.number_of_seasons}</p></div>
+                        <div><p>Seasons:</p><p>{info.number_of_seasons}</p></div>
+                        <div><p>Episodes:</p><p>{info.number_of_episodes}</p></div>
                     </div>
                     {info.first_air_date && <p>First aired: {info.first_air_date}</p>}
                     {info.last_air_date && <p>Last aired: {info.last_air_date}</p>}

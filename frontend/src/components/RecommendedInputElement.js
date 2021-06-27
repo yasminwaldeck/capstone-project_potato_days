@@ -65,7 +65,6 @@ const RecommendedField = styled.div`
     text-transform: uppercase;
     font-weight: 700;
     outline: none;
-    position: relative;
     -webkit-transition: all 0.3s;
     -moz-transition: all 0.3s;
     transition: all 0.3s;

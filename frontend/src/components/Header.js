@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import {NavLink} from "react-router-dom";
 import Menu from "./Menu";
+import  Potato from "../resources/tenor.gif"
 
 export default function Header(){
     return(
@@ -9,6 +10,7 @@ export default function Header(){
             <h1>
                 <StyledNavLink to={"/"} style={{ textDecoration: 'none' }}>POTATO DAYS</StyledNavLink>
             </h1>
+            <img src={Potato}/>
         </Title>
     )
 
@@ -25,7 +27,13 @@ const Title = styled.div`
   display: grid;
   grid-template-columns: 20vw auto 20vw;
   align-items: center;
+  align-content: center;
   justify-items: center;
+  img{
+    width: 60px;
+    height: auto;
+    transform: scaleX(-1);
+  }
 `
 
 const StyledNavLink = styled(NavLink)`

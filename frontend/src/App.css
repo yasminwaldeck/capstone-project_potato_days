@@ -1,5 +1,20 @@
 .App, html {
   text-align: center;
-  background-color: #FDF0D5;
+  background-color: #2c2c2d;
   min-height: 100vh;
+  color: #eae9f1;
+}
+
+input {
+  background-color: #555556;
+  border: #85888C;
+  border: 1px;
+  border-radius: 4px;
+  color: #eae9f1;
+  font-size: 20px;
+  text-align: center;
+}
+
+input:focus {
+  outline: none !important;
 }

@@ -3,7 +3,7 @@ import MovieAndSeriesCard from "../components/MovieAndSeriesCard";
 import TypeContext from "../context/TypeContext";
 import useWatchlist from "../hooks/useWatchlist";
 import useSearch from "../hooks/useSearch";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import useWatchHistory from "../hooks/useWatchHistory";
 
 export default function SearchPage(){

@@ -7,7 +7,7 @@ import useWatchHistoryByType from "../hooks/useWatchHistoryByType";
 
 export default function WatchHistoryPage(){
     const [type, setType] = useState();
-    const {MOVIE, SERIES, BOTH} = useContext(TypeContext)
+    const {MOVIE, SERIES} = useContext(TypeContext)
     const { watchHistoryItems, setWatchHistoryItems } = useWatchHistoryByType(type);
     const { watchHistory } = useWatchHistory();
     const { watchlist } = useWatchlist();

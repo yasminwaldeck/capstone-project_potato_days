@@ -3,12 +3,13 @@ import SearchPage from "./pages/SearchPage";
 import Header from "./components/Header";
 import TypeProvider from "./context/TypeProvider";
 import {Switch, Route, BrowserRouter as Router} from "react-router-dom";
-import MovieAndSeriesDetailsCard from "./components/MovieAndSeriesDetailsCard";
+import MovieAndSeriesDetailsPage from "./pages/MovieAndSeriesDetailsPage";
 import LandingPage from "./pages/LandingPage";
 import WatchlistPage from "./pages/WatchlistPage";
 import TrendingMovieAndSeriesPage from "./pages/TrendingMovieAndSeriesPage";
 import WatchHistoryPage from "./pages/WatchHistoryPage";
 import StatsPage from "./pages/StatsPage";
+import SeasonPage from "./pages/SeasonPage";
 
 function App() {
   return (
@@ -20,8 +21,11 @@ function App() {
                     <Route path={"/search"}>
                         <SearchPage/>
                     </Route>
-                    <Route path={"/details/:id"}>
-                        <MovieAndSeriesDetailsCard/>
+                    <Route path={"/details/:imdbid/:id/:season"} exact>
+                        <SeasonPage/>
+                    </Route>
+                    <Route path={"/details/:id"} exact>
+                        <MovieAndSeriesDetailsPage/>
                     </Route>
                     <Route path={"/watchlist"}>
                         <WatchlistPage/>

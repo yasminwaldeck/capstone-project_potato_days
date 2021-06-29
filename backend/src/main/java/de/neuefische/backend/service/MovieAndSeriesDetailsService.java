@@ -2,13 +2,11 @@ package de.neuefische.backend.service;
 
 import de.neuefische.backend.model.MovieAndSeriesDetails;
 import de.neuefische.backend.model.OMDb.OmdbDetails;
-import de.neuefische.backend.model.TMDb.TmdbCreditDto;
-import de.neuefische.backend.model.TMDb.TmdbDto;
-import de.neuefische.backend.model.TMDb.TmdbOTTDto;
-import de.neuefische.backend.model.TMDb.TmdbOTTbyCountryResponseDto;
+import de.neuefische.backend.model.TMDb.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 
 @Service
@@ -44,5 +42,9 @@ public class MovieAndSeriesDetailsService {
 
         return movieAndSeriesDetails;
 
+    }
+
+    public Season getEpisodes(@PathVariable String id, String season){
+        return tmdbApiService.getEpisodes(id, season);
     }
 }

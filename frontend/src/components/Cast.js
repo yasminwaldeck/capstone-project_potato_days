@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import Portrait from "../resources/Portrait_Placeholder.png";
 
 export default function Cast({castlist}) {

@@ -2,17 +2,18 @@ import { useParams } from "react-router-dom";
 import useDetails from "../hooks/useDetails";
 import useWatchlist from "../hooks/useWatchlist";
 import {useContext} from "react";
-import Cast from "./Cast";
-import Crew from "./Crew";
-import ProviderElement from "./ProviderElement";
-import styled from "styled-components";
-import MovieInfo from "./MovieInfo";
+import Cast from "../components/Cast";
+import Crew from "../components/Crew";
+import ProviderElement from "../components/ProviderElement";
+import styled from "styled-components/macro";
+import MovieInfo from "../components/MovieInfo";
 import TypeContext from "../context/TypeContext";
-import SeriesInfo from "./SeriesInfo";
-import AddRemoveWatchButtons from "./AddRemoveWatchButtons";
+import SeriesInfo from "../components/SeriesInfo";
+import SeasonCard from "../components/SeasonCard";
+import AddRemoveWatchButtons from "../components/AddRemoveWatchButtons";
 import useWatchHistory from "../hooks/useWatchHistory";
 
-export default function MovieAndSeriesDetailsCard() {
+export default function MovieAndSeriesDetailsPage() {
 
     const {id} = useParams();
     const {item} = useDetails(id);
@@ -35,17 +36,12 @@ export default function MovieAndSeriesDetailsCard() {
                             <p key={genre.id}>{genre.name}</p>
                         ))}</div>
                     </>}
-                    {item.in_production && <p>In Production!</p>}
 
-                    {item.seasons && <div>Seasons: {item.seasons.map((season) => (
-                        <div key={season.id}>
-                            <p>Season {season.season_number}: {season.name}</p>
-                            <p>Number of episodes: {season.episode_count}</p>
-                            <p>{season.air_date}</p>
-                            <p>Overview: {season.overview}</p>
-                            <img src={"https://image.tmdb.org/t/p/w500" + season.poster_path} alt={"Poster"}/>
-                        </div>
-                    ))}</div>}
+                    {item.seasons && <div>
+                        <h3>Seasons</h3>
+                        {item.seasons.map((season) => (
+                            <SeasonCard season={season} tmdbid={item.id} key={season.id}/>
+                        ))}</div>}
                     {item.cast && <Cast castlist={item.cast}/>}
                     {item.crew && <Crew crewlist={item.crew}/>}
                     {item.de && (<div>

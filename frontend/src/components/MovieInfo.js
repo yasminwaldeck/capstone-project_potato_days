@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import Ratings from "./Ratings";
 
 export default function MovieInfo({info}){
@@ -14,6 +14,7 @@ export default function MovieInfo({info}){
                 {info.release_date && <p>Released: {info.release_date}</p>}
                 <h3>Plot:</h3>
                 <p>{info.overview}</p>
+                {info.in_production && <p>In Production!</p>}
                 <Ratings info={info.ratings}/>
             </Info>)}
 

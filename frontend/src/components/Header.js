@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import {NavLink} from "react-router-dom";
 import Menu from "./Menu";
 import  Potato from "../resources/tenor.gif"
@@ -8,7 +8,7 @@ export default function Header(){
         <Title>
             <Menu/>
             <h1>
-                <StyledNavLink to={"/"} style={{ textDecoration: 'none' }}>POTATO DAYS</StyledNavLink>
+                <StyledNavLink to={"/"}>POTATO DAYS</StyledNavLink>
             </h1>
             <img src={Potato}/>
         </Title>

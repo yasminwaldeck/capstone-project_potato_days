@@ -1,6 +1,5 @@
 import {NavLink} from "react-router-dom";
-import styled from 'styled-components'
-import {useState} from "react";
+import styled from 'styled-components/macro'
 
 export default function Menu(){
 

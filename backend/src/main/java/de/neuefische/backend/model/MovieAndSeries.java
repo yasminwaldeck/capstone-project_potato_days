@@ -25,4 +25,5 @@ public class MovieAndSeries {
     private boolean watching;
     private String username;
     private List<Episode> watchedEpisodes;
+    private List<Progress> progress;
 }

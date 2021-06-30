@@ -1,7 +1,10 @@
 import Default from "../resources/couchpotato.jpg";
 import styled from "styled-components/macro";
+import useWatchHistoryEpisodes from "../hooks/useWatchHistoryEpisodes";
+import {useParams} from "react-router-dom";
 
-export default function EpisodeCard({episode}){
+export default function EpisodeCard({episode, addEpisodeToHistory, removeEpisodeFromHistory, onWatchHistory}){
+    const {imdbid} = useParams();
 
     return (
         <Episode>
@@ -13,7 +16,9 @@ export default function EpisodeCard({episode}){
                 <div id={"details"}>
                     {episode.name ? <h3>{episode.name}</h3> : <h3>Episode {episode.episode_number}</h3>}
                     <p>{episode.air_date}</p>
-                    <button>Add to watch history</button>
+                    {onWatchHistory ?
+                    <button onClick={() => removeEpisodeFromHistory(imdbid, episode.season_number, episode.episode_number)}>Remove from watch history</button> :
+                        <button onClick={() => addEpisodeToHistory(imdbid, episode.season_number, episode.episode_number)}>Add to watch history</button>}
                 </div>
             </div>
             {episode.overview &&

@@ -35,33 +35,27 @@ public class WatchHistoryController {
         watchHistoryService.removeFromWatchHistory(imdbID);
     }
 
-//    @GetMapping
-//    public List<OmdbOverview> getWatchHistorySeason(@RequestParam String season){
-//        return watchHistoryService.getWatchHistoryByType(type);
-//    }
-//
-//    @PostMapping
-//    public OmdbOverview addToWatchHistorySeason(@RequestBody MovieAndSeries itemToAdd){
-//        return watchHistoryService.addToWatchHistory(itemToAdd);
-//    }
-//
-//    @DeleteMapping
-//    public void removeFromWatchHistorySeason(@RequestBody String imdbID){
-//        watchHistoryService.removeFromWatchHistory(imdbID);
-//    }
-
-
-    @GetMapping
-    public List<Episode> getWatchHistoryEpisodes(@RequestParam String imdbId, @RequestParam String season){
+    @GetMapping("/episode/{imdbId}/season/{season}")
+    public List<Episode> getWatchHistoryEpisodes(@PathVariable String imdbId, @PathVariable String season){
         return watchHistoryService.getWatchHistoryEpisodes(imdbId, season);
     }
 
-    @PostMapping
+    @GetMapping("/episode/{imdbId}/{id}/season/{season}/progress")
+    public float getWatchHistorySeasonProgress(@PathVariable String imdbId, @PathVariable String id, @PathVariable String season){
+        return watchHistoryService.getWatchHistorySeasonProgress(imdbId, id, season);
+    }
+
+    @GetMapping("/episode/{imdbId}/progress")
+    public float getWatchHistoryTotalProgress(@PathVariable String imdbId){
+        return watchHistoryService.getWatchHistoryTotalProgress(imdbId);
+    }
+
+    @PostMapping("/episode")
     public Episode addToWatchHistoryEpisodes(@RequestBody Episode episode){
         return watchHistoryService.addToWatchHistoryEpisodes(episode);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/episode")
     public void removeFromWatchHistoryEpisodes(@RequestBody Episode episode){
         watchHistoryService.removeFromWatchHistoryEpisodes(episode);
     }

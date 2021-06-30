@@ -118,9 +118,8 @@ public class TmdbApiService {
         return getDetails(tmdbId, type).getExternal_ids().getImdb_id();
     }
 
-    public Season getEpisodes(@PathVariable String id, String season){
+    public Season getEpisodes(String id, String season){
         String url = BASE_URL + "tv/" + id + "/season/" + season + "?api_key=" + tmdbConfig.getKey();
-        System.out.println(url);
         ResponseEntity<Season> response = restTemplate.getForEntity(url, Season.class);
         return response.getBody();
     }

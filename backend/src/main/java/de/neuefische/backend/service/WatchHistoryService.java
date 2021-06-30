@@ -6,6 +6,7 @@ import de.neuefische.backend.model.Episode;
 import de.neuefische.backend.repo.MovieAndSeriesRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
@@ -17,11 +18,13 @@ public class WatchHistoryService {
 
     private final MovieAndSeriesRepo movieAndSeriesRepo;
     private final OmdbApiService omdbApiService;
+    private final TmdbApiService tmdbApiService;
 
     @Autowired
-    public WatchHistoryService(MovieAndSeriesRepo movieAndSeriesRepo, OmdbApiService omdbApiService) {
+    public WatchHistoryService(MovieAndSeriesRepo movieAndSeriesRepo, OmdbApiService omdbApiService, TmdbApiService tmdbApiService) {
         this.movieAndSeriesRepo = movieAndSeriesRepo;
         this.omdbApiService = omdbApiService;
+        this.tmdbApiService = tmdbApiService;
     }
 
     public OmdbOverview addToWatchHistory(MovieAndSeries itemToAdd){
@@ -60,34 +63,71 @@ public class WatchHistoryService {
                 .collect(Collectors.toList());
     }
 
-    public List<Episode> getWatchHistoryEpisodes(String imddbID, String season){
-        return movieAndSeriesRepo.findByImdbID(imddbID)
+    public List<Episode> getWatchHistoryEpisodes(String imdbID, String season){
+        if(!movieAndSeriesRepo.existsById(imdbID)) {
+            return null;
+        }
+        return movieAndSeriesRepo.findByImdbID(imdbID)
                 .getWatchedEpisodes()
                 .stream()
                 .filter((episode) -> String.valueOf(episode.getSeason_number()).equals(season))
                 .collect(Collectors.toList());
     }
 
+    public List<Episode> getWatchHistoryAllEpisodes(String imdbID){
+        if(!movieAndSeriesRepo.existsById(imdbID)) {
+            return null;
+        }
+        return movieAndSeriesRepo.findByImdbID(imdbID).getWatchedEpisodes();
+    }
+
+    public float getWatchHistorySeasonProgress(String imdbId, String tmdbId, String season){
+        float watched = getWatchHistoryEpisodes(imdbId, season).size();
+        float total = tmdbApiService.getEpisodes(tmdbId, season).getEpisodes().size();
+        return watched/total * 100;
+    }
+
+    public float getWatchHistoryTotalProgress(String imdbId){
+        int watched = getWatchHistoryAllEpisodes(imdbId).size();
+        int total = tmdbApiService.getDetails(imdbId, "series").getNumber_of_episodes();
+        if (total == watched){
+            MovieAndSeries movieAndSeries = movieAndSeriesRepo.findByImdbID(imdbId);
+            movieAndSeries.setWatchHistory(true);
+            movieAndSeries.setWatching(false);
+            movieAndSeriesRepo.save(movieAndSeries);
+        }
+        return watched/total;
+    }
+
     public Episode addToWatchHistoryEpisodes(Episode episode){
         MovieAndSeries movieAndSeries = movieAndSeriesRepo.findByImdbID(episode.getImdbId());
         List<Episode> list = movieAndSeries.getWatchedEpisodes();
-        list.add(Episode.builder()
+        Episode itemToAdd = Episode.builder()
                 .season_number(episode.getSeason_number())
                 .episode_number(episode.getEpisode_number())
-                .build());
+                .build();
+        if(list != null) {
+            if(list.contains(itemToAdd)){
+                return null;
+            }
+            list.add(itemToAdd);
+        } else {
+            list = List.of(itemToAdd);
+        }
         movieAndSeries.setWatchedEpisodes(list);
         movieAndSeries.setWatching(true);
+        movieAndSeries.setType("series");
         movieAndSeriesRepo.save(movieAndSeries);
-        return episode;
+        return itemToAdd;
     }
 
     public void removeFromWatchHistoryEpisodes(Episode episode){
         if(movieAndSeriesRepo.existsById(episode.getImdbId())) {
             MovieAndSeries movieAndSeries = movieAndSeriesRepo.findByImdbID(episode.getImdbId());
             List<Episode> list = movieAndSeries.getWatchedEpisodes();
-            list.stream()
+            list = list.stream()
                     .filter((item) ->
-                            (item.getEpisode_number() == episode.getEpisode_number() &&
+                            !(item.getEpisode_number() == episode.getEpisode_number() &&
                                     item.getSeason_number() == episode.getSeason_number()))
             .collect(Collectors.toList());
 
@@ -95,6 +135,7 @@ public class WatchHistoryService {
                 movieAndSeries.setWatching(false);
             }
             movieAndSeries.setWatchedEpisodes(list);
+            movieAndSeriesRepo.save(movieAndSeries);
         }
     }
 }

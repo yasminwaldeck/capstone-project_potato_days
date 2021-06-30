@@ -44,7 +44,7 @@ public class MovieAndSeriesDetailsService {
 
     }
 
-    public Season getEpisodes(@PathVariable String id, String season){
+    public Season getEpisodes(String id, String season){
         return tmdbApiService.getEpisodes(id, season);
     }
 }

@@ -12,6 +12,7 @@ import SeriesInfo from "../components/SeriesInfo";
 import SeasonCard from "../components/SeasonCard";
 import AddRemoveWatchButtons from "../components/AddRemoveWatchButtons";
 import useWatchHistory from "../hooks/useWatchHistory";
+import useWatchHistoryProgress from "../hooks/useWatchHistoryProgress";
 
 export default function MovieAndSeriesDetailsPage() {
 
@@ -20,6 +21,7 @@ export default function MovieAndSeriesDetailsPage() {
     const {MOVIE, SERIES} = useContext(TypeContext)
     const {watchlist} = useWatchlist();
     const {watchHistory} = useWatchHistory();
+    const { seriesProgress } = useWatchHistoryProgress(id, item.id)
 
     return (
         <MovieAndSeriesDetails>
@@ -38,10 +40,23 @@ export default function MovieAndSeriesDetailsPage() {
                     </>}
 
                     {item.seasons && <div>
-                        <h3>Seasons</h3>
-                        {item.seasons.map((season) => (
-                            <SeasonCard season={season} tmdbid={item.id} key={season.id}/>
-                        ))}</div>}
+                        {seriesProgress && (seriesProgress != 0) ?
+                            <div>
+                                <h3>Progress: {seriesProgress.toFixed(1)}%</h3>
+                                <progress value={seriesProgress} max="100"/>
+                            </div>:
+                            <div>
+                                <h3>Progress: 0%</h3>
+                                <progress value={0} max="100"/>
+                            </div>
+                        }
+                        <div>
+                            <h3>Seasons</h3>
+                            {item.seasons.map((season) => (
+                                <SeasonCard season={season} tmdbid={item.id} key={season.id}/>
+                            ))}
+                        </div>
+                    </div>}
                     {item.cast && <Cast castlist={item.cast}/>}
                     {item.crew && <Crew crewlist={item.crew}/>}
                     {item.de && (<div>

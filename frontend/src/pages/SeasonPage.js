@@ -12,10 +12,16 @@ export default function SeasonPage(){
 
     return(
         <SeasonOverview>
-            <div id={"progress"}>
-                <h3>Progress: {seasonProgress.toFixed(1)}%</h3>
-                <progress value={seasonProgress} max="100"/>
-            </div>
+            {seasonProgress && (seasonProgress != 0) ?
+                <div id={"progress"}>
+                    <h3>Progress: {seasonProgress.toFixed(1)}%</h3>
+                    <progress value={seasonProgress} max="100"/>
+                </div>:
+                <div id={"progress"}>
+                    <h3>Progress: 0%</h3>
+                    <progress value={0} max="100"/>
+                </div>
+            }
             <div>
                 {item.episodes && item.episodes.map((episode) => (
                     <EpisodeCard
@@ -25,7 +31,7 @@ export default function SeasonPage(){
                         removeEpisodeFromHistory={removeEpisodeFromHistory}
                         onWatchHistory={episodeWatchHistory.find(watchedItem => watchedItem.episode_number === episode.episode_number)}
                     />
-                ))}>
+                ))}
             </div>
         </SeasonOverview>
     )

@@ -40,6 +40,9 @@ public class TmdbApiService {
     }
 
     public TmdbDto getDetails(String id, String type){
+        if(id.isEmpty() || type.isBlank()){
+            return null;
+        }
 
         String urlpart = "";
 
@@ -54,6 +57,7 @@ public class TmdbApiService {
 
         String url = BASE_URL + urlpart + id + "?api_key=" + tmdbConfig.getKey() + "&append_to_response=external_ids";
 
+        System.out.println(url);
         ResponseEntity<TmdbDto> response = restTemplate.getForEntity(url, TmdbDto.class);
         return response.getBody();
     }

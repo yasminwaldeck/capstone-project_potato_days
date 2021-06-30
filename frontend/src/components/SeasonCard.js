@@ -1,9 +1,11 @@
 import styled from "styled-components/macro";
 import Default from "../resources/couchpotato.jpg"
 import {NavLink, useParams} from "react-router-dom";
+import useWatchHistoryEpisodes from "../hooks/useWatchHistoryEpisodes";
 
 export default function SeasonCard({season, tmdbid}) {
     const {id} = useParams();
+    const {seasonProgress} = useWatchHistoryEpisodes(id, tmdbid, season.season_number)
 
     return (
         <Season>
@@ -16,6 +18,16 @@ export default function SeasonCard({season, tmdbid}) {
                     {season.name ? <h3>{season.name}</h3> : <h3>Season {season.season_number}</h3>}
                     <p>Episodes: {season.episode_count}</p>
                     <p>{season.air_date}</p>
+                    {seasonProgress && (seasonProgress != 0) ?
+                        <div>
+                            <p>Progress: {seasonProgress.toFixed(1)}%</p>
+                            <progress value={seasonProgress} max="100"/>
+                        </div>:
+                        <div>
+                            <p>Progress: 0%</p>
+                            <progress value={0} max="100"/>
+                        </div>
+                    }
                     <NavLink to={ id + "/" + tmdbid + "/" + season.season_number}>
                         <button>Go to episodes</button>
                     </NavLink>

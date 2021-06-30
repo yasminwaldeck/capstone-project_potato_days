@@ -65,7 +65,7 @@ public class WatchHistoryService {
 
     public List<Episode> getWatchHistoryEpisodes(String imdbID, String season){
         if(!movieAndSeriesRepo.existsById(imdbID)) {
-            return null;
+            return List.of();
         }
         return movieAndSeriesRepo.findByImdbID(imdbID)
                 .getWatchedEpisodes()
@@ -76,27 +76,34 @@ public class WatchHistoryService {
 
     public List<Episode> getWatchHistoryAllEpisodes(String imdbID){
         if(!movieAndSeriesRepo.existsById(imdbID)) {
-            return null;
+            return List.of();
         }
         return movieAndSeriesRepo.findByImdbID(imdbID).getWatchedEpisodes();
     }
 
     public float getWatchHistorySeasonProgress(String imdbId, String tmdbId, String season){
+        if (getWatchHistoryEpisodes(imdbId, season) == null){
+            return 0;
+        }
         float watched = getWatchHistoryEpisodes(imdbId, season).size();
         float total = tmdbApiService.getEpisodes(tmdbId, season).getEpisodes().size();
         return watched/total * 100;
     }
 
-    public float getWatchHistoryTotalProgress(String imdbId){
-        int watched = getWatchHistoryAllEpisodes(imdbId).size();
-        int total = tmdbApiService.getDetails(imdbId, "series").getNumber_of_episodes();
+    public float getWatchHistoryTotalProgress(String imdbId, String tmdbId){
+        List<Episode> list = getWatchHistoryAllEpisodes(imdbId);
+        if (list == null){
+            return 0;
+        }
+        float watched = list.size();
+        float total = tmdbApiService.getDetails(tmdbId, "series").getNumber_of_episodes();
         if (total == watched){
             MovieAndSeries movieAndSeries = movieAndSeriesRepo.findByImdbID(imdbId);
             movieAndSeries.setWatchHistory(true);
             movieAndSeries.setWatching(false);
             movieAndSeriesRepo.save(movieAndSeries);
         }
-        return watched/total;
+        return watched/total * 100;
     }
 
     public Episode addToWatchHistoryEpisodes(Episode episode){

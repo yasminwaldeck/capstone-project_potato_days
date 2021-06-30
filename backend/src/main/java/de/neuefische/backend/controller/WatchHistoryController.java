@@ -45,9 +45,9 @@ public class WatchHistoryController {
         return watchHistoryService.getWatchHistorySeasonProgress(imdbId, id, season);
     }
 
-    @GetMapping("/episode/{imdbId}/progress")
-    public float getWatchHistoryTotalProgress(@PathVariable String imdbId){
-        return watchHistoryService.getWatchHistoryTotalProgress(imdbId);
+    @GetMapping("/episode/{imdbId}/{id}/progress")
+    public float getWatchHistoryTotalProgress(@PathVariable String imdbId, @PathVariable String id){
+        return watchHistoryService.getWatchHistoryTotalProgress(imdbId, id);
     }
 
     @PostMapping("/episode")

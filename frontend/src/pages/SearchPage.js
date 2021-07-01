@@ -1,6 +1,6 @@
 import {useContext, useState} from "react";
 import MovieAndSeriesCard from "../components/MovieAndSeriesCard";
-import TypeContext from "../context/TypeContext";
+import TypeAndAuthContext from "../context/TypeAndAuthContext";
 import useWatchlist from "../hooks/useWatchlist";
 import useSearch from "../hooks/useSearch";
 import styled from "styled-components/macro";
@@ -8,7 +8,7 @@ import useWatchHistory from "../hooks/useWatchHistory";
 
 export default function SearchPage(){
 
-    const {MOVIE, SERIES} = useContext(TypeContext)
+    const {MOVIE, SERIES} = useContext(TypeAndAuthContext)
     const [searchString, setSearchString] = useState("")
     const [searchType, setSearchType] = useState(MOVIE)
     const { watchlist } = useWatchlist();

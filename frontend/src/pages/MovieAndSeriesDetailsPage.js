@@ -7,7 +7,7 @@ import Crew from "../components/Crew";
 import ProviderElement from "../components/ProviderElement";
 import styled from "styled-components/macro";
 import MovieInfo from "../components/MovieInfo";
-import TypeContext from "../context/TypeContext";
+import TypeAndAuthContext from "../context/TypeAndAuthContext";
 import SeriesInfo from "../components/SeriesInfo";
 import SeasonCard from "../components/SeasonCard";
 import AddRemoveWatchButtons from "../components/AddRemoveWatchButtons";
@@ -18,7 +18,7 @@ export default function MovieAndSeriesDetailsPage() {
 
     const {id} = useParams();
     const {item} = useDetails(id);
-    const {MOVIE, SERIES} = useContext(TypeContext)
+    const {MOVIE, SERIES} = useContext(TypeAndAuthContext)
     const {watchlist} = useWatchlist();
     const {watchHistory} = useWatchHistory();
     const { seriesProgress } = useWatchHistoryProgress(id, item.id)

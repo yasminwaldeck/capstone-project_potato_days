@@ -4,7 +4,6 @@
   min-height: 100vh;
   color: #eae9f1;
 }
-
 input {
   background-color: #555556;
   border: #85888C;
@@ -16,5 +15,5 @@ input {
 }
 
 input:focus {
-  outline: none !important;
+  outline: none;
 }

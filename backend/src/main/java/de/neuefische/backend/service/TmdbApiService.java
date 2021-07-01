@@ -7,6 +7,7 @@ import de.neuefische.backend.model.TMDb.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -32,13 +33,16 @@ public class TmdbApiService {
         TmdbIdDto result = response.getBody();
         if (result.getTv_results().isEmpty() && !result.getMovie_results().isEmpty()){
             return result.getMovie_results().get(0).getId();
-        } else if (!result.getTv_results().isEmpty() && result.getMovie_results().isEmpty()){
+        } else if (!result.getTv_results().isEmpty()){
             return result.getTv_results().get(0).getId();
         }
         return null;
     }
 
     public TmdbDto getDetails(String id, String type){
+        if(id.isEmpty() || type.isBlank()){
+            return null;
+        }
 
         String urlpart = "";
 
@@ -53,6 +57,7 @@ public class TmdbApiService {
 
         String url = BASE_URL + urlpart + id + "?api_key=" + tmdbConfig.getKey() + "&append_to_response=external_ids";
 
+        System.out.println(url);
         ResponseEntity<TmdbDto> response = restTemplate.getForEntity(url, TmdbDto.class);
         return response.getBody();
     }
@@ -117,4 +122,9 @@ public class TmdbApiService {
         return getDetails(tmdbId, type).getExternal_ids().getImdb_id();
     }
 
+    public Season getEpisodes(String id, String season){
+        String url = BASE_URL + "tv/" + id + "/season/" + season + "?api_key=" + tmdbConfig.getKey();
+        ResponseEntity<Season> response = restTemplate.getForEntity(url, Season.class);
+        return response.getBody();
+    }
 }

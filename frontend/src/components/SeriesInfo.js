@@ -1,5 +1,5 @@
 import Ratings from "./Ratings";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 
 export default function SeriesInfo({info}){
 
@@ -20,6 +20,7 @@ export default function SeriesInfo({info}){
                     {info.last_air_date && <p>Last aired: {info.last_air_date}</p>}
                     <h3>Plot:</h3>
                     <p>{info.overview}</p>
+                    {info.in_production && <p>In Production!</p>}
                     <Ratings info={info.ratings}/>
                 </Info>)}
 

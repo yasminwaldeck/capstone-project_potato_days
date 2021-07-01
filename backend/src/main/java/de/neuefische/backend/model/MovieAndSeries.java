@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,4 +22,8 @@ public class MovieAndSeries {
     private String recommendedBy;
     private boolean watchHistory;
     private boolean watchlist;
+    private boolean watching;
+    private String username;
+    private List<Episode> watchedEpisodes;
+    private List<Progress> progress;
 }

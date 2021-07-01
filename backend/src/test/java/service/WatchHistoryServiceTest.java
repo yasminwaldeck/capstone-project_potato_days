@@ -1,11 +1,13 @@
 package service;
 
 import de.neuefische.backend.config.OMDbConfig;
+import de.neuefische.backend.config.TMDbConfig;
 import de.neuefische.backend.model.MovieAndSeries;
 import de.neuefische.backend.model.OMDb.OmdbOverview;
 import de.neuefische.backend.model.OMDb.OmdbOverviewDto;
 import de.neuefische.backend.repo.MovieAndSeriesRepo;
 import de.neuefische.backend.service.OmdbApiService;
+import de.neuefische.backend.service.TmdbApiService;
 import de.neuefische.backend.service.WatchHistoryService;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +24,11 @@ public class WatchHistoryServiceTest {
 
     private final MovieAndSeriesRepo movieAndSeriesRepo = mock(MovieAndSeriesRepo.class);
     private final OMDbConfig omDbConfig = new OMDbConfig();
+    private final TMDbConfig tmDbConfig = new TMDbConfig();
     private final RestTemplate mockedTemplate = mock(RestTemplate.class);
     private final OmdbApiService omdbApiService = new OmdbApiService(omDbConfig, mockedTemplate);
-    private final WatchHistoryService watchHistoryService = new WatchHistoryService(movieAndSeriesRepo, omdbApiService);
+    private final TmdbApiService tmdbApiService = new TmdbApiService(mockedTemplate, tmDbConfig);
+    private final WatchHistoryService watchHistoryService = new WatchHistoryService(movieAndSeriesRepo, omdbApiService, tmdbApiService);
 
     @Test
     public void addMovieToHistoryDatabaseTest(){

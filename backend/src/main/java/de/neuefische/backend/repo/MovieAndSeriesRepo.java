@@ -11,8 +11,6 @@ public interface MovieAndSeriesRepo extends PagingAndSortingRepository<MovieAndS
 
     List<MovieAndSeries> findAll();
 
-    List<MovieAndSeries> findByType(String type);
-
     List<MovieAndSeries> findMovieAndSeriesByWatchHistoryIsTrue();
 
     List<MovieAndSeries> findMovieAndSeriesByWatchHistoryIsTrueAndType(String type);

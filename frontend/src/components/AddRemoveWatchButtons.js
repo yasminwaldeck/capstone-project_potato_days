@@ -2,7 +2,7 @@ import useWatchlist from "../hooks/useWatchlist";
 import {useEffect, useState} from "react";
 import {ReactComponent as Add} from "../resources/plus-lg.svg";
 import {ReactComponent as Remove} from "../resources/dash-lg.svg";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import useWatchHistory from "../hooks/useWatchHistory";
 import RecommendedInputElement from "./RecommendedInputElement";
 import useRecommendedBy from "../hooks/useRecommendedBy";

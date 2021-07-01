@@ -1,6 +1,5 @@
 package de.neuefische.backend.model.OMDb;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

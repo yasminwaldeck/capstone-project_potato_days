@@ -1,6 +1,6 @@
 import {useState} from "react";
 import useRecommendedBy from "../hooks/useRecommendedBy";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import {ReactComponent as Remove} from "../resources/dash-lg.svg";
 import {ReactComponent as Add} from "../resources/plus-lg.svg";
 

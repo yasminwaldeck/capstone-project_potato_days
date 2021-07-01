@@ -9,17 +9,14 @@ import java.util.List;
 @Repository
 public interface MovieAndSeriesRepo extends PagingAndSortingRepository<MovieAndSeries, String> {
 
-    List<MovieAndSeries> findAll();
+    List<MovieAndSeries> findByUsername(String username);
 
-    List<MovieAndSeries> findMovieAndSeriesByWatchHistoryIsTrue();
+    List<MovieAndSeries> findMovieAndSeriesByWatchHistoryIsTrueAndUsername(String username);
 
-    List<MovieAndSeries> findMovieAndSeriesByWatchHistoryIsTrueAndType(String type);
+    List<MovieAndSeries> findMovieAndSeriesByWatchHistoryIsTrueAndTypeAndUsername(String type, String username);
 
-    List<MovieAndSeries> findMovieAndSeriesByWatchlistIsTrue();
+    List<MovieAndSeries> findMovieAndSeriesByWatchlistIsTrueAndUsername(String username);
 
-    List<MovieAndSeries> findMovieAndSeriesByWatchlistIsTrueAndType(String type);
+    List<MovieAndSeries> findMovieAndSeriesByWatchlistIsTrueAndTypeAndUsername(String type, String username);
 
-    MovieAndSeries findByImdbID(String imdbID);
-
-    void deleteByImdbID(String imdbID);
 }

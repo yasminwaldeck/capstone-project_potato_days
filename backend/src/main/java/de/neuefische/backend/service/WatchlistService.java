@@ -22,54 +22,59 @@ public class WatchlistService {
         this.omdbApiService = omdbApiService;
     }
 
-    public List<OmdbOverview> getWatchlistByType(Optional<String> type){
+    public List<OmdbOverview> getWatchlistByType(String username, Optional<String> type){
         if(type.isEmpty()){
-            return movieAndSeriesRepo.findMovieAndSeriesByWatchlistIsTrue().stream()
+            return movieAndSeriesRepo.findMovieAndSeriesByWatchlistIsTrueAndUsername(username).stream()
                     .map(item -> omdbApiService.getOverview(item)
                     )
                     .collect(Collectors.toList());
         }
-        return movieAndSeriesRepo.findMovieAndSeriesByWatchlistIsTrueAndType(type.get())
+        return movieAndSeriesRepo.findMovieAndSeriesByWatchlistIsTrueAndTypeAndUsername(type.get(), username)
                 .stream()
                 .map(item -> omdbApiService.getOverview(item))
                 .collect(Collectors.toList());
     }
 
-    public String getNameFromWatchlist(String imdbId){
-        MovieAndSeries movieAndSeries = movieAndSeriesRepo.findByImdbID(imdbId);
-        if(movieAndSeries == null) {
+    public String getNameFromWatchlist(String username, String imdbId){
+        String id = imdbId + "_" + username;
+        if(movieAndSeriesRepo.findById(id).isEmpty()) {
             return null;
         }
-        return movieAndSeriesRepo.findByImdbID(imdbId).getRecommendedBy();
+        return movieAndSeriesRepo.findById(id).get().getRecommendedBy();
     }
 
-    public OmdbOverview addToWatchlist(MovieAndSeries itemToAdd){
-        MovieAndSeries movieAndSeries = movieAndSeriesRepo.findByImdbID(itemToAdd.getImdbID());
-        if(movieAndSeries == null) {
+    public OmdbOverview addToWatchlist(String username, MovieAndSeries itemToAdd){
+        String id = itemToAdd.getImdbID() + "_" + username;
+        if(movieAndSeriesRepo.findById(id).isEmpty()) {
             itemToAdd.setWatchlist(true);
+            itemToAdd.setUsername(username);
+            itemToAdd.setId(id);
             movieAndSeriesRepo.save(itemToAdd);
         } else {
+            MovieAndSeries movieAndSeries = movieAndSeriesRepo.findById(id).get();
             movieAndSeries.setWatchlist(true);
             movieAndSeriesRepo.save(movieAndSeries);
         }
-        return omdbApiService.getOverview(movieAndSeriesRepo.findByImdbID(itemToAdd.getImdbID()));
+        return omdbApiService.getOverview(movieAndSeriesRepo.findById(id).get());
     }
 
-    public String addNameToWatchlist(MovieAndSeries itemToAdd){
-        MovieAndSeries movieAndSeries = movieAndSeriesRepo.findByImdbID(itemToAdd.getImdbID());
-        if(movieAndSeries == null) {
+    public String addNameToWatchlist(String username, MovieAndSeries itemToAdd){
+        String id = itemToAdd.getImdbID() + "_" + username;
+        if(movieAndSeriesRepo.findById(id).isEmpty()) {
             return null;
         }
+        MovieAndSeries movieAndSeries = movieAndSeriesRepo.findById(id).get();
         movieAndSeries.setRecommendedBy(itemToAdd.getRecommendedBy());
         movieAndSeriesRepo.save(movieAndSeries);
-        return movieAndSeriesRepo.findByImdbID(itemToAdd.getImdbID()).getRecommendedBy();
+        return movieAndSeries.getRecommendedBy();
     }
 
-    public void removeFromWatchlist(String imdbId){
-        MovieAndSeries movieAndSeries = movieAndSeriesRepo.findByImdbID(imdbId);
-        if(movieAndSeries != null) {
-            if (!movieAndSeries.isWatchHistory()) {
-                movieAndSeriesRepo.deleteByImdbID(imdbId);
+    public void removeFromWatchlist(String username, String imdbId){
+        String id = imdbId + "_" + username;
+        if(movieAndSeriesRepo.findById(id).isPresent()) {
+            MovieAndSeries movieAndSeries = movieAndSeriesRepo.findById(id).get();
+            if (!(movieAndSeries.isWatchHistory() || movieAndSeries.isWatching())) {
+                movieAndSeriesRepo.deleteById(id);
             } else {
                 movieAndSeries.setWatchlist(false);
                 movieAndSeriesRepo.save(movieAndSeries);
@@ -77,14 +82,15 @@ public class WatchlistService {
         }
     }
 
-    public void removeNameFromWatchlist(String imdbId){
-        MovieAndSeries movieAndSeries = movieAndSeriesRepo.findByImdbID(imdbId);
+    public void removeNameFromWatchlist(String username, String imdbId){
+        String id = imdbId + "_" + username;
+        MovieAndSeries movieAndSeries = movieAndSeriesRepo.findById(id).get();
         movieAndSeries.setRecommendedBy(null);
         movieAndSeriesRepo.save(movieAndSeries);
     }
 
-    public List<Stats> getRecommendedByStats(){
-        List<MovieAndSeries> movieAndSeriesList = movieAndSeriesRepo.findAll();
+    public List<Stats> getRecommendedByStats(String username){
+        List<MovieAndSeries> movieAndSeriesList = movieAndSeriesRepo.findByUsername(username);
         Map<String, Stats> stats = new HashMap();
         for(MovieAndSeries item : movieAndSeriesList){
             if(item.getRecommendedBy() != null){

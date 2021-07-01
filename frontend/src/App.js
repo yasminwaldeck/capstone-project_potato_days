@@ -11,6 +11,7 @@ import WatchHistoryPage from "./pages/WatchHistoryPage";
 import StatsPage from "./pages/StatsPage";
 import SeasonPage from "./pages/SeasonPage";
 import LoginPage from "./pages/LoginPage";
+import PrivateRoute from "./routing/PrivateRoute";
 
 function App() {
   return (
@@ -19,33 +20,33 @@ function App() {
             <Router>
                 <Header/>
                 <Switch>
-                    <Route path={"/search"}>
+                    <PrivateRoute path={"/search"}>
                         <SearchPage/>
-                    </Route>
-                    <Route path={"/details/:imdbid/:id/:season"} exact>
+                    </PrivateRoute>
+                    <PrivateRoute path={"/details/:imdbid/:id/:season"} exact>
                         <SeasonPage/>
-                    </Route>
-                    <Route path={"/details/:id"} exact>
+                    </PrivateRoute>
+                    <PrivateRoute path={"/details/:id"} exact>
                         <MovieAndSeriesDetailsPage/>
-                    </Route>
-                    <Route path={"/watchlist"}>
+                    </PrivateRoute>
+                    <PrivateRoute path={"/watchlist"}>
                         <WatchlistPage/>
-                    </Route>
-                    <Route path={"/trending"}>
+                    </PrivateRoute>
+                    <PrivateRoute path={"/trending"}>
                         <TrendingMovieAndSeriesPage/>
-                    </Route>
-                    <Route path={"/history"}>
+                    </PrivateRoute>
+                    <PrivateRoute path={"/history"}>
                         <WatchHistoryPage/>
-                    </Route>
-                    <Route path={"/stats"}>
+                    </PrivateRoute>
+                    <PrivateRoute path={"/stats"}>
                         <StatsPage/>
-                    </Route>
+                    </PrivateRoute>
                     <Route path={"/login"}>
                         <LoginPage/>
                     </Route>
-                    <Route path={"/home"}>
+                    <PrivateRoute path={"/"}>
                         <LandingPage/>
-                    </Route>
+                    </PrivateRoute>
                 </Switch>
             </Router>
         </TypeAndAuthProvider>

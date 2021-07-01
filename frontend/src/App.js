@@ -16,8 +16,8 @@ import PrivateRoute from "./routing/PrivateRoute";
 function App() {
   return (
     <div className="App">
-        <TypeAndAuthProvider>
-            <Router>
+        <Router>
+            <TypeAndAuthProvider>
                 <Header/>
                 <Switch>
                     <PrivateRoute path={"/search"}>
@@ -44,12 +44,12 @@ function App() {
                     <Route path={"/login"}>
                         <LoginPage/>
                     </Route>
-                    <PrivateRoute path={"/"}>
+                    <PrivateRoute path={"/home"}>
                         <LandingPage/>
                     </PrivateRoute>
                 </Switch>
-            </Router>
-        </TypeAndAuthProvider>
+            </TypeAndAuthProvider>
+        </Router>
     </div>
   );
 }

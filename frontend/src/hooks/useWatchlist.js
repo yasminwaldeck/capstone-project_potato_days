@@ -15,7 +15,7 @@ export default function useWatchlist(){
 
     const addToWatchlist = (imdbID, type) =>{
         axios.post("/api/watchlist", {imdbID, type})
-            .then((response) => setWatchlist([... watchlist, response.data]))
+            .then((response) => setWatchlist([...watchlist, response.data]))
             .catch((error) => console.error(error.message))
     }
 

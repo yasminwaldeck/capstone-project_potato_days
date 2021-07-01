@@ -15,7 +15,7 @@ export default function useWatchHistoryProgress(imdbId, id) {
                 .then(setSeriesProgress)
                 .catch((error) => console.error(error.message));
         }
-    }, [id])
+    }, [id, imdbId])
 
 
     return { seriesProgress }

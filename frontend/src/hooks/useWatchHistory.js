@@ -14,7 +14,7 @@ export default function useWatchHistory(){
 
     const addToHistory = (imdbID, type) =>{
         axios.post("/api/watchhistory", {imdbID, type})
-            .then((response) => setWatchHistory([... watchHistory, response.data]))
+            .then((response) => setWatchHistory([...watchHistory, response.data]))
             .catch((error) => console.error(error.message))
     }
 

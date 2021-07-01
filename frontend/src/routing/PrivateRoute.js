@@ -6,6 +6,6 @@ export default function PrivateRoute(props) {
     const {token} = useContext(TypeAndAuthContext)
 
     return (
-        token ? <Route {...props }/> : <Redirect to={'/home'}/>
+        token ? <Route {...props }/> : <Redirect to={'/login'}/>
     )
 }

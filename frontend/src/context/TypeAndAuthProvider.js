@@ -1,7 +1,7 @@
 import TypeAndAuthContext from "./TypeAndAuthContext";
 import {useState} from "react";
 import axios from "axios";
-import jwt_decode from "jwt-decode";
+import {useHistory} from "react-router-dom";
 
 export default function TypeAndAuthProvider({children}){
     const MOVIE = "movie"
@@ -11,18 +11,14 @@ export default function TypeAndAuthProvider({children}){
     const WEEK = "week"
 
     const [token, setToken] = useState()
-    const [jwtDecoded, setJwtDecoded] = useState()
+    const history = useHistory()
 
     const login = credentials => {
         axios
             .post('/auth/login', credentials)
             .then(response => response.data)
-            .then(data => {
-                setToken(data)
-                setJwtDecoded(jwt_decode(data.toString()))
-                console.log(jwt_decode(data.toString()))
-                console.log(data)
-            })
+            .then(setToken)
+            .then(() => history.push("/home"))
             .catch(error => console.error(error.message))
     }
 

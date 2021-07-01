@@ -40,7 +40,7 @@ export default function MovieAndSeriesDetailsPage() {
                     </>}
 
                     {item.seasons && <div>
-                        {seriesProgress && (seriesProgress != 0) ?
+                        {seriesProgress && (seriesProgress !== 0) ?
                             <div>
                                 <h3>Progress: {seriesProgress.toFixed(1)}%</h3>
                                 <progress value={seriesProgress} max="100"/>

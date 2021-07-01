@@ -6,10 +6,17 @@ export default function useWatchHistoryEpisodes(imdbId, id, season) {
     const [episodeWatchHistory, setEpisodeWatchHistory] = useState([]);
     const [seasonProgress, setSeasonProgress] = useState();
 
-
     useEffect(() => {
-        getEpisodeHistory()
-    }, [imdbId, season])
+        axios.get(`/api/watchhistory/episode/${imdbId}/season/${season}`)
+            .then(response => response.data)
+            .then(setEpisodeWatchHistory)
+            .catch((error) => console.error(error.message));
+
+        axios.get(`/api/watchhistory/episode/${imdbId}/${id}/season/${season}/progress`)
+            .then(response => response.data)
+            .then(setSeasonProgress)
+            .catch((error) => console.error(error.message));
+    }, [imdbId, season, id])
 
     const getEpisodeHistory = () => {
         axios.get(`/api/watchhistory/episode/${imdbId}/season/${season}`)

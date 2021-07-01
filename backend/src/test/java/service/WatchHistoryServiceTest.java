@@ -50,7 +50,7 @@ public class WatchHistoryServiceTest {
     }
 
     @Test
-    public void deleteMovieToHistoryDatabaseTest(){
+    public void deleteMovieFromHistoryDatabaseTest(){
         //GIVEN
         when(movieAndSeriesRepo.findById("imdbID_name")).thenReturn(Optional.of(MovieAndSeries.builder().id("imdbID_name").username("name").imdbID("imdbID").watchHistory(true).watchlist(false).build()));
 
@@ -64,7 +64,7 @@ public class WatchHistoryServiceTest {
     @Test
     public void getWatchHistoryByTypeShouldReturnWatchlistByType() {
         // GIVEN
-        when(movieAndSeriesRepo.findMovieAndSeriesByWatchHistoryIsTrueAndTypeAndUsername("name", "type")).thenReturn(List.of(
+        when(movieAndSeriesRepo.findMovieAndSeriesByWatchHistoryIsTrueAndTypeAndUsername( "type", "name")).thenReturn(List.of(
                 MovieAndSeries.builder().imdbID("id1").username("name").type("type").build(),
                 MovieAndSeries.builder().imdbID("id2").username("name").type("type").build()
         ));
@@ -96,6 +96,6 @@ public class WatchHistoryServiceTest {
                         "title", "year", "id2", "poster", "type"
                 )
         )));
-        verify(movieAndSeriesRepo).findMovieAndSeriesByWatchHistoryIsTrueAndTypeAndUsername("name", "type");
+        verify(movieAndSeriesRepo).findMovieAndSeriesByWatchHistoryIsTrueAndTypeAndUsername("type", "name");
     }
 }

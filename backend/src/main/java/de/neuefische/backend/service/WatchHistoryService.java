@@ -44,7 +44,7 @@ public class WatchHistoryService {
 
     public void removeFromWatchHistory(String username, String imdbId){
         String id = imdbId + "_" + username;
-        if(movieAndSeriesRepo.findById(id).isEmpty()) {
+        if(movieAndSeriesRepo.findById(id).isPresent()) {
             MovieAndSeries movieAndSeries = movieAndSeriesRepo.findById(id).get();
             if (!(movieAndSeries.isWatchlist() || movieAndSeries.isWatching())) {
                 movieAndSeriesRepo.deleteById(id);

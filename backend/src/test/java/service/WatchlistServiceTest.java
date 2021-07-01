@@ -74,7 +74,7 @@ public class WatchlistServiceTest {
     @Test
     public void getWatchlistByTypeShouldReturnWatchlistByType() {
         // GIVEN
-        when(movieAndSeriesRepo.findMovieAndSeriesByWatchlistIsTrueAndTypeAndUsername("name", "type")).thenReturn(List.of(
+        when(movieAndSeriesRepo.findMovieAndSeriesByWatchlistIsTrueAndTypeAndUsername("type", "name")).thenReturn(List.of(
                 MovieAndSeries.builder().imdbID("id1").username("name").type("type").build(),
                 MovieAndSeries.builder().imdbID("id2").username("name").type("type").build()
         ));
@@ -106,7 +106,7 @@ public class WatchlistServiceTest {
                         "title", "year", "id2", "poster", "type"
                 )
         )));
-        verify(movieAndSeriesRepo).findMovieAndSeriesByWatchlistIsTrueAndTypeAndUsername("name", "type");
+        verify(movieAndSeriesRepo).findMovieAndSeriesByWatchlistIsTrueAndTypeAndUsername("type", "name");
     }
 
 

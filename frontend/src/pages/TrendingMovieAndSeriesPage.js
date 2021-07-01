@@ -1,4 +1,4 @@
-import TypeContext from "../context/TypeContext";
+import TypeAndAuthContext from "../context/TypeAndAuthContext";
 import useWatchlist from "../hooks/useWatchlist";
 import {useContext, useState} from "react";
 import useTrending from "../hooks/useTrending";
@@ -9,7 +9,7 @@ import useWatchHistory from "../hooks/useWatchHistory";
 export default function TrendingMovieAndSeriesPage(){
 
 
-    const {MOVIE, SERIES, DAY, WEEK} = useContext(TypeContext)
+    const {MOVIE, SERIES, DAY, WEEK} = useContext(TypeAndAuthContext)
     const [searchType, setSearchType] = useState(MOVIE)
     const [timewindow, setTimewindow] = useState(DAY)
     const { watchlist } = useWatchlist();

@@ -1,7 +1,7 @@
 import './App.css';
 import SearchPage from "./pages/SearchPage";
 import Header from "./components/Header";
-import TypeProvider from "./context/TypeProvider";
+import TypeAndAuthProvider from "./context/TypeAndAuthProvider";
 import {Switch, Route, BrowserRouter as Router} from "react-router-dom";
 import MovieAndSeriesDetailsPage from "./pages/MovieAndSeriesDetailsPage";
 import LandingPage from "./pages/LandingPage";
@@ -10,11 +10,12 @@ import TrendingMovieAndSeriesPage from "./pages/TrendingMovieAndSeriesPage";
 import WatchHistoryPage from "./pages/WatchHistoryPage";
 import StatsPage from "./pages/StatsPage";
 import SeasonPage from "./pages/SeasonPage";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
   return (
     <div className="App">
-        <TypeProvider>
+        <TypeAndAuthProvider>
             <Router>
                 <Header/>
                 <Switch>
@@ -39,12 +40,15 @@ function App() {
                     <Route path={"/stats"}>
                         <StatsPage/>
                     </Route>
-                    <Route path={"/"}>
+                    <Route path={"/login"}>
+                        <LoginPage/>
+                    </Route>
+                    <Route path={"/home"}>
                         <LandingPage/>
                     </Route>
                 </Switch>
             </Router>
-        </TypeProvider>
+        </TypeAndAuthProvider>
     </div>
   );
 }

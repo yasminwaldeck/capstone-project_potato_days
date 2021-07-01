@@ -1,13 +1,13 @@
 import MovieAndSeriesCard from "../components/MovieAndSeriesCard";
 import {useContext, useState} from "react";
-import TypeContext from "../context/TypeContext";
+import TypeAndAuthContext from "../context/TypeAndAuthContext";
 import useWatchlist from "../hooks/useWatchlist";
 import useWatchHistory from "../hooks/useWatchHistory";
 import useWatchHistoryByType from "../hooks/useWatchHistoryByType";
 
 export default function WatchHistoryPage(){
     const [type, setType] = useState();
-    const {MOVIE, SERIES} = useContext(TypeContext)
+    const {MOVIE, SERIES} = useContext(TypeAndAuthContext)
     const { watchHistoryItems, setWatchHistoryItems } = useWatchHistoryByType(type);
     const { watchHistory } = useWatchHistory();
     const { watchlist } = useWatchlist();

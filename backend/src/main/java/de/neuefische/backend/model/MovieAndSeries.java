@@ -17,6 +17,7 @@ import java.util.List;
 public class MovieAndSeries {
 
     @Id
+    private String id;
     private String imdbID;
     private String type;
     private String recommendedBy;

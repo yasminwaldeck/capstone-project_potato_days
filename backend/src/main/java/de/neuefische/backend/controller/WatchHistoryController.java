@@ -7,6 +7,7 @@ import de.neuefische.backend.service.WatchHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,42 +22,50 @@ public class WatchHistoryController {
     }
 
     @GetMapping
-    public List<OmdbOverview> getWatchHistoryType(@RequestParam Optional<String> type){
-        return watchHistoryService.getWatchHistoryByType(type);
+    public List<OmdbOverview> getWatchHistoryByType(Principal principal, @RequestParam Optional<String> type){
+        String username = principal.getName();
+        return watchHistoryService.getWatchHistoryByType(username, type);
     }
 
     @PostMapping
-    public OmdbOverview addToWatchHistory(@RequestBody MovieAndSeries itemToAdd){
-        return watchHistoryService.addToWatchHistory(itemToAdd);
+    public OmdbOverview addToWatchHistory(Principal principal, @RequestBody MovieAndSeries itemToAdd){
+        String username = principal.getName();
+        return watchHistoryService.addToWatchHistory(username, itemToAdd);
     }
 
     @DeleteMapping
-    public void removeFromWatchHistory(@RequestBody String imdbID){
-        watchHistoryService.removeFromWatchHistory(imdbID);
+    public void removeFromWatchHistory(Principal principal, @RequestBody String imdbID){
+        String username = principal.getName();
+        watchHistoryService.removeFromWatchHistory(username, imdbID);
     }
 
     @GetMapping("/episode/{imdbId}/season/{season}")
-    public List<Episode> getWatchHistoryEpisodes(@PathVariable String imdbId, @PathVariable String season){
-        return watchHistoryService.getWatchHistoryEpisodes(imdbId, season);
+    public List<Episode> getWatchHistoryEpisodes(Principal principal, @PathVariable String imdbId, @PathVariable String season){
+        String username = principal.getName();
+        return watchHistoryService.getWatchHistoryEpisodes(username, imdbId, season);
     }
 
     @GetMapping("/episode/{imdbId}/{id}/season/{season}/progress")
-    public float getWatchHistorySeasonProgress(@PathVariable String imdbId, @PathVariable String id, @PathVariable String season){
-        return watchHistoryService.getWatchHistorySeasonProgress(imdbId, id, season);
+    public float getWatchHistorySeasonProgress(Principal principal, @PathVariable String imdbId, @PathVariable String id, @PathVariable String season){
+        String username = principal.getName();
+        return watchHistoryService.getWatchHistorySeasonProgress(username, imdbId, id, season);
     }
 
     @GetMapping("/episode/{imdbId}/{id}/progress")
-    public float getWatchHistoryTotalProgress(@PathVariable String imdbId, @PathVariable String id){
-        return watchHistoryService.getWatchHistoryTotalProgress(imdbId, id);
+    public float getWatchHistoryTotalProgress(Principal principal, @PathVariable String imdbId, @PathVariable String id){
+        String username = principal.getName();
+        return watchHistoryService.getWatchHistoryTotalProgress(username, imdbId, id);
     }
 
     @PostMapping("/episode")
-    public Episode addToWatchHistoryEpisodes(@RequestBody Episode episode){
-        return watchHistoryService.addToWatchHistoryEpisodes(episode);
+    public Episode addToWatchHistoryEpisodes(Principal principal, @RequestBody Episode episode){
+        String username = principal.getName();
+        return watchHistoryService.addToWatchHistoryEpisodes(username, episode);
     }
 
     @DeleteMapping("/episode")
-    public void removeFromWatchHistoryEpisodes(@RequestBody Episode episode){
-        watchHistoryService.removeFromWatchHistoryEpisodes(episode);
+    public void removeFromWatchHistoryEpisodes(Principal principal, @RequestBody Episode episode){
+        String username = principal.getName();
+        watchHistoryService.removeFromWatchHistoryEpisodes(username, episode);
     }
 }

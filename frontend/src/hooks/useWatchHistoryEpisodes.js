@@ -40,9 +40,7 @@ export default function useWatchHistoryEpisodes(imdbId, id, season) {
         axios.delete("/api/watchhistory/episode", {
             headers: {
                 Authorization: "Bearer " + token,
-            },
-            data: item.imdbID
-        })
+            }, data: {imdbId, season_number, episode_number}})
             .then(() => getEpisodeHistory())
             .catch((error) => console.error(error.message))
     }

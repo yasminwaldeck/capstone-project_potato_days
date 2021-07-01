@@ -21,7 +21,7 @@ export default function MovieAndSeriesDetailsPage() {
     const {MOVIE, SERIES} = useContext(TypeAndAuthContext)
     const {watchlist} = useWatchlist();
     const {watchHistory} = useWatchHistory();
-    const { seriesProgress } = useWatchHistoryProgress(id, item.id)
+    const { seriesProgress } = useWatchHistoryProgress(id, item.id, item.type)
 
     return (
         <MovieAndSeriesDetails>

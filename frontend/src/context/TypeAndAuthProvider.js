@@ -27,7 +27,7 @@ export default function TypeAndAuthProvider({children}){
     }
 
      return (
-        <TypeAndAuthContext.Provider value={{MOVIE, SERIES, BOTH, DAY, WEEK, login}}>
+        <TypeAndAuthContext.Provider value={{MOVIE, SERIES, BOTH, DAY, WEEK, login, token}}>
             {children}
         </TypeAndAuthContext.Provider>
     )

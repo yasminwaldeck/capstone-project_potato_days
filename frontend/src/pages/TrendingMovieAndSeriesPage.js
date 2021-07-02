@@ -35,7 +35,6 @@ export default function TrendingMovieAndSeriesPage(){
                     onWatchHistory={watchHistory.find(watchedItem => watchedItem.imdbID === item.imdbID)}
                 />
             ))}
-            {console.log("time: " + timewindow + "type: " + searchType)}
         </div>
     )
 }

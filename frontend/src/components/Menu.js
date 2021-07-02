@@ -11,7 +11,7 @@ export default function Menu(){
                 <span></span>
                 <span></span>
                 <ul id="menu">
-                    <li><StyledNavLink to={"/"} onClick={() => document.getElementById("toggle").checked = false}>HOME</StyledNavLink></li>
+                    <li><StyledNavLink to={"/home"} onClick={() => document.getElementById("toggle").checked = false}>HOME</StyledNavLink></li>
                     <li><StyledNavLink to={"/search"} onClick={() => document.getElementById("toggle").checked = false}>SEARCH</StyledNavLink></li>
                     <li><StyledNavLink to={"/watchlist"} onClick={() => document.getElementById("toggle").checked = false}>WATCHLIST</StyledNavLink></li>
                     <li><StyledNavLink to={"/trending"} onClick={() => document.getElementById("toggle").checked = false}>TRENDING</StyledNavLink></li>

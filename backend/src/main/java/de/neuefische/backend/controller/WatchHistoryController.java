@@ -3,6 +3,7 @@ package de.neuefische.backend.controller;
 import de.neuefische.backend.model.MovieAndSeries;
 import de.neuefische.backend.model.OMDb.OmdbOverview;
 import de.neuefische.backend.model.Episode;
+import de.neuefische.backend.model.Random;
 import de.neuefische.backend.service.WatchHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -67,5 +68,11 @@ public class WatchHistoryController {
     public void removeFromWatchHistoryEpisodes(Principal principal, @RequestBody Episode episode){
         String username = principal.getName();
         watchHistoryService.removeFromWatchHistoryEpisodes(username, episode);
+    }
+
+    @GetMapping("/random")
+    public Random getRandomWatchingEntry(Principal principal){
+        String username = principal.getName();
+        return watchHistoryService.getRandomWatchingEntry(username);
     }
 }

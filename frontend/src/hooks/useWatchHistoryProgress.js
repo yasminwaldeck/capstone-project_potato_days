@@ -16,7 +16,6 @@ export default function useWatchHistoryProgress(imdbId, id, type) {
 
     useEffect(() => {
         if(id !== undefined && type === SERIES) {
-            console.log(imdbId + ", " + id)
             axios.get(`/api/watchhistory/episode/${imdbId}/${id}/progress`, config)
                 .then(response => response.data)
                 .then(setSeriesProgress)

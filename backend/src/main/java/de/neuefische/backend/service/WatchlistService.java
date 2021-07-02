@@ -2,6 +2,7 @@ package de.neuefische.backend.service;
 
 import de.neuefische.backend.model.MovieAndSeries;
 import de.neuefische.backend.model.OMDb.OmdbOverview;
+import de.neuefische.backend.model.Random;
 import de.neuefische.backend.model.Stats;
 import de.neuefische.backend.repo.MovieAndSeriesRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,5 +109,17 @@ public class WatchlistService {
         result.sort(Comparator.comparing(Stats::getNumber));
         Collections.reverse(result);
         return result;
+    }
+
+    public Random getRandomWatchlistEntry(String username){
+        List<MovieAndSeries> fullList = movieAndSeriesRepo.findByUsernameAndWatchHistoryIsFalseAndWatchingIsFalse(username);
+        int length = fullList.size();
+        if (length == 0){
+            return null;
+        }
+        int random =  (int)(Math.random() * length);
+        OmdbOverview omdbOverview = omdbApiService.getOverviewById(fullList.get(random).getImdbID());
+        return Random.builder().title(omdbOverview.getTitle()).year(omdbOverview.getYear()).poster_path(omdbOverview.getPoster())
+                .imdbId(omdbOverview.getImdbID()).build();
     }
 }

@@ -29,6 +29,8 @@ const Title = styled.div`
   align-items: center;
   align-content: center;
   justify-items: center;
+  position: sticky;
+  top: 0px;
   img{
     width: 60px;
     height: auto;

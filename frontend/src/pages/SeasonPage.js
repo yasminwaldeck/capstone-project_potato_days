@@ -45,7 +45,7 @@ const SeasonOverview = styled.div`
     margin: 0;
     padding-bottom: 3vh;
     position: sticky;
-    top: 0px;
+    top: 81px;
     h3{
       padding-top: 3vh;
       margin-top: 0;

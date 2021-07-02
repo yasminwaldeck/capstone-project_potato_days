@@ -1,7 +1,7 @@
 import './App.css';
 import SearchPage from "./pages/SearchPage";
 import Header from "./components/Header";
-import TypeProvider from "./context/TypeProvider";
+import TypeAndAuthProvider from "./context/TypeAndAuthProvider";
 import {Switch, Route, BrowserRouter as Router} from "react-router-dom";
 import MovieAndSeriesDetailsPage from "./pages/MovieAndSeriesDetailsPage";
 import LandingPage from "./pages/LandingPage";
@@ -10,41 +10,46 @@ import TrendingMovieAndSeriesPage from "./pages/TrendingMovieAndSeriesPage";
 import WatchHistoryPage from "./pages/WatchHistoryPage";
 import StatsPage from "./pages/StatsPage";
 import SeasonPage from "./pages/SeasonPage";
+import LoginPage from "./pages/LoginPage";
+import PrivateRoute from "./routing/PrivateRoute";
 
 function App() {
   return (
     <div className="App">
-        <TypeProvider>
-            <Router>
+        <Router>
+            <TypeAndAuthProvider>
                 <Header/>
                 <Switch>
-                    <Route path={"/search"}>
+                    <PrivateRoute path={"/search"}>
                         <SearchPage/>
-                    </Route>
-                    <Route path={"/details/:imdbid/:id/:season"} exact>
+                    </PrivateRoute>
+                    <PrivateRoute path={"/details/:imdbid/:id/:season"} exact>
                         <SeasonPage/>
-                    </Route>
-                    <Route path={"/details/:id"} exact>
+                    </PrivateRoute>
+                    <PrivateRoute path={"/details/:id"} exact>
                         <MovieAndSeriesDetailsPage/>
-                    </Route>
-                    <Route path={"/watchlist"}>
+                    </PrivateRoute>
+                    <PrivateRoute path={"/watchlist"}>
                         <WatchlistPage/>
-                    </Route>
-                    <Route path={"/trending"}>
+                    </PrivateRoute>
+                    <PrivateRoute path={"/trending"}>
                         <TrendingMovieAndSeriesPage/>
-                    </Route>
-                    <Route path={"/history"}>
+                    </PrivateRoute>
+                    <PrivateRoute path={"/history"}>
                         <WatchHistoryPage/>
-                    </Route>
-                    <Route path={"/stats"}>
+                    </PrivateRoute>
+                    <PrivateRoute path={"/stats"}>
                         <StatsPage/>
+                    </PrivateRoute>
+                    <Route path={"/login"}>
+                        <LoginPage/>
                     </Route>
-                    <Route path={"/"}>
+                    <PrivateRoute path={"/home"}>
                         <LandingPage/>
-                    </Route>
+                    </PrivateRoute>
                 </Switch>
-            </Router>
-        </TypeProvider>
+            </TypeAndAuthProvider>
+        </Router>
     </div>
   );
 }

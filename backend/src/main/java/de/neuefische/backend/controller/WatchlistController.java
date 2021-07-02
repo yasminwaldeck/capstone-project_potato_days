@@ -7,6 +7,7 @@ import de.neuefische.backend.service.WatchlistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -22,37 +23,44 @@ public class WatchlistController {
     }
 
     @GetMapping
-    public List<OmdbOverview> getWatchlistByType(@RequestParam Optional<String> type){
-        return watchlistService.getWatchlistByType(type);
+    public List<OmdbOverview> getWatchlistByType(Principal principal, @RequestParam Optional<String> type){
+        String username = principal.getName();
+        return watchlistService.getWatchlistByType(username, type);
     }
 
     @PostMapping
-    public OmdbOverview addToWatchlist(@RequestBody MovieAndSeries itemToAdd){
-        return watchlistService.addToWatchlist(itemToAdd);
+    public OmdbOverview addToWatchlist(Principal principal, @RequestBody MovieAndSeries itemToAdd){
+        String username = principal.getName();
+        return watchlistService.addToWatchlist(username, itemToAdd);
     }
 
     @DeleteMapping
-    public void removeFromWatchlist(@RequestBody String imdbID){
-        watchlistService.removeFromWatchlist(imdbID);
+    public void removeFromWatchlist(Principal principal, @RequestBody String imdbID){
+        String username = principal.getName();
+        watchlistService.removeFromWatchlist(username, imdbID);
     }
 
     @GetMapping("/name")
-    public String getRecommendedByFromWatchlist(@RequestParam String imdbID){
-        return watchlistService.getNameFromWatchlist(imdbID);
+    public String getRecommendedByFromWatchlist(Principal principal, @RequestParam String imdbID){
+        String username = principal.getName();
+        return watchlistService.getNameFromWatchlist(username, imdbID);
     }
 
     @GetMapping("/name/stats")
-    public List<Stats> getRecommendedByStats(){
-        return watchlistService.getRecommendedByStats();
+    public List<Stats> getRecommendedByStats(Principal principal){
+        String username = principal.getName();
+        return watchlistService.getRecommendedByStats(username);
     }
 
     @PostMapping("/name")
-    public String addNameToWatchlist(@RequestBody MovieAndSeries itemToAdd){
-        return watchlistService.addNameToWatchlist(itemToAdd);
+    public String addNameToWatchlist(Principal principal, @RequestBody MovieAndSeries itemToAdd){
+        String username = principal.getName();
+        return watchlistService.addNameToWatchlist(username, itemToAdd);
     }
 
     @DeleteMapping("/name")
-    public void removeNameFromWatchlist(@RequestParam String imdbID){
-        watchlistService.removeNameFromWatchlist(imdbID);
+    public void removeNameFromWatchlist(Principal principal, @RequestParam String imdbID){
+        String username = principal.getName();
+        watchlistService.removeNameFromWatchlist(username, imdbID);
     }
 }

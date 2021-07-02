@@ -36,10 +36,10 @@ public class WatchlistServiceTest {
                 "https://www.omdbapi.com/?apikey=" + omDbConfig.getKey() + "&i=imdbID", OmdbOverviewDto.class))
                 .thenReturn(ResponseEntity.ok(OmdbOverviewDto.builder().imdbID("imdbID").build()));
 
-        when(movieAndSeriesRepo.findByImdbID("imdbID")).thenReturn(MovieAndSeries.builder().imdbID("imdbID").type("type").watchHistory(true).watchlist(false).build());
+        when(movieAndSeriesRepo.findById("imdbID_name")).thenReturn(Optional.of(MovieAndSeries.builder().imdbID("imdbID").type("type").watchHistory(true).watchlist(false).build()));
 
         //WHEN
-        watchlistService.addToWatchlist(itemToAdd);
+        watchlistService.addToWatchlist("name", itemToAdd);
 
         //THEN
         verify(movieAndSeriesRepo).save(MovieAndSeries.builder().imdbID("imdbID").type("type").watchHistory(true).watchlist(true).build());
@@ -49,23 +49,23 @@ public class WatchlistServiceTest {
     public void deleteMovieToDatabaseTest(){
         //GIVEN
 
-        when(movieAndSeriesRepo.findByImdbID("imdbID")).thenReturn(MovieAndSeries.builder().imdbID("imdbID").watchHistory(false).watchlist(true).build());
+        when(movieAndSeriesRepo.findById("imdbID_name")).thenReturn(Optional.of(MovieAndSeries.builder().imdbID("imdbID").watchHistory(false).watchlist(true).build()));
 
 
         //WHEN
-        watchlistService.removeFromWatchlist("imdbID");
+        watchlistService.removeFromWatchlist("name", "imdbID");
 
         //THEN
-        verify(movieAndSeriesRepo).deleteByImdbID("imdbID");
+        verify(movieAndSeriesRepo).deleteById("imdbID_name");
     }
 
     @Test
     public void updateInsteadOfDeletingMovieToDatabaseTest(){
         //GIVEN
-        when(movieAndSeriesRepo.findByImdbID("imdbID")).thenReturn(MovieAndSeries.builder().imdbID("imdbID").watchHistory(true).watchlist(true).build());
+        when(movieAndSeriesRepo.findById("imdbID_name")).thenReturn(Optional.of(MovieAndSeries.builder().imdbID("imdbID").watchHistory(true).watchlist(true).build()));
 
         //WHEN
-        watchlistService.removeFromWatchlist("imdbID");
+        watchlistService.removeFromWatchlist("name", "imdbID");
 
         //THEN
         verify(movieAndSeriesRepo).save(MovieAndSeries.builder().imdbID("imdbID").watchHistory(true).watchlist(false).build());
@@ -74,9 +74,9 @@ public class WatchlistServiceTest {
     @Test
     public void getWatchlistByTypeShouldReturnWatchlistByType() {
         // GIVEN
-        when(movieAndSeriesRepo.findMovieAndSeriesByWatchlistIsTrueAndType("type")).thenReturn(List.of(
-                MovieAndSeries.builder().imdbID("id1").type("type").build(),
-                MovieAndSeries.builder().imdbID("id2").type("type").build()
+        when(movieAndSeriesRepo.findMovieAndSeriesByWatchlistIsTrueAndTypeAndUsername("type", "name")).thenReturn(List.of(
+                MovieAndSeries.builder().imdbID("id1").username("name").type("type").build(),
+                MovieAndSeries.builder().imdbID("id2").username("name").type("type").build()
         ));
 
         OmdbOverviewDto omdbOverviewDto1 = new OmdbOverviewDto(
@@ -95,7 +95,7 @@ public class WatchlistServiceTest {
                 .thenReturn(ResponseEntity.ok(omdbOverviewDto2));
 
         // WHEN
-        List<OmdbOverview> items = watchlistService.getWatchlistByType(Optional.of("type"));
+        List<OmdbOverview> items = watchlistService.getWatchlistByType("name", Optional.of("type"));
 
         // THEN
         assertThat(items, is(List.of(
@@ -106,7 +106,7 @@ public class WatchlistServiceTest {
                         "title", "year", "id2", "poster", "type"
                 )
         )));
-        verify(movieAndSeriesRepo).findMovieAndSeriesByWatchlistIsTrueAndType("type");
+        verify(movieAndSeriesRepo).findMovieAndSeriesByWatchlistIsTrueAndTypeAndUsername("type", "name");
     }
 
 

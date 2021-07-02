@@ -27,23 +27,27 @@ public class WatchHistoryService {
         this.tmdbApiService = tmdbApiService;
     }
 
-    public OmdbOverview addToWatchHistory(MovieAndSeries itemToAdd){
-        MovieAndSeries movieAndSeries = movieAndSeriesRepo.findByImdbID(itemToAdd.getImdbID());
-        if(movieAndSeries == null) {
+    public OmdbOverview addToWatchHistory(String username, MovieAndSeries itemToAdd){
+        String id = itemToAdd.getImdbID() + "_" + username;
+        if(movieAndSeriesRepo.findById(id).isEmpty()) {
             itemToAdd.setWatchHistory(true);
+            itemToAdd.setUsername(username);
+            itemToAdd.setId(id);
             movieAndSeriesRepo.save(itemToAdd);
         } else {
+            MovieAndSeries movieAndSeries = movieAndSeriesRepo.findById(id).get();
             movieAndSeries.setWatchHistory(true);
             movieAndSeriesRepo.save(movieAndSeries);
         }
-        return omdbApiService.getOverview(movieAndSeriesRepo.findByImdbID(itemToAdd.getImdbID()));
+        return omdbApiService.getOverview(movieAndSeriesRepo.findById(id).get());
     }
 
-    public void removeFromWatchHistory(String imdbId){
-        MovieAndSeries movieAndSeries = movieAndSeriesRepo.findByImdbID(imdbId);
-        if(movieAndSeries != null) {
-            if (!movieAndSeries.isWatchlist()) {
-                movieAndSeriesRepo.deleteByImdbID(imdbId);
+    public void removeFromWatchHistory(String username, String imdbId){
+        String id = imdbId + "_" + username;
+        if(movieAndSeriesRepo.findById(id).isPresent()) {
+            MovieAndSeries movieAndSeries = movieAndSeriesRepo.findById(id).get();
+            if (!(movieAndSeries.isWatchlist() || movieAndSeries.isWatching())) {
+                movieAndSeriesRepo.deleteById(id);
             } else {
                 movieAndSeries.setWatchHistory(false);
                 movieAndSeriesRepo.save(movieAndSeries);
@@ -51,54 +55,57 @@ public class WatchHistoryService {
         }
     }
 
-    public List<OmdbOverview> getWatchHistoryByType(Optional<String> type){
+    public List<OmdbOverview> getWatchHistoryByType(String username, Optional<String> type){
         if(type.isEmpty()){
-            return movieAndSeriesRepo.findMovieAndSeriesByWatchHistoryIsTrue().stream()
+            return movieAndSeriesRepo.findMovieAndSeriesByWatchHistoryIsTrueAndUsername(username).stream()
                     .map(item -> omdbApiService.getOverview(item))
                     .collect(Collectors.toList());
         }
-        return movieAndSeriesRepo.findMovieAndSeriesByWatchHistoryIsTrueAndType(type.get())
+        return movieAndSeriesRepo.findMovieAndSeriesByWatchHistoryIsTrueAndTypeAndUsername(type.get(), username)
                 .stream()
                 .map(item -> omdbApiService.getOverview(item))
                 .collect(Collectors.toList());
     }
 
-    public List<Episode> getWatchHistoryEpisodes(String imdbID, String season){
-        if(!movieAndSeriesRepo.existsById(imdbID)) {
+    public List<Episode> getWatchHistoryEpisodes(String username, String imdbID, String season){
+        String id = imdbID + "_" + username;
+        if(!movieAndSeriesRepo.existsById(id)) {
             return List.of();
         }
-        return movieAndSeriesRepo.findByImdbID(imdbID)
+        return movieAndSeriesRepo.findById(id)
+                .get()
                 .getWatchedEpisodes()
                 .stream()
                 .filter((episode) -> String.valueOf(episode.getSeason_number()).equals(season))
                 .collect(Collectors.toList());
     }
 
-    public List<Episode> getWatchHistoryAllEpisodes(String imdbID){
-        if(!movieAndSeriesRepo.existsById(imdbID)) {
+    public List<Episode> getWatchHistoryAllEpisodes(String id){
+        if(!movieAndSeriesRepo.existsById(id)) {
             return List.of();
         }
-        return movieAndSeriesRepo.findByImdbID(imdbID).getWatchedEpisodes();
+        return movieAndSeriesRepo.findById(id).get().getWatchedEpisodes();
     }
 
-    public float getWatchHistorySeasonProgress(String imdbId, String tmdbId, String season){
-        if (getWatchHistoryEpisodes(imdbId, season) == null){
+    public float getWatchHistorySeasonProgress(String username, String imdbId, String tmdbId, String season){
+        if (getWatchHistoryEpisodes(username, imdbId, season) == null){
             return 0;
         }
-        float watched = getWatchHistoryEpisodes(imdbId, season).size();
+        float watched = getWatchHistoryEpisodes(username, imdbId, season).size();
         float total = tmdbApiService.getEpisodes(tmdbId, season).getEpisodes().size();
         return watched/total * 100;
     }
 
-    public float getWatchHistoryTotalProgress(String imdbId, String tmdbId){
-        List<Episode> list = getWatchHistoryAllEpisodes(imdbId);
+    public float getWatchHistoryTotalProgress(String username, String imdbId, String tmdbId){
+        String id = imdbId + "_" + username;
+        List<Episode> list = getWatchHistoryAllEpisodes(id);
         if (list == null){
             return 0;
         }
         float watched = list.size();
         float total = tmdbApiService.getDetails(tmdbId, "series").getNumber_of_episodes();
         if (total == watched){
-            MovieAndSeries movieAndSeries = movieAndSeriesRepo.findByImdbID(imdbId);
+            MovieAndSeries movieAndSeries = movieAndSeriesRepo.findById(id).get();
             movieAndSeries.setWatchHistory(true);
             movieAndSeries.setWatching(false);
             movieAndSeriesRepo.save(movieAndSeries);
@@ -106,8 +113,9 @@ public class WatchHistoryService {
         return watched/total * 100;
     }
 
-    public Episode addToWatchHistoryEpisodes(Episode episode){
-        MovieAndSeries movieAndSeries = movieAndSeriesRepo.findByImdbID(episode.getImdbId());
+    public Episode addToWatchHistoryEpisodes(String username, Episode episode){
+        String id = episode.getImdbId() + "_" + username;
+        MovieAndSeries movieAndSeries = movieAndSeriesRepo.findById(id).get();
         List<Episode> list = movieAndSeries.getWatchedEpisodes();
         Episode itemToAdd = Episode.builder()
                 .season_number(episode.getSeason_number())
@@ -124,13 +132,17 @@ public class WatchHistoryService {
         movieAndSeries.setWatchedEpisodes(list);
         movieAndSeries.setWatching(true);
         movieAndSeries.setType("series");
+        movieAndSeries.setUsername(username);
+        movieAndSeries.setId(id);
+        movieAndSeries.setImdbID(episode.getImdbId());
         movieAndSeriesRepo.save(movieAndSeries);
         return itemToAdd;
     }
 
-    public void removeFromWatchHistoryEpisodes(Episode episode){
-        if(movieAndSeriesRepo.existsById(episode.getImdbId())) {
-            MovieAndSeries movieAndSeries = movieAndSeriesRepo.findByImdbID(episode.getImdbId());
+    public void removeFromWatchHistoryEpisodes(String username, Episode episode){
+        String id = episode.getImdbId() + "_" + username;
+        if(movieAndSeriesRepo.existsById(id)) {
+            MovieAndSeries movieAndSeries = movieAndSeriesRepo.findById(id).get();
             List<Episode> list = movieAndSeries.getWatchedEpisodes();
             list = list.stream()
                     .filter((item) ->
@@ -139,6 +151,10 @@ public class WatchHistoryService {
             .collect(Collectors.toList());
 
             if (list.size() == 0) {
+                if(! (movieAndSeries.isWatchlist() || movieAndSeries.isWatchHistory())){
+                    movieAndSeriesRepo.deleteById(id);
+                    return;
+                }
                 movieAndSeries.setWatching(false);
             }
             movieAndSeries.setWatchedEpisodes(list);

@@ -12,7 +12,7 @@ export default function SeasonPage(){
 
     return(
         <SeasonOverview>
-            {seasonProgress && (seasonProgress != 0) ?
+            {seasonProgress && (seasonProgress !== 0) ?
                 <div id={"progress"}>
                     <h3>Progress: {seasonProgress.toFixed(1)}%</h3>
                     <progress value={seasonProgress} max="100"/>

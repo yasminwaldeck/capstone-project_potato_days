@@ -18,7 +18,7 @@ export default function SeasonCard({season, tmdbid}) {
                     {season.name ? <h3>{season.name}</h3> : <h3>Season {season.season_number}</h3>}
                     <p>Episodes: {season.episode_count}</p>
                     <p>{season.air_date}</p>
-                    {seasonProgress && (seasonProgress != 0) ?
+                    {seasonProgress && (seasonProgress !== 0) ?
                         <div>
                             <p>Progress: {seasonProgress.toFixed(1)}%</p>
                             <progress value={seasonProgress} max="100"/>

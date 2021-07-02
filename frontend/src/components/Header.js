@@ -10,7 +10,7 @@ export default function Header(){
             <h1>
                 <StyledNavLink to={"/"}>POTATO DAYS</StyledNavLink>
             </h1>
-            <img src={Potato}/>
+            <img src={Potato} alt={"logo"}/>
         </Title>
     )
 

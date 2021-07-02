@@ -22,7 +22,7 @@ export default function useWatchHistoryProgress(imdbId, id, type) {
                 .then(setSeriesProgress)
                 .catch((error) => console.error(error.message));
         }
-    }, [id])
+    }, [id, imdbId])
 
 
     return { seriesProgress }

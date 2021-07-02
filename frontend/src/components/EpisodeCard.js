@@ -1,6 +1,5 @@
 import Default from "../resources/couchpotato.jpg";
 import styled from "styled-components/macro";
-import useWatchHistoryEpisodes from "../hooks/useWatchHistoryEpisodes";
 import {useParams} from "react-router-dom";
 
 export default function EpisodeCard({episode, addEpisodeToHistory, removeEpisodeFromHistory, onWatchHistory}){

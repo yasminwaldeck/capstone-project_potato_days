@@ -1,20 +1,18 @@
-import styled from 'styled-components/macro'
-import {NavLink} from "react-router-dom";
+import styled from "styled-components/macro";
+import { NavLink } from "react-router-dom";
 import Menu from "./Menu";
-import  Potato from "../resources/tenor.gif"
+import Potato from "../resources/tenor.gif";
 
-export default function Header(){
-    return(
-        <Title>
-            <Menu/>
-            <h1>
-                <StyledNavLink to={"/home"}>POTATO DAYS</StyledNavLink>
-            </h1>
-            <img src={Potato} alt={"logo"}/>
-        </Title>
-    )
-
-
+export default function Header() {
+  return (
+    <Title>
+      <Menu />
+      <h1>
+        <StyledNavLink to={"/home"}>POTATO DAYS</StyledNavLink>
+      </h1>
+      <img src={Potato} alt={"logo"} />
+    </Title>
+  );
 }
 
 const Title = styled.div`
@@ -32,13 +30,13 @@ const Title = styled.div`
   position: sticky;
   top: 0px;
   z-index: 5;
-  img{
+  img {
     width: 60px;
     height: auto;
     transform: scaleX(-1);
     z-index: -1;
   }
-`
+`;
 
 const StyledNavLink = styled(NavLink)`
     text-decoration: none;
@@ -48,4 +46,4 @@ const StyledNavLink = styled(NavLink)`
         text-decoration: none;
       color: white;
     
-`
+`;

@@ -22,16 +22,16 @@ public class OmdbApiServiceTest {
     public void searchMoviesShouldReturnAListWithMovies(){
 
         //GIVEN
-        List<OmdbOverviewDto> movies = List.of(
-                new OmdbOverviewDto("title", "year", "imdb", "url", "movie"),
-                new OmdbOverviewDto("title2", "year2", "imdb2", "url2", "movie"),
-                new OmdbOverviewDto("title3", "year3", "imdb3", "url3", "movie")
+        List<OmdbDetailsDto> movies = List.of(
+                OmdbDetailsDto.builder().title("title1").build(),
+                OmdbDetailsDto.builder().title("title2").build(),
+                OmdbDetailsDto.builder().title("title3").build()
         );
 
-        List<OmdbOverview> expected = List.of(
-                new OmdbOverview("title", "year", "imdb", "url", "movie"),
-                new OmdbOverview("title2", "year2", "imdb2", "url2", "movie"),
-                new OmdbOverview("title3", "year3", "imdb3", "url3", "movie")
+        List<OmdbDetails> expected = List.of(
+                OmdbDetails.builder().title("title1").build(),
+                OmdbDetails.builder().title("title2").build(),
+                OmdbDetails.builder().title("title3").build()
         );
 
         OmdbResponseDto omdbResponseDto = new OmdbResponseDto(movies, 3);
@@ -42,7 +42,7 @@ public class OmdbApiServiceTest {
 
         //WHEN
 
-        List<OmdbOverview> actual = omdbApiService.searchByString("title", "movie");
+        List<OmdbDetails> actual = omdbApiService.searchByString("title", "movie");
 
         //THEN
 
@@ -66,7 +66,7 @@ public class OmdbApiServiceTest {
 
         //WHEN
 
-        List<OmdbOverview> actual = omdbApiService.searchByString("title", "movie");
+        List<OmdbDetails> actual = omdbApiService.searchByString("title", "movie");
 
         //THEN
 
@@ -126,28 +126,24 @@ public class OmdbApiServiceTest {
     public void getOverviewByIdShouldReturnOverview(){
 
         //GIVEN
-        OmdbOverviewDto omdbOverviewDto = new OmdbOverviewDto(
-                "title", "year", "imdbId", "poster", "type"
-        );
+        OmdbDetailsDto omdbDetailsDto = OmdbDetailsDto.builder().title("title1").build();
 
-        OmdbOverview expected = new OmdbOverview(
-                "title", "year", "imdbId", "poster", "type"
-        );
+        OmdbDetails expected = OmdbDetails.builder().title("title1").build();
 
         when(mockedTemplate.getForEntity(
-                "https://www.omdbapi.com/?apikey=" + omdbconfig.getKey() + "&i=someId", OmdbOverviewDto.class))
-                .thenReturn(ResponseEntity.ok(omdbOverviewDto));
+                "https://www.omdbapi.com/?apikey=" + omdbconfig.getKey() + "&i=someId", OmdbDetailsDto.class))
+                .thenReturn(ResponseEntity.ok(omdbDetailsDto));
 
         //WHEN
 
-        OmdbOverview actual = omdbApiService.getOverviewById("someId");
+        OmdbDetails actual = omdbApiService.getOverviewById("someId");
 
         //THEN
 
         assertThat(actual, is(expected));
         verify(mockedTemplate).getForEntity(
                 ("https://www.omdbapi.com/?apikey=" + omdbconfig.getKey() + "&i=someId"),
-                OmdbOverviewDto.class);
+                OmdbDetailsDto.class);
 
     }
 

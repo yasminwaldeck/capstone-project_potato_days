@@ -1,14 +1,12 @@
 package de.neuefische.backend.service;
 
 import de.neuefische.backend.model.MovieAndSeries;
-import de.neuefische.backend.model.OMDb.OmdbOverview;
+import de.neuefische.backend.model.OMDb.OmdbDetails;
 import de.neuefische.backend.model.Random;
 import de.neuefische.backend.model.Stats;
 import de.neuefische.backend.repo.MovieAndSeriesRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.rmi.NoSuchObjectException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -23,7 +21,7 @@ public class WatchlistService {
         this.omdbApiService = omdbApiService;
     }
 
-    public List<OmdbOverview> getWatchlistByType(String username, Optional<String> type){
+    public List<OmdbDetails> getWatchlistByType(String username, Optional<String> type){
         if(type.isEmpty()){
             return movieAndSeriesRepo.findMovieAndSeriesByWatchlistIsTrueAndUsername(username).stream()
                     .map(item -> omdbApiService.getOverview(item)
@@ -44,7 +42,7 @@ public class WatchlistService {
         return movieAndSeriesRepo.findById(id).get().getRecommendedBy();
     }
 
-    public OmdbOverview addToWatchlist(String username, MovieAndSeries itemToAdd){
+    public OmdbDetails addToWatchlist(String username, MovieAndSeries itemToAdd){
         String id = itemToAdd.getImdbID() + "_" + username;
         if(movieAndSeriesRepo.findById(id).isEmpty()) {
             itemToAdd.setWatchlist(true);
@@ -118,7 +116,7 @@ public class WatchlistService {
             return null;
         }
         int random =  (int)(Math.random() * length);
-        OmdbOverview omdbOverview = omdbApiService.getOverviewById(fullList.get(random).getImdbID());
+        OmdbDetails omdbOverview = omdbApiService.getOverviewById(fullList.get(random).getImdbID());
         return Random.builder().title(omdbOverview.getTitle()).year(omdbOverview.getYear()).poster_path(omdbOverview.getPoster())
                 .imdbId(omdbOverview.getImdbID()).build();
     }

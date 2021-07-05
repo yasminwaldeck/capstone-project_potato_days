@@ -2,8 +2,8 @@ package service;
 
 import de.neuefische.backend.config.OMDbConfig;
 import de.neuefische.backend.model.*;
-import de.neuefische.backend.model.OMDb.OmdbOverview;
-import de.neuefische.backend.model.OMDb.OmdbOverviewDto;
+import de.neuefische.backend.model.OMDb.OmdbDetails;
+import de.neuefische.backend.model.OMDb.OmdbDetailsDto;
 import de.neuefische.backend.repo.MovieAndSeriesRepo;
 import de.neuefische.backend.service.OmdbApiService;
 import de.neuefische.backend.service.WatchlistService;
@@ -16,7 +16,6 @@ import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.mockito.Mockito.*;
 
 public class WatchlistServiceTest {
@@ -33,8 +32,8 @@ public class WatchlistServiceTest {
         MovieAndSeries itemToAdd = MovieAndSeries.builder().imdbID("imdbID").type("type").build();
 
         when(mockedTemplate.getForEntity(
-                "https://www.omdbapi.com/?apikey=" + omDbConfig.getKey() + "&i=imdbID", OmdbOverviewDto.class))
-                .thenReturn(ResponseEntity.ok(OmdbOverviewDto.builder().imdbID("imdbID").build()));
+                "https://www.omdbapi.com/?apikey=" + omDbConfig.getKey() + "&i=imdbID", OmdbDetailsDto.class))
+                .thenReturn(ResponseEntity.ok(OmdbDetailsDto.builder().imdbID("imdbID").build()));
 
         when(movieAndSeriesRepo.findById("imdbID_name")).thenReturn(Optional.of(MovieAndSeries.builder().imdbID("imdbID").type("type").watchHistory(true).watchlist(false).build()));
 
@@ -79,32 +78,24 @@ public class WatchlistServiceTest {
                 MovieAndSeries.builder().imdbID("id2").username("name").type("type").build()
         ));
 
-        OmdbOverviewDto omdbOverviewDto1 = new OmdbOverviewDto(
-                "title", "year", "id1", "poster", "type"
-        );
-        OmdbOverviewDto omdbOverviewDto2 = new OmdbOverviewDto(
-                "title", "year", "id2", "poster", "type"
-        );
+        OmdbDetailsDto omdbDetailsDto1 = OmdbDetailsDto.builder().title("title1").build();
+        OmdbDetailsDto omdbDetailsDto2 = OmdbDetailsDto.builder().title("title2").build();
 
         when(mockedTemplate.getForEntity(
-                "https://www.omdbapi.com/?apikey=" + omDbConfig.getKey() + "&i=id1", OmdbOverviewDto.class))
-                .thenReturn(ResponseEntity.ok(omdbOverviewDto1));
+                "https://www.omdbapi.com/?apikey=" + omDbConfig.getKey() + "&i=id1", OmdbDetailsDto.class))
+                .thenReturn(ResponseEntity.ok(omdbDetailsDto1));
 
         when(mockedTemplate.getForEntity(
-                "https://www.omdbapi.com/?apikey=" + omDbConfig.getKey() + "&i=id2", OmdbOverviewDto.class))
-                .thenReturn(ResponseEntity.ok(omdbOverviewDto2));
+                "https://www.omdbapi.com/?apikey=" + omDbConfig.getKey() + "&i=id2", OmdbDetailsDto.class))
+                .thenReturn(ResponseEntity.ok(omdbDetailsDto2));
 
         // WHEN
-        List<OmdbOverview> items = watchlistService.getWatchlistByType("name", Optional.of("type"));
+        List<OmdbDetails> items = watchlistService.getWatchlistByType("name", Optional.of("type"));
 
         // THEN
         assertThat(items, is(List.of(
-                new OmdbOverview(
-                        "title", "year", "id1", "poster", "type"
-                ),
-                new OmdbOverview(
-                        "title", "year", "id2", "poster", "type"
-                )
+                OmdbDetails.builder().title("title1").build(),
+                OmdbDetails.builder().title("title2").build()
         )));
         verify(movieAndSeriesRepo).findMovieAndSeriesByWatchlistIsTrueAndTypeAndUsername("type", "name");
     }

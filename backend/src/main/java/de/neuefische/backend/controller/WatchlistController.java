@@ -1,7 +1,7 @@
 package de.neuefische.backend.controller;
 
 import de.neuefische.backend.model.MovieAndSeries;
-import de.neuefische.backend.model.OMDb.OmdbOverview;
+import de.neuefische.backend.model.OMDb.OmdbDetails;
 import de.neuefische.backend.model.Random;
 import de.neuefische.backend.model.Stats;
 import de.neuefische.backend.service.WatchlistService;
@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -24,13 +23,13 @@ public class WatchlistController {
     }
 
     @GetMapping
-    public List<OmdbOverview> getWatchlistByType(Principal principal, @RequestParam Optional<String> type){
+    public List<OmdbDetails> getWatchlistByType(Principal principal, @RequestParam Optional<String> type){
         String username = principal.getName();
         return watchlistService.getWatchlistByType(username, type);
     }
 
     @PostMapping
-    public OmdbOverview addToWatchlist(Principal principal, @RequestBody MovieAndSeries itemToAdd){
+    public OmdbDetails addToWatchlist(Principal principal, @RequestBody MovieAndSeries itemToAdd){
         String username = principal.getName();
         return watchlistService.addToWatchlist(username, itemToAdd);
     }

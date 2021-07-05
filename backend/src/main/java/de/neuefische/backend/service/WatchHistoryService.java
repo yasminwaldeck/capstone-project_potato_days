@@ -1,14 +1,12 @@
 package de.neuefische.backend.service;
 
 import de.neuefische.backend.model.MovieAndSeries;
-import de.neuefische.backend.model.OMDb.OmdbOverview;
+import de.neuefische.backend.model.OMDb.OmdbDetails;
 import de.neuefische.backend.model.Episode;
 import de.neuefische.backend.model.Random;
 import de.neuefische.backend.repo.MovieAndSeriesRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +26,7 @@ public class WatchHistoryService {
         this.tmdbApiService = tmdbApiService;
     }
 
-    public OmdbOverview addToWatchHistory(String username, MovieAndSeries itemToAdd){
+    public OmdbDetails addToWatchHistory(String username, MovieAndSeries itemToAdd){
         String id = itemToAdd.getImdbID() + "_" + username;
         if(movieAndSeriesRepo.findById(id).isEmpty()) {
             itemToAdd.setWatchHistory(true);
@@ -56,7 +54,7 @@ public class WatchHistoryService {
         }
     }
 
-    public List<OmdbOverview> getWatchHistoryByType(String username, Optional<String> type){
+    public List<OmdbDetails> getWatchHistoryByType(String username, Optional<String> type){
         if(type.isEmpty()){
             return movieAndSeriesRepo.findMovieAndSeriesByWatchHistoryIsTrueAndUsername(username).stream()
                     .map(item -> omdbApiService.getOverview(item))
@@ -176,7 +174,7 @@ public class WatchHistoryService {
             return null;
         }
         int random =  (int)(Math.random() * length);
-        OmdbOverview omdbOverview = omdbApiService.getOverviewById(fullList.get(random).getImdbID());
+        OmdbDetails omdbOverview = omdbApiService.getOverviewById(fullList.get(random).getImdbID());
         float progress = getWatchHistoryTotalProgress(username, omdbOverview.getImdbID(), tmdbApiService.getId(omdbOverview.getImdbID()));
 
         return Random.builder().title(omdbOverview.getTitle()).year(omdbOverview.getYear()).poster_path(omdbOverview.getPoster())

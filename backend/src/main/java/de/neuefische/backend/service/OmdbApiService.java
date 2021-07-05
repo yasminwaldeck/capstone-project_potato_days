@@ -10,7 +10,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,7 +24,7 @@ public class OmdbApiService {
         this.restTemplate = restTemplate;
     }
 
-    public List<OmdbOverview> searchByString(String searchString, String type){
+    public List<OmdbDetails> searchByString(String searchString, String type){
 
         if(searchString.isEmpty() || type.isEmpty()){
             return null;
@@ -38,9 +37,9 @@ public class OmdbApiService {
             return List.of();
         }
 
-        List<OmdbOverviewDto> responseList = response.getBody().getList();
+        List<OmdbDetailsDto> responseList = response.getBody().getList();
         return responseList.stream()
-                    .map(movie -> OmdbOverview.builder()
+                    .map(movie -> OmdbDetails.builder()
                     .title(movie.getTitle())
                     .year(movie.getYear())
                     .imdbID(movie.getImdbID())
@@ -73,16 +72,16 @@ public class OmdbApiService {
                 .build();
     }
 
-    public OmdbOverview getOverview(MovieAndSeries movieAndSeries){
+    public OmdbDetails getOverview(MovieAndSeries movieAndSeries){
 
         String url = BASE_URL_WITH_KEY_ANNOTATION + omdbConfig.getKey() + "&i=" + movieAndSeries.getImdbID();
-        ResponseEntity<OmdbOverviewDto> response = restTemplate.getForEntity(url, OmdbOverviewDto.class);
+        ResponseEntity<OmdbDetailsDto> response = restTemplate.getForEntity(url, OmdbDetailsDto.class);
 
         if(response.getBody() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         } else {
-            OmdbOverviewDto responseBody = response.getBody();
-            return OmdbOverview.builder()
+            OmdbDetailsDto responseBody = response.getBody();
+            return OmdbDetails.builder()
                     .title(responseBody.getTitle())
                     .year(responseBody.getYear())
                     .imdbID(responseBody.getImdbID())
@@ -92,16 +91,16 @@ public class OmdbApiService {
         }
     }
 
-    public OmdbOverview getOverviewById(String imdbID){
+    public OmdbDetails getOverviewById(String imdbID){
 
         String url = BASE_URL_WITH_KEY_ANNOTATION + omdbConfig.getKey() + "&i=" + imdbID;
-        ResponseEntity<OmdbOverviewDto> response = restTemplate.getForEntity(url, OmdbOverviewDto.class);
+        ResponseEntity<OmdbDetailsDto> response = restTemplate.getForEntity(url, OmdbDetailsDto.class);
 
         if(response.getBody() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-        OmdbOverviewDto responseBody = response.getBody();
-        return OmdbOverview.builder()
+        OmdbDetailsDto responseBody = response.getBody();
+        return OmdbDetails.builder()
                 .title(responseBody.getTitle())
                 .year(responseBody.getYear())
                 .imdbID(responseBody.getImdbID())

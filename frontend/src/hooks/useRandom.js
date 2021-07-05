@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react";
 export default function useRandom() {
   const [watchlistItem, setWatchlistItem] = useState({});
   const [watchhistoryItem, setWatchhistorytItem] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   const { token } = useContext(TypeAndAuthContext);
   const config = {
     headers: {
@@ -13,6 +14,7 @@ export default function useRandom() {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     axios
       .get(`/api/watchlist/random`, config)
       .then((response) => response.data)
@@ -23,8 +25,9 @@ export default function useRandom() {
       .get(`/api/watchhistory/random`, config)
       .then((response) => response.data)
       .then(setWatchhistorytItem)
-      .catch((error) => console.error(error.message));
+      .catch((error) => console.error(error.message))
+      .finally(() => setIsLoading(false));
   }, []);
 
-  return { watchlistItem, watchhistoryItem };
+  return { watchlistItem, watchhistoryItem, isLoading };
 }

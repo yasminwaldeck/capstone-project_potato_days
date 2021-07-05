@@ -5,13 +5,14 @@ import useWatchlist from "../hooks/useWatchlist";
 import useSearch from "../hooks/useSearch";
 import styled from "styled-components/macro";
 import useWatchHistory from "../hooks/useWatchHistory";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function SearchPage() {
   const { MOVIE, SERIES } = useContext(TypeAndAuthContext);
   const [searchString, setSearchString] = useState("");
   const [searchType, setSearchType] = useState(MOVIE);
   const { watchlist } = useWatchlist();
-  const { searchResults } = useSearch(searchString, searchType);
+  const { searchResults, isLoading } = useSearch(searchString, searchType);
   const { watchHistory } = useWatchHistory();
 
   return (
@@ -36,6 +37,7 @@ export default function SearchPage() {
         />{" "}
         Series
       </div>
+      {isLoading && <LoadingSpinner />}
       {searchResults &&
         searchResults.map((item) => (
           <MovieAndSeriesCard

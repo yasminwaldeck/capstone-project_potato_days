@@ -4,6 +4,7 @@ import TypeAndAuthContext from "../context/TypeAndAuthContext";
 
 export default function useSeasons(id, season) {
   const [item, setItem] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   const { token } = useContext(TypeAndAuthContext);
   const config = {
     headers: {
@@ -12,12 +13,14 @@ export default function useSeasons(id, season) {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     axios
       .get(`/api/details/${id}/season/${season}`, config)
       .then((response) => response.data)
       .then(setItem)
-      .catch((error) => console.error(error.message));
+      .catch((error) => console.error(error.message))
+      .finally(() => setIsLoading(false));
   }, [id, season]);
 
-  return { item };
+  return { item, isLoading };
 }

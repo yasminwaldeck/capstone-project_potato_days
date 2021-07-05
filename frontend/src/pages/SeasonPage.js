@@ -3,10 +3,11 @@ import useSeasons from "../hooks/useSeasons";
 import EpisodeCard from "../components/EpisodeCard";
 import styled from "styled-components/macro";
 import useWatchHistoryEpisodes from "../hooks/useWatchHistoryEpisodes";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function SeasonPage() {
   const { imdbid, id, season } = useParams();
-  const { item } = useSeasons(id, season);
+  const { item, isLoading } = useSeasons(id, season);
   const {
     episodeWatchHistory,
     seasonProgress,
@@ -16,6 +17,7 @@ export default function SeasonPage() {
 
   return (
     <SeasonOverview>
+      {isLoading && <LoadingSpinner />}
       {seasonProgress && seasonProgress !== 0 ? (
         <div id={"progress"}>
           <h3>Progress: {seasonProgress.toFixed(1)}%</h3>

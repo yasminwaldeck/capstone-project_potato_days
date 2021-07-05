@@ -4,13 +4,14 @@ import { useContext, useState } from "react";
 import useTrending from "../hooks/useTrending";
 import MovieAndSeriesCard from "../components/MovieAndSeriesCard";
 import useWatchHistory from "../hooks/useWatchHistory";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function TrendingMovieAndSeriesPage() {
   const { MOVIE, SERIES, DAY, WEEK } = useContext(TypeAndAuthContext);
   const [searchType, setSearchType] = useState(MOVIE);
   const [timewindow, setTimewindow] = useState(DAY);
   const { watchlist } = useWatchlist();
-  const { searchResults } = useTrending(timewindow, searchType);
+  const { searchResults, isLoading } = useTrending(timewindow, searchType);
   const { watchHistory } = useWatchHistory();
 
   return (
@@ -45,6 +46,7 @@ export default function TrendingMovieAndSeriesPage() {
         />{" "}
         Week
       </div>
+      {isLoading && <LoadingSpinner />}
       {searchResults &&
         searchResults.map((item) => (
           <MovieAndSeriesCard

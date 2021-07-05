@@ -4,6 +4,7 @@ import TypeAndAuthContext from "../context/TypeAndAuthContext";
 
 export default function useDetails(id) {
   const [item, setItem] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   const { token } = useContext(TypeAndAuthContext);
   const config = {
     headers: {
@@ -12,12 +13,14 @@ export default function useDetails(id) {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     axios
       .get(`/api/details/${id}`, config)
       .then((response) => response.data)
       .then(setItem)
-      .catch((error) => console.error(error.message));
+      .catch((error) => console.error(error.message))
+      .finally(() => setIsLoading(false));
   }, [id]);
 
-  return { item };
+  return { item, isLoading };
 }

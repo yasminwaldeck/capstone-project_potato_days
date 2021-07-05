@@ -4,11 +4,12 @@ import TypeAndAuthContext from "../context/TypeAndAuthContext";
 import useWatchlist from "../hooks/useWatchlist";
 import useWatchHistory from "../hooks/useWatchHistory";
 import useWatchHistoryByType from "../hooks/useWatchHistoryByType";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function WatchHistoryPage() {
   const [type, setType] = useState();
   const { MOVIE, SERIES } = useContext(TypeAndAuthContext);
-  const { watchHistoryItems, setWatchHistoryItems } =
+  const { watchHistoryItems, setWatchHistoryItems, isLoading } =
     useWatchHistoryByType(type);
   const { watchHistory } = useWatchHistory();
   const { watchlist } = useWatchlist();
@@ -24,6 +25,7 @@ export default function WatchHistoryPage() {
       >
         See everything!
       </button>
+      {isLoading && <LoadingSpinner />}
 
       {type !== null &&
         watchHistoryItems.map((item) => (

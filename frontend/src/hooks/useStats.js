@@ -4,6 +4,7 @@ import TypeAndAuthContext from "../context/TypeAndAuthContext";
 
 export default function useStats() {
   const [stats, setStats] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const { token } = useContext(TypeAndAuthContext);
   const config = {
     headers: {
@@ -12,15 +13,16 @@ export default function useStats() {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     axios
       .get("/api/watchlist/name/stats", config)
       .then((response) => response.data)
       .then((response) => {
         setStats(response);
-        console.log(response);
       })
-      .catch((error) => console.error(error.message));
+      .catch((error) => console.error(error.message))
+      .finally(() => setIsLoading(false));
   }, []);
 
-  return { stats };
+  return { stats, isLoading };
 }

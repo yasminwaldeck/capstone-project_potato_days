@@ -13,10 +13,11 @@ import SeasonCard from "../components/SeasonCard";
 import AddRemoveWatchButtons from "../components/AddRemoveWatchButtons";
 import useWatchHistory from "../hooks/useWatchHistory";
 import useWatchHistoryProgress from "../hooks/useWatchHistoryProgress";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function MovieAndSeriesDetailsPage() {
   const { id } = useParams();
-  const { item } = useDetails(id);
+  const { item, isLoading } = useDetails(id);
   const { MOVIE, SERIES } = useContext(TypeAndAuthContext);
   const { watchlist } = useWatchlist();
   const { watchHistory } = useWatchHistory();
@@ -24,6 +25,7 @@ export default function MovieAndSeriesDetailsPage() {
 
   return (
     <MovieAndSeriesDetails>
+      {isLoading && <LoadingSpinner />}
       {item && (
         <>
           <img src={item.poster} alt={"Poster"} />

@@ -4,6 +4,7 @@ import TypeAndAuthContext from "../context/TypeAndAuthContext";
 
 export default function useWatchHistoryByType(type) {
   const [watchHistoryItems, setWatchHistoryItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const { token } = useContext(TypeAndAuthContext);
   const config = {
     headers: {
@@ -12,12 +13,14 @@ export default function useWatchHistoryByType(type) {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     axios
       .get(`/api/watchhistory?type=${type}`, config)
       .then((response) => response.data)
       .then(setWatchHistoryItems)
-      .catch((error) => console.error(error.message));
+      .catch((error) => console.error(error.message))
+      .finally(() => setIsLoading(false));
   }, [type]);
 
-  return { watchHistoryItems, setWatchHistoryItems };
+  return { watchHistoryItems, setWatchHistoryItems, isLoading };
 }

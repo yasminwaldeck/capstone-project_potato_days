@@ -7,7 +7,6 @@ export default function useWatchHistoryProgress(imdbId, id, type) {
   const [seriesProgress, setSeriesProgress] = useState();
   const { token } = useContext(TypeAndAuthContext);
 
-
   useEffect(() => {
     const config = {
       headers: {

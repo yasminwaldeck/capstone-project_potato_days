@@ -15,7 +15,7 @@ export default function MovieAndSeriesCard({
         {item.title} ({item.year})
       </h3>
       <div id="buttons">
-          <DetailsButtons imdbID={item.imdbID}/>
+        <DetailsButtons imdbID={item.imdbID} />
         <AddRemoveWatchButtons
           onWatchlist={onWatchlist}
           onWatchHistory={onWatchHistory}
@@ -51,4 +51,4 @@ const OverviewCard = styled.div`
     padding: 1vh;
     margin: 0;
   }
-  `
+`;

@@ -1,23 +1,22 @@
-import {ReactComponent as Info} from "../resources/info.svg";
+import { ReactComponent as Info } from "../resources/info.svg";
 import styled from "styled-components/macro";
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-export default function DetailsButtonsWide( {imdbID} ){
-
-    return (
-        <Button>
-        <StyledNavLink to={"/details/" + imdbID}>
-            <button id={"btn"}>
-                <Info id={"icon"} />
-                Details!
-            </button>
-        </StyledNavLink>
-        </Button>
-    )
+export default function DetailsButtonsWide({ imdbID }) {
+  return (
+    <Button>
+      <StyledNavLink to={"/details/" + imdbID}>
+        <button id={"btn"}>
+          <Info id={"icon"} />
+          Details!
+        </button>
+      </StyledNavLink>
+    </Button>
+  );
 }
 
 const Button = styled.div`
- #btn {
+  #btn {
     border: none;
     font-size: inherit;
     color: white;
@@ -35,26 +34,26 @@ const Button = styled.div`
     justify-content: space-between;
     width: 60vw;
     background-color: #828282;
-}
-#icon {
+  }
+  #icon {
     margin: 0 10px 0 0;
     width: 15px;
     height: auto;
-}
+  }
 
-#btn:after {
+  #btn:after {
     content: "";
     position: absolute;
     z-index: -1;
     -webkit-transition: all 0.3s;
     -moz-transition: all 0.3s;
     transition: all 0.3s;
-}
+  }
 
-#btn:before {
+  #btn:before {
     line-height: 1;
     position: relative;
-}
+  }
 `;
 
 const StyledNavLink = styled(NavLink)`

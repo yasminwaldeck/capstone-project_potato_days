@@ -20,7 +20,7 @@ export default function RandomCard({ item }) {
               <progress value={item.progress} max="100" />
             </div>
           )}
-          <DetailsButtonsNarrow imdbID={item.imdbId} id={"button"}/>
+          <DetailsButtonsNarrow imdbID={item.imdbId} id={"button"} />
         </div>
       </section>
     </Random>
@@ -30,12 +30,12 @@ export default function RandomCard({ item }) {
 const Random = styled.div`
   width: 90vw;
   margin: 0 auto 5vh auto;
-  
-  h3{
-    margin-top:1vh;
+
+  h3 {
+    margin-top: 1vh;
     margin-bottom: 2vh;
   }
-  h4{
+  h4 {
     margin-top: 2vh;
   }
 
@@ -54,4 +54,3 @@ const Random = styled.div`
     justify-content: space-around;
   }
 `;
-

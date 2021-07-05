@@ -1,6 +1,6 @@
 import styled from "styled-components/macro";
 import Default from "../resources/couchpotato.jpg";
-import { NavLink } from "react-router-dom";
+import DetailsButtonsNarrow from "./DetailsButtonNarrow";
 
 export default function RandomCard({ item }) {
   return (
@@ -20,9 +20,7 @@ export default function RandomCard({ item }) {
               <progress value={item.progress} max="100" />
             </div>
           )}
-          <NavLink to={"details/" + item.imdbId}>
-            <button>Details</button>
-          </NavLink>
+          <DetailsButtonsNarrow imdbID={item.imdbId} id={"button"}/>
         </div>
       </section>
     </Random>
@@ -32,6 +30,14 @@ export default function RandomCard({ item }) {
 const Random = styled.div`
   width: 90vw;
   margin: 0 auto 5vh auto;
+  
+  h3{
+    margin-top:1vh;
+    margin-bottom: 2vh;
+  }
+  h4{
+    margin-top: 2vh;
+  }
 
   img {
     max-width: 40vw;
@@ -47,7 +53,5 @@ const Random = styled.div`
     flex-direction: row;
     justify-content: space-around;
   }
-  details {
-    margin-top: 3vh;
-  }
 `;
+

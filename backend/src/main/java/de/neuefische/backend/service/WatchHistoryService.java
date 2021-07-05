@@ -124,10 +124,13 @@ public class WatchHistoryService {
         if(movieAndSeriesRepo.existsById(id)) {
             movieAndSeries = movieAndSeriesRepo.findById(id).get();
             List<Episode> list = movieAndSeries.getWatchedEpisodes();
-            if(list.contains(itemToAdd)){
+            if(list == null){
+                list = List.of(itemToAdd);
+            } else if(list.contains(itemToAdd)){
                 return null;
+            } else {
+                list.add(itemToAdd);
             }
-            list.add(itemToAdd);
             movieAndSeries.setWatchedEpisodes(list);
         } else {
             List<Episode> list = List.of(itemToAdd);

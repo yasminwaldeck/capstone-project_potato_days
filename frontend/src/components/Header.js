@@ -31,10 +31,12 @@ const Title = styled.div`
   justify-items: center;
   position: sticky;
   top: 0px;
+  z-index: 5;
   img{
     width: 60px;
     height: auto;
     transform: scaleX(-1);
+    z-index: -1;
   }
 `
 

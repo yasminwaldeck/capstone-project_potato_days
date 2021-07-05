@@ -3,6 +3,7 @@ package de.neuefische.backend.service;
 import de.neuefische.backend.model.MovieAndSeries;
 import de.neuefische.backend.model.OMDb.OmdbOverview;
 import de.neuefische.backend.model.Episode;
+import de.neuefische.backend.model.Random;
 import de.neuefische.backend.repo.MovieAndSeriesRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -115,22 +116,25 @@ public class WatchHistoryService {
 
     public Episode addToWatchHistoryEpisodes(String username, Episode episode){
         String id = episode.getImdbId() + "_" + username;
-        MovieAndSeries movieAndSeries = movieAndSeriesRepo.findById(id).get();
-        List<Episode> list = movieAndSeries.getWatchedEpisodes();
         Episode itemToAdd = Episode.builder()
                 .season_number(episode.getSeason_number())
                 .episode_number(episode.getEpisode_number())
                 .build();
-        if(list != null) {
+        MovieAndSeries movieAndSeries;
+        if(movieAndSeriesRepo.existsById(id)) {
+            movieAndSeries = movieAndSeriesRepo.findById(id).get();
+            List<Episode> list = movieAndSeries.getWatchedEpisodes();
             if(list.contains(itemToAdd)){
                 return null;
             }
             list.add(itemToAdd);
+            movieAndSeries.setWatchedEpisodes(list);
         } else {
-            list = List.of(itemToAdd);
+            List<Episode> list = List.of(itemToAdd);
+            movieAndSeries = MovieAndSeries.builder().watchedEpisodes(list).build();
         }
-        movieAndSeries.setWatchedEpisodes(list);
         movieAndSeries.setWatching(true);
+        movieAndSeries.setWatchlist(true);
         movieAndSeries.setType("series");
         movieAndSeries.setUsername(username);
         movieAndSeries.setId(id);
@@ -160,5 +164,19 @@ public class WatchHistoryService {
             movieAndSeries.setWatchedEpisodes(list);
             movieAndSeriesRepo.save(movieAndSeries);
         }
+    }
+
+    public Random getRandomWatchingEntry(String username){
+        List<MovieAndSeries> fullList = movieAndSeriesRepo.findByUsernameAndWatchingIsTrueAndWatchHistoryIsFalseAndWatchlistIsTrue(username);
+        int length = fullList.size();
+        if (length == 0){
+            return null;
+        }
+        int random =  (int)(Math.random() * length);
+        OmdbOverview omdbOverview = omdbApiService.getOverviewById(fullList.get(random).getImdbID());
+        float progress = getWatchHistoryTotalProgress(username, omdbOverview.getImdbID(), tmdbApiService.getId(omdbOverview.getImdbID()));
+
+        return Random.builder().title(omdbOverview.getTitle()).year(omdbOverview.getYear()).poster_path(omdbOverview.getPoster())
+                .imdbId(omdbOverview.getImdbID()).progress(progress).build();
     }
 }

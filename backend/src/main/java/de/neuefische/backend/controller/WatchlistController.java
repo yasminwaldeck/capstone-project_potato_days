@@ -2,6 +2,7 @@ package de.neuefische.backend.controller;
 
 import de.neuefische.backend.model.MovieAndSeries;
 import de.neuefische.backend.model.OMDb.OmdbOverview;
+import de.neuefische.backend.model.Random;
 import de.neuefische.backend.model.Stats;
 import de.neuefische.backend.service.WatchlistService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,4 +64,11 @@ public class WatchlistController {
         String username = principal.getName();
         watchlistService.removeNameFromWatchlist(username, imdbID);
     }
+
+    @GetMapping("/random")
+    public Random getRandomWatchlistEntry(Principal principal){
+        String username = principal.getName();
+        return watchlistService.getRandomWatchlistEntry(username);
+    }
+
 }

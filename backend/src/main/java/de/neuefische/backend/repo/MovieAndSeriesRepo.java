@@ -11,6 +11,10 @@ public interface MovieAndSeriesRepo extends PagingAndSortingRepository<MovieAndS
 
     List<MovieAndSeries> findByUsername(String username);
 
+    List<MovieAndSeries> findByUsernameAndWatchHistoryIsFalseAndWatchingIsFalse(String username);
+
+    List<MovieAndSeries> findByUsernameAndWatchingIsTrueAndWatchHistoryIsFalseAndWatchlistIsTrue(String username);
+
     List<MovieAndSeries> findMovieAndSeriesByWatchHistoryIsTrueAndUsername(String username);
 
     List<MovieAndSeries> findMovieAndSeriesByWatchHistoryIsTrueAndTypeAndUsername(String type, String username);

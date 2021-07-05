@@ -7,14 +7,14 @@ export default function useRandom() {
   const [watchhistoryItem, setWatchhistorytItem] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const { token } = useContext(TypeAndAuthContext);
-  const config = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
 
   useEffect(() => {
     setIsLoading(true);
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
     axios
       .get(`/api/watchlist/random`, config)
       .then((response) => response.data)
@@ -27,7 +27,7 @@ export default function useRandom() {
       .then(setWatchhistorytItem)
       .catch((error) => console.error(error.message))
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [token]);
 
-  return { watchlistItem, watchhistoryItem, isLoading };
+  return { watchlistItem, watchhistoryItem, isLoading, token };
 }

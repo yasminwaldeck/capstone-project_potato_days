@@ -14,6 +14,12 @@ export default function useWatchHistoryEpisodes(imdbId, id, season) {
   };
 
   useEffect(() => {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
     axios
       .get(`/api/watchhistory/episode/${imdbId}/season/${season}`, config)
       .then((response) => response.data)
@@ -28,7 +34,7 @@ export default function useWatchHistoryEpisodes(imdbId, id, season) {
       .then((response) => response.data)
       .then(setSeasonProgress)
       .catch((error) => console.error(error.message));
-  }, [imdbId, season, id]);
+  }, [imdbId, season, id, token]);
 
   const getEpisodeHistory = () => {
     axios

@@ -6,21 +6,21 @@ export default function useWatchHistoryByType(type) {
   const [watchHistoryItems, setWatchHistoryItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { token } = useContext(TypeAndAuthContext);
-  const config = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
 
   useEffect(() => {
     setIsLoading(true);
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
     axios
       .get(`/api/watchhistory?type=${type}`, config)
       .then((response) => response.data)
       .then(setWatchHistoryItems)
       .catch((error) => console.error(error.message))
       .finally(() => setIsLoading(false));
-  }, [type]);
+  }, [type, token]);
 
   return { watchHistoryItems, setWatchHistoryItems, isLoading };
 }

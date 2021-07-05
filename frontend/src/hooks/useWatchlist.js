@@ -12,12 +12,17 @@ export default function useWatchlist() {
   };
 
   useEffect(() => {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
     axios
       .get("/api/watchlist/", config)
       .then((response) => response.data)
       .then(setWatchlist)
       .catch((error) => console.error(error.message));
-  }, []);
+  }, [token]);
 
   const addToWatchlist = (imdbID, type) => {
     axios

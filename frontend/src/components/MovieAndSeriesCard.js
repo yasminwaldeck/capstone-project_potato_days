@@ -1,7 +1,5 @@
-import { NavLink } from "react-router-dom";
 import styled from "styled-components/macro";
 import AddRemoveWatchButtons from "./AddRemoveWatchButtons";
-import { ReactComponent as Info } from "../resources/info.svg";
 import DetailsButtons from "./DetailsButtonWide";
 
 export default function MovieAndSeriesCard({

@@ -6,13 +6,14 @@ export default function useWatchHistoryProgress(imdbId, id, type) {
   const { SERIES } = useContext(TypeAndAuthContext);
   const [seriesProgress, setSeriesProgress] = useState();
   const { token } = useContext(TypeAndAuthContext);
-  const config = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
+
 
   useEffect(() => {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
     if (id !== undefined && type === SERIES) {
       axios
         .get(`/api/watchhistory/episode/${imdbId}/${id}/progress`, config)
@@ -20,7 +21,7 @@ export default function useWatchHistoryProgress(imdbId, id, type) {
         .then(setSeriesProgress)
         .catch((error) => console.error(error.message));
     }
-  }, [id, imdbId]);
+  }, [id, imdbId, SERIES, type, token]);
 
   return { seriesProgress };
 }

@@ -12,12 +12,17 @@ export default function useWatchHistory() {
   };
 
   useEffect(() => {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
     axios
       .get("/api/watchhistory/", config)
       .then((response) => response.data)
       .then(setWatchHistory)
       .catch((error) => console.error(error.message));
-  }, []);
+  }, [token]);
 
   const addToHistory = (imdbID, type) => {
     axios

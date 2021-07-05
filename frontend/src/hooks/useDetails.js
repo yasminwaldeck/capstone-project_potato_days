@@ -6,21 +6,21 @@ export default function useDetails(id) {
   const [item, setItem] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const { token } = useContext(TypeAndAuthContext);
-  const config = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
 
   useEffect(() => {
     setIsLoading(true);
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
     axios
       .get(`/api/details/${id}`, config)
       .then((response) => response.data)
       .then(setItem)
       .catch((error) => console.error(error.message))
       .finally(() => setIsLoading(false));
-  }, [id]);
+  }, [id, token]);
 
   return { item, isLoading };
 }

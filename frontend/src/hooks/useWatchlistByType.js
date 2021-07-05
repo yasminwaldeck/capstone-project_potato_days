@@ -6,13 +6,13 @@ export default function useWatchlistByType(type) {
   const [watchlistitems, setWatchlistitems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { token } = useContext(TypeAndAuthContext);
-  const config = {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  };
 
   useEffect(() => {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
     setIsLoading(true);
     axios
       .get(`/api/watchlist?type=${type}`, config)
@@ -20,7 +20,7 @@ export default function useWatchlistByType(type) {
       .then(setWatchlistitems)
       .catch((error) => console.error(error.message))
       .finally(() => setIsLoading(false));
-  }, [type]);
+  }, [type, token]);
 
   return { watchlistitems, setWatchlistitems, isLoading };
 }

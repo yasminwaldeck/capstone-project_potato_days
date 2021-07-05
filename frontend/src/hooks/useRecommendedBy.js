@@ -12,12 +12,17 @@ export default function useRecommendedBy(imdbID) {
   };
 
   useEffect(() => {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
     axios
       .get(`/api/watchlist/name?imdbID=${imdbID}`, config)
       .then((response) => response.data)
       .then(setName)
       .catch((error) => console.error(error.message));
-  }, [imdbID, name]);
+  }, [imdbID, name, token]);
 
   const setRecommendedBy = (imdbID, recommendedBy) => {
     axios

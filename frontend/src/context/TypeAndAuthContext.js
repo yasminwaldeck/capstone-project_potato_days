@@ -1,5 +1,5 @@
-import {createContext} from "react";
+import { createContext } from "react";
 
-const TypeAndAuthContext = createContext({})
+const TypeAndAuthContext = createContext({});
 
-export default TypeAndAuthContext
+export default TypeAndAuthContext;

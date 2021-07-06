@@ -1,6 +1,5 @@
 package de.neuefische.backend.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import de.neuefische.backend.model.OMDb.OmdbRating;
 import de.neuefische.backend.model.TMDb.Credit;
 import de.neuefische.backend.model.TMDb.Genre;

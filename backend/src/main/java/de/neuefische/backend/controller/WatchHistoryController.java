@@ -1,7 +1,7 @@
 package de.neuefische.backend.controller;
 
 import de.neuefische.backend.model.MovieAndSeries;
-import de.neuefische.backend.model.OMDb.OmdbOverview;
+import de.neuefische.backend.model.OMDb.OmdbDetails;
 import de.neuefische.backend.model.Episode;
 import de.neuefische.backend.model.Random;
 import de.neuefische.backend.service.WatchHistoryService;
@@ -23,13 +23,13 @@ public class WatchHistoryController {
     }
 
     @GetMapping
-    public List<OmdbOverview> getWatchHistoryByType(Principal principal, @RequestParam Optional<String> type){
+    public List<OmdbDetails> getWatchHistoryByType(Principal principal, @RequestParam Optional<String> type){
         String username = principal.getName();
         return watchHistoryService.getWatchHistoryByType(username, type);
     }
 
     @PostMapping
-    public OmdbOverview addToWatchHistory(Principal principal, @RequestBody MovieAndSeries itemToAdd){
+    public OmdbDetails addToWatchHistory(Principal principal, @RequestBody MovieAndSeries itemToAdd){
         String username = principal.getName();
         return watchHistoryService.addToWatchHistory(username, itemToAdd);
     }

@@ -1,6 +1,6 @@
 package de.neuefische.backend.controller;
 
-import de.neuefische.backend.model.OMDb.OmdbOverview;
+import de.neuefische.backend.model.OMDb.OmdbDetails;
 import de.neuefische.backend.service.TrendingService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +18,7 @@ public class TrendingController {
     }
 
     @GetMapping
-    public List<OmdbOverview> findTrending(String timewindow, String type){
+    public List<OmdbDetails> findTrending(String timewindow, String type){
         return trendingService.findTrending(timewindow, type);
     }
 }

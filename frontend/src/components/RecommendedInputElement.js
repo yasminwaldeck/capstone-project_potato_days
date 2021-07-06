@@ -1,56 +1,57 @@
-import {useState} from "react";
+import { useState } from "react";
 import useRecommendedBy from "../hooks/useRecommendedBy";
 import styled from "styled-components/macro";
-import {ReactComponent as Remove} from "../resources/dash-lg.svg";
-import {ReactComponent as Add} from "../resources/plus-lg.svg";
+import { ReactComponent as Remove } from "../resources/dash-lg.svg";
+import { ReactComponent as Add } from "../resources/plus-lg.svg";
 
-export default function RecommendedInputElement({imdbID, preSetName}){
+export default function RecommendedInputElement({ imdbID, preSetName }) {
+  const { setRecommendedBy, deleteRecommendedBy } = useRecommendedBy(imdbID);
+  const [input, setInput] = useState();
+  const [sent, setSent] = useState();
+  const [name, setName] = useState("");
+  const [deleted, setDeleted] = useState(false);
 
-    const { setRecommendedBy, deleteRecommendedBy } = useRecommendedBy(imdbID);
-    const [input, setInput] = useState()
-    const [sent, setSent] = useState()
-    const [name, setName] = useState("")
-    const [deleted, setDeleted] = useState(false)
-
-
-    return(
-        <RecommendedField>
-
-            <p>Recommended by:</p>
-            {
-                ((!sent && preSetName === "") || (deleted)) &&
-                <div id={"input"}>
-                    <input type="text"
-                    value={input}
-                    onChange={(event) => setInput(event.target.value)}/>
-                    <button onClick={() => {
-                        setRecommendedBy(imdbID, input);
-                        setSent(true);
-                        setDeleted(false);
-                        setName(input)
-                        }} className={"btn_small add"}>
-                        <Add/>
-                    </button>
-                </div>
-            }
-            {
-                ((preSetName !== "" || name !== "")  || sent ) && !deleted &&
-                <div  id={"text"}>
-                    {sent ? <p>{input}</p> : <p>{preSetName}</p>}
-                    <button onClick={() => {
-                        setSent(false);
-                        setDeleted(true);
-                        deleteRecommendedBy(imdbID);}}
-                        className={"btn_small remove"}>
-                        <Remove/>
-                    </button>
-                </div>
-            }
-
-        </RecommendedField>
-    )
+  return (
+    <RecommendedField>
+      <p>Recommended by:</p>
+      {((!sent && preSetName === "") || deleted) && (
+        <div id={"input"}>
+          <input
+            type="text"
+            value={input}
+            onChange={(event) => setInput(event.target.value)}
+          />
+          <button
+            onClick={() => {
+              setRecommendedBy(imdbID, input);
+              setSent(true);
+              setDeleted(false);
+              setName(input);
+            }}
+            className={"btn_small add"}
+          >
+            <Add />
+          </button>
+        </div>
+      )}
+      {(preSetName !== "" || name !== "" || sent) && !deleted && (
+        <div id={"text"}>
+          {sent ? <p>{input}</p> : <p>{preSetName}</p>}
+          <button
+            onClick={() => {
+              setSent(false);
+              setDeleted(true);
+              deleteRecommendedBy(imdbID);
+            }}
+            className={"btn_small remove"}
+          >
+            <Remove />
+          </button>
+        </div>
+      )}
+    </RecommendedField>
+  );
 }
-
 
 const RecommendedField = styled.div`
   .btn_small {
@@ -73,47 +74,47 @@ const RecommendedField = styled.div`
     justify-content: space-between;
   }
   .remove {
-    background: #66000E;
+    background: #66000e;
     border-radius: 50%;
   }
   .remove:hover {
-    background: #8F0013;
+    background: #8f0013;
   }
 
   .remove:active {
-    background: #8F0013;
+    background: #8f0013;
     top: 2px;
   }
 
   .add {
-    background: #00916E;
+    background: #00916e;
     border-radius: 50%;
   }
 
   .add:hover {
-    background: #00664E;
+    background: #00664e;
   }
 
   .add:active {
-    background: #00664E;
+    background: #00664e;
     top: 2px;
   }
-  
-  #text{
+
+  #text {
     display: inline-flex;
     font-size: 20px;
     align-items: center;
     height: 5vh;
   }
 
-  #input{
+  #input {
     display: inline-flex;
     align-items: center;
     height: 5vh;
-    
+
     input {
       height: 30px;
       width: 50vw;
     }
   }
-`
+`;

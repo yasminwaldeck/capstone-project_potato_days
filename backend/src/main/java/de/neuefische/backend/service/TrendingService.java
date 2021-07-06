@@ -1,6 +1,6 @@
 package de.neuefische.backend.service;
 
-import de.neuefische.backend.model.OMDb.OmdbOverview;
+import de.neuefische.backend.model.OMDb.OmdbDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +17,7 @@ public class TrendingService {
         this.omdbApiService = omdbApiService;
     }
 
-    public List<OmdbOverview> findTrending(String timewindow, String type){
+    public List<OmdbDetails> findTrending(String timewindow, String type){
         if(timewindow == null || type == null){
             return null;
         }

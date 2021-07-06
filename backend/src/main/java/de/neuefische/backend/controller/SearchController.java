@@ -1,6 +1,6 @@
 package de.neuefische.backend.controller;
 
-import de.neuefische.backend.model.OMDb.OmdbOverview;
+import de.neuefische.backend.model.OMDb.OmdbDetails;
 import de.neuefische.backend.service.OmdbApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +19,7 @@ public class SearchController {
     }
 
     @GetMapping
-    public List<OmdbOverview> searchByString(@RequestParam String searchString, String type){
+    public List<OmdbDetails> searchByString(@RequestParam String searchString, String type){
         return omdbApiService.searchByString(searchString, type);
     }
 

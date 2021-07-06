@@ -23,9 +23,9 @@ public class WatchlistController {
     }
 
     @GetMapping
-    public List<OmdbDetails> getWatchlistByType(Principal principal, @RequestParam Optional<String> type){
+    public List<OmdbDetails> getWatchlistByType(Principal principal, @RequestParam Optional<String> type, @RequestParam String filtered){
         String username = principal.getName();
-        return watchlistService.getWatchlistByType(username, type);
+        return watchlistService.getWatchlistByType(username, type, filtered);
     }
 
     @PostMapping

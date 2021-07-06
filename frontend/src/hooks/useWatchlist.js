@@ -2,7 +2,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import TypeAndAuthContext from "../context/TypeAndAuthContext";
 
-export default function useWatchlist() {
+export default function useWatchlist(filtered) {
   const [watchlist, setWatchlist] = useState([]);
   const { token } = useContext(TypeAndAuthContext);
   const config = {
@@ -18,11 +18,11 @@ export default function useWatchlist() {
       },
     };
     axios
-      .get("/api/watchlist/", config)
+      .get(`/api/watchlist/?filtered=${filtered}`, config)
       .then((response) => response.data)
       .then(setWatchlist)
       .catch((error) => console.error(error.message));
-  }, [token]);
+  }, [token, filtered]);
 
   const addToWatchlist = (imdbID, type) => {
     axios

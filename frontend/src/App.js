@@ -12,6 +12,7 @@ import StatsPage from "./pages/StatsPage";
 import SeasonPage from "./pages/SeasonPage";
 import LoginPage from "./pages/LoginPage";
 import PrivateRoute from "./routing/PrivateRoute";
+import SignUpPage from "./pages/SignUpPage";
 
 function App() {
   return (
@@ -43,6 +44,9 @@ function App() {
             </PrivateRoute>
             <Route path={"/login"}>
               <LoginPage />
+            </Route>
+            <Route path={"/signup"}>
+              <SignUpPage />
             </Route>
             <PrivateRoute path={"/home"}>
               <LandingPage />

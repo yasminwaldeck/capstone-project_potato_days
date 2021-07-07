@@ -90,7 +90,7 @@ public class WatchlistServiceTest {
                 .thenReturn(ResponseEntity.ok(omdbDetailsDto2));
 
         // WHEN
-        List<OmdbDetails> items = watchlistService.getWatchlistByType("name", Optional.of("type"));
+        List<OmdbDetails> items = watchlistService.getWatchlistByType("name", Optional.of("type"), "false");
 
         // THEN
         assertThat(items, is(List.of(

@@ -8,10 +8,11 @@ import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function WatchlistPage() {
   const [type, setType] = useState();
+  const [filtered, setFiltered] = useState(false);
   const { MOVIE, SERIES } = useContext(TypeAndAuthContext);
   const { watchlistitems, setWatchlistitems, isLoading } =
-    useWatchlistByType(type);
-  const { watchlist } = useWatchlist();
+    useWatchlistByType(type, filtered);
+  const { watchlist } = useWatchlist(filtered);
   const { watchHistory } = useWatchHistory();
 
   return (
@@ -24,7 +25,7 @@ export default function WatchlistPage() {
         }}
       >
         See everything!
-      </button>
+      </button>{filtered ? <button onClick={() => setFiltered(false)}>Include watched items</button> : <button onClick={() => setFiltered(true)}>Exclude watched items</button>}
       {isLoading && <LoadingSpinner />}
       {type !== null &&
         watchlistitems.map((item) => (

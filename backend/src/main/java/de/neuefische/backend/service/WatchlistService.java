@@ -21,17 +21,31 @@ public class WatchlistService {
         this.omdbApiService = omdbApiService;
     }
 
-    public List<OmdbDetails> getWatchlistByType(String username, Optional<String> type){
-        if(type.isEmpty()){
-            return movieAndSeriesRepo.findMovieAndSeriesByWatchlistIsTrueAndUsername(username).stream()
-                    .map(item -> omdbApiService.getOverview(item)
-                    )
+    public List<OmdbDetails> getWatchlistByType(String username, Optional<String> type, String filtered){
+        boolean filter = Boolean.parseBoolean(filtered);
+        if (!filter) {
+            if (type.isEmpty()) {
+                return movieAndSeriesRepo.findMovieAndSeriesByWatchlistIsTrueAndUsername(username).stream()
+                        .map(item -> omdbApiService.getOverview(item)
+                        )
+                        .collect(Collectors.toList());
+            }
+            return movieAndSeriesRepo.findMovieAndSeriesByWatchlistIsTrueAndTypeAndUsername(type.get(), username)
+                    .stream()
+                    .map(item -> omdbApiService.getOverview(item))
+                    .collect(Collectors.toList());
+        } else {
+            if (type.isEmpty()) {
+                return movieAndSeriesRepo.findMovieAndSeriesByWatchlistIsTrueAndWatchHistoryIsFalseAndUsername(username).stream()
+                        .map(item -> omdbApiService.getOverview(item)
+                        )
+                        .collect(Collectors.toList());
+            }
+            return movieAndSeriesRepo.findMovieAndSeriesByWatchlistIsTrueAndWatchHistoryIsFalseAndTypeAndUsername(type.get(), username)
+                    .stream()
+                    .map(item -> omdbApiService.getOverview(item))
                     .collect(Collectors.toList());
         }
-        return movieAndSeriesRepo.findMovieAndSeriesByWatchlistIsTrueAndTypeAndUsername(type.get(), username)
-                .stream()
-                .map(item -> omdbApiService.getOverview(item))
-                .collect(Collectors.toList());
     }
 
     public String getNameFromWatchlist(String username, String imdbId){

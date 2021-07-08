@@ -5,11 +5,12 @@ import useWatchlistByType from "../hooks/useWatchlistByType";
 import useWatchlist from "../hooks/useWatchlist";
 import useWatchHistory from "../hooks/useWatchHistory";
 import LoadingSpinner from "../components/LoadingSpinner";
+import styled from "styled-components/macro";
 
 export default function WatchlistPage() {
-  const [type, setType] = useState();
-  const [filtered, setFiltered] = useState(false);
   const { MOVIE, SERIES } = useContext(TypeAndAuthContext);
+  const [type, setType] = useState(MOVIE);
+  const [filtered, setFiltered] = useState(false);
   const { watchlistitems, setWatchlistitems, isLoading } =
     useWatchlistByType(type, filtered);
   const { watchlist } = useWatchlist(filtered);
@@ -17,15 +18,32 @@ export default function WatchlistPage() {
 
   return (
     <div>
-      <button onClick={() => setType(MOVIE)}>See all movies!</button>
-      <button onClick={() => setType(SERIES)}>See all series!</button>
-      <button
-        onClick={() => {
-          setWatchlistitems(watchlist);
-        }}
-      >
-        See everything!
-      </button>{filtered ? <button onClick={() => setFiltered(false)}>Include watched items</button> : <button onClick={() => setFiltered(true)}>Exclude watched items</button>}
+        <Select>
+            <div className={"typeselectors"}>
+                <input
+                    type="radio"
+                    name="type"
+                    onChange={() => setType(MOVIE)}
+                    defaultChecked
+                    label={"Movie"}
+                />
+                <input
+                    type="radio"
+                    name="type"
+                    onChange={() => setType(SERIES)}
+                    label={"Series"}
+                />
+                <input
+                    type="radio"
+                    name="type"
+                    onChange={() => setWatchlistitems(watchlist)}
+                    label={"Both"}
+                />
+            </div>
+
+        {filtered ? <input className={"filter"} type="checkbox" onClick={() => setFiltered(false)} label="Include watched items"/> :
+            <input type="checkbox" className={"filter"} onClick={() => setFiltered(true)} label="Exclude watched items"/>}
+    </Select>
       {isLoading && <LoadingSpinner />}
       {type !== null &&
         watchlistitems.map((item) => (
@@ -43,3 +61,53 @@ export default function WatchlistPage() {
     </div>
   );
 }
+
+const Select = styled.div`
+  
+  padding: 4px;
+  border-radius: 3px;
+  position: relative;
+  width: 80vw;
+  margin: auto;
+
+  .typeselectors{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  };
+  
+  input {
+    height: 100%;
+    width: 25vw;
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 2px;
+    padding: 4px 8px;
+    background: #48484a;
+    font-size: 18px;
+    transition: all 100ms linear;
+  }
+
+  input:checked {
+    background-image: linear-gradient(180deg, #828282, #48484a);
+  }
+
+  input:before {
+    content: attr(label);
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+  }
+  
+  .filter {
+    width: auto;
+    margin-top: 1.5vh;
+    background-image: linear-gradient(180deg, #48484a, #828282);
+  }
+  
+   .filter:checked {
+      background-image: linear-gradient(180deg, #828282, #48484a);
+  }
+  
+`;

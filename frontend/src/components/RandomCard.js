@@ -44,16 +44,17 @@ const Random = styled.div`
   }
   h4 {
     margin-top: 2vh;
-    margin-bottom: 1vh;
+    margin-bottom: 0vh;
   }
   p{
     margin-top: 0;
+    margin-bottom: 1vh;
   }
   progress {
     -webkit-appearance: none;
     appearance: none;
     width: 35vw;
-    height: 2.5vh;
+    height: 2vh;
     border-radius: 50px;
     background-color: #dededf;
     

@@ -41,8 +41,8 @@ export default function WatchlistPage() {
                 />
             </div>
 
-        {filtered ? <input className={"filter"} type="checkbox" onClick={() => setFiltered(false)} label="Include watched items"/> :
-            <input type="checkbox" className={"filter"} onClick={() => setFiltered(true)} label="Exclude watched items"/>}
+        {filtered ? <input className={"filter"} type="checkbox" onClick={() => setFiltered(false)} label="Show watched items"/> :
+            <input type="checkbox" className={"filter"} onClick={() => setFiltered(true)} label="Hide watched items"/>}
     </Select>
       {isLoading && <LoadingSpinner />}
       {type !== null &&

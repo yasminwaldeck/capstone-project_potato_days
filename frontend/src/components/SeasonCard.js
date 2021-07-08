@@ -48,7 +48,7 @@ export default function SeasonCard({ season, tmdbid }) {
       </section>
       {season.overview && (
         <details>
-          <summary>Overview</summary>
+          <summary><b>Overview</b></summary>
           <p>{season.overview}</p>
         </details>
       )}

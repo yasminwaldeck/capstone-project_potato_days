@@ -19,10 +19,10 @@ const Button = styled.div`
   #btn {
     border: none;
     margin-top: 1.5vh;
-    font-size: inherit;
+    font-size: 14px;
     color: white;
     cursor: pointer;
-    padding: 10px 25px 10px 20px;
+    padding: 8px 23px 8px 18px;
     text-transform: uppercase;
     font-weight: 700;
     outline: none;
@@ -37,7 +37,7 @@ const Button = styled.div`
   }
   #icon {
     margin: 0 10px 0 0;
-    width: 15px;
+    width: 14px;
     height: auto;
   }
 

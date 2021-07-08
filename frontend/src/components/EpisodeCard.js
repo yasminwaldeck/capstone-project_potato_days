@@ -59,7 +59,7 @@ export default function EpisodeCard({
       </div>
       {episode.overview && (
         <details>
-          <summary>Overview</summary>
+          <summary><b>Overview</b></summary>
           <p>{episode.overview}</p>
         </details>
       )}

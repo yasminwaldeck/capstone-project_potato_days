@@ -23,15 +23,19 @@ export default function StatsCard({ recommendationDetails }) {
 
 const Recommended = styled.div`
   
-  border-radius: 3px;
   position: relative;
   width: 80vw;
-  margin: auto;
+  margin: auto auto 2vh auto;
+  background: #49494a;
+  border-radius: 10px;
+  padding-bottom: 1vh;
+  padding-top:1vh;
   
   input {
     height: 100%;
     width: auto;
     margin-top: 1.5vh;
+    margin-bottom: 1.5vh;
     background-image: linear-gradient(180deg, #828282, #48484a);
     appearance: none;
     outline: none;

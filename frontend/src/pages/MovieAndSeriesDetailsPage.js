@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import {NavLink, useParams} from "react-router-dom";
 import useDetails from "../hooks/useDetails";
 import useWatchlist from "../hooks/useWatchlist";
 import { useContext } from "react";
@@ -49,12 +49,12 @@ export default function MovieAndSeriesDetailsPage() {
               {seriesProgress && seriesProgress !== 0 ? (
                 <div>
                   <h3>Progress: {seriesProgress.toFixed(1)}%</h3>
-                  <progress value={seriesProgress} max="100" />
+                  <progress id={"progress"} value={seriesProgress} max="100" />
                 </div>
               ) : (
                 <div>
                   <h3>Progress: 0%</h3>
-                  <progress value={0} max="100" />
+                  <progress id={"progress"} value={0} max="100" />
                 </div>
               )}
               <div>
@@ -118,4 +118,28 @@ const MovieAndSeriesDetails = styled.div`
     min-width: 20vh;
     justify-content: space-evenly;
   }
-`;
+
+  #progress {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 70vw;
+    height: 3vh;
+    border-radius: 50px;
+    background-color: #dededf;
+
+    ::-moz-progress-bar {
+      background-image: linear-gradient(180deg, #828282, #48484a);
+      border-radius: 50px;
+    }
+    ::-webkit-progress-bar{
+      background-image: linear-gradient(180deg, #828282, #48484a);
+      border-radius: 50px;
+    }
+    ::-webkit-progress-value{
+      background-image: linear-gradient(180deg, #828282, #48484a);
+      border-radius: 50px;
+    }
+  }
+      `;
+
+

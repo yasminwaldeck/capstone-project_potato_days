@@ -65,8 +65,23 @@ const SeasonOverview = styled.div`
   progress {
     -webkit-appearance: none;
     appearance: none;
-    height: 5vh;
     width: 90vw;
+    height: 5vh;
+    border-radius: 50px;
+    background-color: #dededf;
+
+    ::-moz-progress-bar {
+      background-image: linear-gradient(180deg, #828282, #48484a);
+      border-radius: 50px;
+    }
+    ::-webkit-progress-bar{
+      background-image: linear-gradient(180deg, #828282, #48484a);
+      border-radius: 50px;
+    }
+    ::-webkit-progress-value{
+      background-image: linear-gradient(180deg, #828282, #48484a);
+      border-radius: 50px;
+    }
   }
 
   img {

@@ -30,6 +30,7 @@ export default function EpisodeCard({
           <p>{episode.air_date}</p>
           {onWatchHistory ? (
             <button
+                className={"remove"}
               onClick={() =>
                 removeEpisodeFromHistory(
                   imdbid,
@@ -42,6 +43,7 @@ export default function EpisodeCard({
             </button>
           ) : (
             <button
+                className={"add"}
               onClick={() =>
                 addEpisodeToHistory(
                   imdbid,
@@ -67,4 +69,67 @@ export default function EpisodeCard({
 
 const Episode = styled.div`
   margin-bottom: 5vh;
+
+  button {
+    border: none;
+    margin-top: 1.5vh;
+    font-size: inherit;
+    color: white;
+    cursor: pointer;
+    padding: 10px 25px 10px 20px;
+    text-transform: uppercase;
+    font-weight: 700;
+    outline: none;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  button:after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+  }
+
+  button:before {
+    line-height: 1;
+    position: relative;
+  }
+
+  .add {
+    background: #00916e;
+  }
+
+  .add:hover {
+    background: #00664e;
+  }
+
+  .add:active {
+    background: #00664e;
+    top: 2px;
+  }
+
+  .remove {
+    background: #66000e;
+  }
+
+  .remove:hover {
+    background: #8f0013;
+  }
+
+  .remove:active {
+    background: #8f0013;
+    top: 2px;
+  }
+
+  details{
+    margin: 3vh;
+  }
 `;

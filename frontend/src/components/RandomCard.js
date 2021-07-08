@@ -59,15 +59,15 @@ const Random = styled.div`
     background-color: #dededf;
     
     ::-moz-progress-bar {
-      background: #1e6b4e;
+      background-image: linear-gradient(180deg, #828282, #48484a);
       border-radius: 50px;
     }
     ::-webkit-progress-bar{
-      background: #1e6b4e;
+      background-image: linear-gradient(180deg, #828282, #48484a);
       border-radius: 50px;
     }
     ::-webkit-progress-value{
-      background: #1e6b4e;
+      background-image: linear-gradient(180deg, #828282, #48484a);
       border-radius: 50px;
     }
   }

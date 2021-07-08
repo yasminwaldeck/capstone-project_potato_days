@@ -78,7 +78,7 @@ const Select = styled.div`
     border-radius: 2px;
     padding: 4px 8px;
     background: #48484a;
-    font-size: 14px;
+    font-size: 16px;
     transition: all 100ms linear;
   }
 

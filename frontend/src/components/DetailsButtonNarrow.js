@@ -18,6 +18,7 @@ export default function DetailsButtonsNarrow({ imdbID }) {
 const Button = styled.div`
   #btn {
     border: none;
+    margin-top: 1.5vh;
     font-size: inherit;
     color: white;
     cursor: pointer;

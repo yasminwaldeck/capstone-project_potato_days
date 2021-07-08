@@ -3,13 +3,14 @@ import TypeAndAuthContext from "../context/TypeAndAuthContext";
 import { useContext } from "react";
 import RandomCard from "../components/RandomCard";
 import LoadingSpinner from "../components/LoadingSpinner";
+import styled from "styled-components/macro";
 
 export default function LandingPage() {
   const { watchlistItem, watchhistoryItem, isLoading } = useRandom();
   const { name } = useContext(TypeAndAuthContext);
 
   return (
-    <div>
+    <Home>
       <h2>Hello {name} :)</h2>
       <div id={"random"}>
         {isLoading && <LoadingSpinner />}
@@ -26,6 +27,12 @@ export default function LandingPage() {
           </div>
         )}
       </div>
-    </div>
+    </Home>
   );
 }
+
+const Home = styled.div`
+  width: 90vw;
+  margin: auto;
+  padding-bottom: 3vh;
+`

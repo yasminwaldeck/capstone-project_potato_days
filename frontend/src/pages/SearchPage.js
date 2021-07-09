@@ -22,21 +22,21 @@ export default function SearchPage() {
         value={searchString}
         onChange={(event) => setSearchString(event.target.value)}
       />
-      <div>
+      <TypeSelector>
         <input
           type="radio"
           name="search_type"
           onChange={() => setSearchType(MOVIE)}
+          label={"Movie"}
           defaultChecked
-        />{" "}
-        Movie
+        />
         <input
           type="radio"
           name="search_type"
           onChange={() => setSearchType(SERIES)}
-        />{" "}
-        Series
-      </div>
+          label={"Series"}
+        />
+      </TypeSelector>
       {isLoading && <LoadingSpinner />}
       {searchResults &&
         searchResults.map((item) => (
@@ -71,3 +71,31 @@ const Search = styled.div`
     margin: auto auto 3vh;
   }
 `;
+
+const TypeSelector = styled.div`
+  input {
+    height: 100%;
+    width: 25vw;
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 2px;
+    padding: 4px 8px;
+    background: #48484a;
+    font-size: 16px;
+    transition: all 100ms linear;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  input:checked {
+    background-image: linear-gradient(180deg, #828282, #48484a);
+  }
+
+  input:before {
+    content: attr(label);
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+  }
+`

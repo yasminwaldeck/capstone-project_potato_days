@@ -1,6 +1,6 @@
 import styled from "styled-components/macro";
 import AddRemoveWatchButtons from "./AddRemoveWatchButtons";
-import DetailsButtons from "./DetailsButtonWide";
+import DetailsButtonWide from "./DetailsButtonWide";
 
 export default function MovieAndSeriesCard({
   item,
@@ -15,7 +15,7 @@ export default function MovieAndSeriesCard({
         {item.title} ({item.year})
       </h3>
       <div id="buttons">
-        <DetailsButtons imdbID={item.imdbID} />
+        <DetailsButtonWide imdbID={item.imdbID} />
         <AddRemoveWatchButtons
           onWatchlist={onWatchlist}
           onWatchHistory={onWatchHistory}

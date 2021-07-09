@@ -76,14 +76,20 @@ export default function SignUpPage() {
                     />
                 </label>
                 <button>Sign up</button>
+
+                        <div className={"login"}>
+                            <h3>You already have an account?</h3>
+                            <StyledNavLink to={"/login"}>
+                                <button>Log in!</button>
+                            </StyledNavLink>
+                        </div>
                     </div>
                 }
-
                 {success && <div>
                     <p>Sign up successful!</p>
-                    <NavLink to={"/login"}>
-                        <button>Go to login</button>
-                    </NavLink>
+                    <StyledNavLink to={"/login"}>
+                        <button className={"btn-login"}>Go to login</button>
+                    </StyledNavLink>
                 </div>}
             </LoginForm>
         </div>
@@ -93,6 +99,10 @@ export default function SignUpPage() {
 const LoginForm = styled.form`
   display: flex;
   flex-direction: column;
+  
+  .btn-login{
+    width: 50vw;
+  }
 
   button {
     margin: 5vh auto auto auto;
@@ -134,4 +144,20 @@ const LoginForm = styled.form`
   button:hover {
     background: #00664e;
   }
+
+  .login{
+    h3{
+      margin-top: 8vh;
+      margin-button: 3vh;
+    }
 `;
+
+const StyledNavLink = styled(NavLink)`
+text-decoration: none;
+color: #eae9f1;
+
+&:focus, &:hover, &:visited, &:link, &:active {
+    text-decoration: none;
+    color: #eae9f1;
+
+    `;

@@ -146,14 +146,14 @@ const Nav = styled.nav`
   #menu {
     position: absolute;
     width: 70vw;
-    height: 75vh;
+    height: 76.5vh;
     box-shadow: 0 0 10px #85888c;
     margin: -50px 0 0 -50px;
     padding: 125px 50px 50px;
     background-color: #454546;
     -webkit-font-smoothing: antialiased;
     transform-origin: 0% 0%;
-    transform: translate(-100%, 0);
+    transform: translate(-200%, 0);
     transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
   }
 

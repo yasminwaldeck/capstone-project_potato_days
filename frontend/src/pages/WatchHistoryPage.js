@@ -5,10 +5,12 @@ import useWatchlist from "../hooks/useWatchlist";
 import useWatchHistory from "../hooks/useWatchHistory";
 import useWatchHistoryByType from "../hooks/useWatchHistoryByType";
 import LoadingSpinner from "../components/LoadingSpinner";
+import styled from "styled-components/macro";
 
 export default function WatchHistoryPage() {
-  const [type, setType] = useState();
+
   const { MOVIE, SERIES } = useContext(TypeAndAuthContext);
+  const [type, setType] = useState(MOVIE);
   const { watchHistoryItems, setWatchHistoryItems, isLoading } =
     useWatchHistoryByType(type);
   const { watchHistory } = useWatchHistory();
@@ -16,15 +18,28 @@ export default function WatchHistoryPage() {
 
   return (
     <div>
-      <button onClick={() => setType(MOVIE)}>See all movies!</button>
-      <button onClick={() => setType(SERIES)}>See all series!</button>
-      <button
-        onClick={() => {
-          setWatchHistoryItems(watchHistory);
-        }}
-      >
-        See everything!
-      </button>
+        <Select>
+            <input
+                type="radio"
+                name="type"
+                onChange={() => setType(MOVIE)}
+                defaultChecked
+                label={"Movie"}
+            />
+            <input
+                type="radio"
+                name="type"
+                onChange={() => setType(SERIES)}
+                label={"Series"}
+            />
+            <input
+                type="radio"
+                name="type"
+                onChange={() => setWatchHistoryItems(watchHistory)}
+                label={"Both"}
+            />
+
+        </Select>
       {isLoading && <LoadingSpinner />}
 
       {type !== null &&
@@ -43,3 +58,38 @@ export default function WatchHistoryPage() {
     </div>
   );
 }
+
+const Select = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 4px;
+  border-radius: 3px;
+  position: relative;
+  width: 80vw;
+  margin: auto;
+
+  input {
+    height: 100%;
+    width: 25vw;
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 2px;
+    padding: 4px 8px;
+    background: #48484a;
+    font-size: 16px;
+    transition: all 100ms linear;
+  }
+
+  input:checked {
+    background-image: linear-gradient(180deg, #828282, #48484a);
+  }
+
+  input:before {
+    content: attr(label);
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+  }
+`;

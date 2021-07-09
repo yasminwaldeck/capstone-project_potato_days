@@ -1,6 +1,7 @@
 import styled from "styled-components/macro";
 import { useContext, useState } from "react";
 import TypeAndAuthContext from "../context/TypeAndAuthContext";
+import {NavLink} from "react-router-dom";
 
 export default function LoginPage() {
   const [credentials, setCredentials] = useState({
@@ -19,9 +20,9 @@ export default function LoginPage() {
   };
 
   return (
-    <div>
+    <LoginForm>
       <h2>Please log in!</h2>
-      <LoginForm onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <label htmlFor="username">
           <h3>Username:</h3>
           <input
@@ -45,12 +46,18 @@ export default function LoginPage() {
           />
         </label>
         <button>Login</button>
-      </LoginForm>
-    </div>
+      </form>
+          <div className={"signup"}>
+            <h3>You don't have an account yet?</h3>
+            <StyledNavLink to={"/signup"}>
+              <button>Sign Up!</button>
+            </StyledNavLink>
+          </div>
+    </LoginForm>
   );
 }
 
-const LoginForm = styled.form`
+const LoginForm = styled.div`
   display: flex;
   flex-direction: column;
 
@@ -94,4 +101,22 @@ const LoginForm = styled.form`
   button:hover {
     background: #00664e;
   }
+  
+  .signup{
+    h3{
+      margin-top: 15vh;
+      margin-button: 3vh;
+    }
+  }
 `;
+
+const StyledNavLink = styled(NavLink)`
+text-decoration: none;
+color: #eae9f1;
+
+&:focus, &:hover, &:visited, &:link, &:active {
+    text-decoration: none;
+    color: #eae9f1;
+
+    `;
+

@@ -2,10 +2,10 @@ import { ReactComponent as Info } from "../resources/info.svg";
 import styled from "styled-components/macro";
 import { NavLink } from "react-router-dom";
 
-export default function DetailsButtonsWide({ imdbID }) {
+export default function DetailsButtonWide({ imdbID, input }) {
   return (
     <Button>
-      <StyledNavLink to={"/details/" + imdbID}>
+      <StyledNavLink to={"/details/" + imdbID }>
         <button id={"btn"}>
           <Info id={"icon"} />
           Details!

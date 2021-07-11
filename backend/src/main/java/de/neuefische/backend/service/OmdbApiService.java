@@ -52,6 +52,11 @@ public class OmdbApiService {
 
         String url = BASE_URL_WITH_KEY_ANNOTATION + omdbConfig.getKey() + "&i=" + id;
         ResponseEntity<OmdbDetailsDto> response = restTemplate.getForEntity(url, OmdbDetailsDto.class);
+
+        if(!response.hasBody()){
+            return null;
+        }
+
         OmdbDetailsDto movie = response.getBody();
 
         return OmdbDetails.builder()

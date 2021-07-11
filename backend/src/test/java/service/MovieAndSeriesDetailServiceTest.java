@@ -16,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import static org.hamcrest.Matchers.is;
 import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -246,6 +247,16 @@ public class MovieAndSeriesDetailServiceTest {
         assertThat(actual, is(expected));
 
 
+    }
+
+    @Test
+    public void getDetailsShouldReturnNullIfImdbIdIsNull(){
+
+        //GIVEN
+        //WHEN
+        MovieAndSeriesDetails actual = movieAndSeriesDetailsService.getDetails(null);
+        //THEN
+        assertThat(actual, is(nullValue()));
     }
 
 }

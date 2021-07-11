@@ -57,12 +57,12 @@ public class WatchHistoryService {
     public List<OmdbDetails> getWatchHistoryByType(String username, Optional<String> type){
         if(type.isEmpty()){
             return movieAndSeriesRepo.findMovieAndSeriesByWatchHistoryIsTrueAndUsername(username).stream()
-                    .map(item -> omdbApiService.getOverview(item))
+                    .map(omdbApiService::getOverview)
                     .collect(Collectors.toList());
         }
         return movieAndSeriesRepo.findMovieAndSeriesByWatchHistoryIsTrueAndTypeAndUsername(type.get(), username)
                 .stream()
-                .map(item -> omdbApiService.getOverview(item))
+                .map(omdbApiService::getOverview)
                 .collect(Collectors.toList());
     }
 

@@ -1,7 +1,7 @@
 import styled from "styled-components/macro";
 import { useContext, useState } from "react";
 import TypeAndAuthContext from "../context/TypeAndAuthContext";
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default function LoginPage() {
   const [credentials, setCredentials] = useState({
@@ -47,12 +47,12 @@ export default function LoginPage() {
         </label>
         <button>Login</button>
       </form>
-          <div className={"signup"}>
-            <h3>You don't have an account yet?</h3>
-            <StyledNavLink to={"/signup"}>
-              <button>Sign Up!</button>
-            </StyledNavLink>
-          </div>
+      <div className={"signup"}>
+        <h3>You don't have an account yet?</h3>
+        <StyledNavLink to={"/signup"}>
+          <button>Sign Up!</button>
+        </StyledNavLink>
+      </div>
     </LoginForm>
   );
 }
@@ -101,9 +101,9 @@ const LoginForm = styled.div`
   button:hover {
     background: #00664e;
   }
-  
-  .signup{
-    h3{
+
+  .signup {
+    h3 {
       margin-top: 15vh;
       margin-button: 3vh;
     }
@@ -119,4 +119,3 @@ color: #eae9f1;
     color: #eae9f1;
 
     `;
-

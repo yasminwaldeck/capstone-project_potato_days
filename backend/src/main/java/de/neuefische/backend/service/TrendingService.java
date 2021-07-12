@@ -18,7 +18,7 @@ public class TrendingService {
     }
 
     public List<OmdbDetails> findTrending(String timewindow, String type){
-        if(timewindow == null || type == null){
+        if(timewindow.isEmpty() || type.isEmpty()){
             return null;
         }
         List<String> trendingTmdbIds = tmdbApiService.getTrending(timewindow, type);

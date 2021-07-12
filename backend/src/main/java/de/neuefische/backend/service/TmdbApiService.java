@@ -28,6 +28,7 @@ public class TmdbApiService {
         String url = BASE_URL + "find/" + imdbId + "?external_source=imdb_id&api_key=" + tmdbConfig.getKey();
         ResponseEntity<TmdbIdDto> response = restTemplate.getForEntity(url, TmdbIdDto.class);
         TmdbIdDto result = response.getBody();
+        assert result != null;
         if (result.getTv_results().isEmpty() && !result.getMovie_results().isEmpty()){
             return result.getMovie_results().get(0).getId();
         } else if (!result.getTv_results().isEmpty()){
@@ -37,20 +38,10 @@ public class TmdbApiService {
     }
 
     public TmdbDto getDetails(String id, String type){
-        if(id.isEmpty() || type.isBlank()){
+        if(id.isEmpty()){
             return null;
         }
-
-        String urlpart = "";
-
-        switch(type) {
-            case "movie":
-                urlpart = "movie/";
-                break;
-            case "series":
-                urlpart = "tv/";
-                break;
-        }
+        String urlpart = getUrlPart(type);
 
         String url = BASE_URL + urlpart + id + "?api_key=" + tmdbConfig.getKey() + "&append_to_response=external_ids";
         ResponseEntity<TmdbDto> response = restTemplate.getForEntity(url, TmdbDto.class);
@@ -59,16 +50,7 @@ public class TmdbApiService {
 
     public TmdbOTTbyCountryResponseDto getOTT(String id, String type){
 
-        String urlpart = "";
-
-        switch(type) {
-            case "movie":
-                urlpart = "movie/";
-                break;
-            case "series":
-                urlpart = "tv/";
-                break;
-        }
+        String urlpart = getUrlPart(type);
 
         String url = BASE_URL + urlpart + id + "/watch/providers?api_key=" + tmdbConfig.getKey();
 
@@ -78,16 +60,7 @@ public class TmdbApiService {
 
     public TmdbCreditDto getCredits(String id, String type){
 
-        String urlpart = "";
-
-        switch(type) {
-            case "movie":
-                urlpart = "movie/";
-                break;
-            case "series":
-                urlpart = "tv/";
-                break;
-        }
+        String urlpart = getUrlPart(type);
 
         String url = BASE_URL + urlpart + id + "/credits?api_key=" + tmdbConfig.getKey();
 
@@ -97,20 +70,13 @@ public class TmdbApiService {
 
     public List<String> getTrending(String timewindow, String type){
 
-        String urlpart = "";
+        String urlpart = getUrlPart(type);
 
-        switch(type) {
-            case "movie":
-                urlpart = "movie/";
-                break;
-            case "series":
-                urlpart = "tv/";
-                break;
-        }
         String url = BASE_URL + "trending/" + urlpart + timewindow + "?api_key=" + tmdbConfig.getKey();
 
         ResponseEntity<TmdbTrendingResponseDto> response = restTemplate.getForEntity(url, TmdbTrendingResponseDto.class);
-        return response.getBody().getResults().stream().map(result -> result.getId()).collect(Collectors.toList());
+
+        return response.getBody().getResults().stream().map(TmdbDto::getId).collect(Collectors.toList());
     }
 
     public String getImdbId(String tmdbId, String type){
@@ -121,5 +87,13 @@ public class TmdbApiService {
         String url = BASE_URL + "tv/" + id + "/season/" + season + "?api_key=" + tmdbConfig.getKey();
         ResponseEntity<Season> response = restTemplate.getForEntity(url, Season.class);
         return response.getBody();
+    }
+
+    public String getUrlPart(String type) {
+        return switch (type) {
+            case "movie" -> "movie/";
+            case "series" -> "tv/";
+            default -> throw new IllegalStateException("Unexpected value: " + type);
+        };
     }
 }

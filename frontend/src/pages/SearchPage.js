@@ -98,4 +98,4 @@ const TypeSelector = styled.div`
     text-align: center;
     width: 100%;
   }
-`
+`;

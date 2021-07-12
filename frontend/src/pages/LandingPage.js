@@ -35,4 +35,4 @@ const Home = styled.div`
   width: 90vw;
   margin: auto;
   padding-bottom: 3vh;
-`
+`;

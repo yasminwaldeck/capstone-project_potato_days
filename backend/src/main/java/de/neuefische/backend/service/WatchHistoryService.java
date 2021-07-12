@@ -57,12 +57,12 @@ public class WatchHistoryService {
     public List<OmdbDetails> getWatchHistoryByType(String username, Optional<String> type){
         if(type.isEmpty()){
             return movieAndSeriesRepo.findMovieAndSeriesByWatchHistoryIsTrueAndUsername(username).stream()
-                    .map(item -> omdbApiService.getOverview(item))
+                    .map(omdbApiService::getOverview)
                     .collect(Collectors.toList());
         }
         return movieAndSeriesRepo.findMovieAndSeriesByWatchHistoryIsTrueAndTypeAndUsername(type.get(), username)
                 .stream()
-                .map(item -> omdbApiService.getOverview(item))
+                .map(omdbApiService::getOverview)
                 .collect(Collectors.toList());
     }
 
@@ -87,7 +87,7 @@ public class WatchHistoryService {
     }
 
     public float getWatchHistorySeasonProgress(String username, String imdbId, String tmdbId, String season){
-        if (getWatchHistoryEpisodes(username, imdbId, season) == null){
+        if (getWatchHistoryEpisodes(username, imdbId, season).size() == 0){
             return 0;
         }
         float watched = getWatchHistoryEpisodes(username, imdbId, season).size();
@@ -98,10 +98,10 @@ public class WatchHistoryService {
     public float getWatchHistoryTotalProgress(String username, String imdbId, String tmdbId){
         String id = imdbId + "_" + username;
         List<Episode> list = getWatchHistoryAllEpisodes(id);
-        if (list == null){
+        float watched = list.size();
+        if (watched == 0){
             return 0;
         }
-        float watched = list.size();
         float total = tmdbApiService.getDetails(tmdbId, "series").getNumber_of_episodes();
         if (total == watched){
             MovieAndSeries movieAndSeries = movieAndSeriesRepo.findById(id).get();

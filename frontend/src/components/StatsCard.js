@@ -7,10 +7,25 @@ export default function StatsCard({ recommendationDetails }) {
 
   return (
     <Recommended>
-        <p><b>Name:</b> {recommendationDetails.name}</p>
-      <p><b>Recommendations:</b> {recommendationDetails.number}</p>
-        {showing ? <input type="checkbox" onClick={() => setShowing(!showing)} label={"Hide recommendations"}/> :
-        <input type="checkbox" onClick={() => setShowing(!showing)} label={"Show recommendations"}/>}
+      <p>
+        <b>Name:</b> {recommendationDetails.name}
+      </p>
+      <p>
+        <b>Recommendations:</b> {recommendationDetails.number}
+      </p>
+      {showing ? (
+        <input
+          type="checkbox"
+          onClick={() => setShowing(!showing)}
+          label={"Hide recommendations"}
+        />
+      ) : (
+        <input
+          type="checkbox"
+          onClick={() => setShowing(!showing)}
+          label={"Show recommendations"}
+        />
+      )}
       <div style={{ display: showing ? "block" : "none" }}>
         {recommendationDetails.recommendations &&
           recommendationDetails.recommendations.map((recommendation) => (
@@ -22,15 +37,14 @@ export default function StatsCard({ recommendationDetails }) {
 }
 
 const Recommended = styled.div`
-  
   position: relative;
   width: 80vw;
   margin: auto auto 2vh auto;
   background: #49494a;
   border-radius: 10px;
   padding-bottom: 1vh;
-  padding-top:1vh;
-  
+  padding-top: 1vh;
+
   input {
     height: 100%;
     width: auto;
@@ -56,6 +70,4 @@ const Recommended = styled.div`
     text-align: center;
     width: 100%;
   }
-  
 `;
-

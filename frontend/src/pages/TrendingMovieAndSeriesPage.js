@@ -94,4 +94,4 @@ const Selector = styled.div`
     text-align: center;
     width: 100%;
   }
-`
+`;

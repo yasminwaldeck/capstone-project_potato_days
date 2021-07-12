@@ -13,13 +13,13 @@ export default function RandomCard({ item }) {
         )}
         <div id={"details"}>
           <div>
-              <h3>{item.title}</h3>
-              <h4>{item.year}</h4>
+            <h3>{item.title}</h3>
+            <h4>{item.year}</h4>
           </div>
           {item.progress > 0 && (
             <div>
               <p>Progress: {item.progress.toFixed(1)}%</p>
-                <progress value={item.progress} max="100"/>
+              <progress value={item.progress} max="100" />
             </div>
           )}
           <DetailsButtonsNarrow imdbID={item.imdbId} id={"button"} />
@@ -37,7 +37,7 @@ const Random = styled.div`
   border-radius: 10px;
   padding-left: 3vw;
   padding-right: 3vw;
-  
+
   h3 {
     margin-top: 0;
     margin-bottom: 2vh;
@@ -46,7 +46,7 @@ const Random = styled.div`
     margin-top: 2vh;
     margin-bottom: 0vh;
   }
-  p{
+  p {
     margin-top: 0;
     margin-bottom: 1vh;
   }
@@ -57,16 +57,16 @@ const Random = styled.div`
     height: 2vh;
     border-radius: 50px;
     background-color: #dededf;
-    
+
     ::-moz-progress-bar {
       background-image: linear-gradient(180deg, #828282, #48484a);
       border-radius: 50px;
     }
-    ::-webkit-progress-bar{
+    ::-webkit-progress-bar {
       background-image: linear-gradient(180deg, #828282, #48484a);
       border-radius: 50px;
     }
-    ::-webkit-progress-value{
+    ::-webkit-progress-value {
       background-image: linear-gradient(180deg, #828282, #48484a);
       border-radius: 50px;
     }

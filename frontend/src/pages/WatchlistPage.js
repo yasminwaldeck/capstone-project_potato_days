@@ -11,39 +11,54 @@ export default function WatchlistPage() {
   const { MOVIE, SERIES } = useContext(TypeAndAuthContext);
   const [type, setType] = useState(MOVIE);
   const [filtered, setFiltered] = useState(false);
-  const { watchlistitems, setWatchlistitems, isLoading } =
-    useWatchlistByType(type, filtered);
+  const { watchlistitems, setWatchlistitems, isLoading } = useWatchlistByType(
+    type,
+    filtered
+  );
   const { watchlist } = useWatchlist(filtered);
   const { watchHistory } = useWatchHistory();
 
   return (
     <div>
-        <Select>
-            <div className={"typeselectors"}>
-                <input
-                    type="radio"
-                    name="type"
-                    onChange={() => setType(MOVIE)}
-                    defaultChecked
-                    label={"Movie"}
-                />
-                <input
-                    type="radio"
-                    name="type"
-                    onChange={() => setType(SERIES)}
-                    label={"Series"}
-                />
-                <input
-                    type="radio"
-                    name="type"
-                    onChange={() => setWatchlistitems(watchlist)}
-                    label={"Both"}
-                />
-            </div>
+      <Select>
+        <div className={"typeselectors"}>
+          <input
+            type="radio"
+            name="type"
+            onChange={() => setType(MOVIE)}
+            defaultChecked
+            label={"Movie"}
+          />
+          <input
+            type="radio"
+            name="type"
+            onChange={() => setType(SERIES)}
+            label={"Series"}
+          />
+          <input
+            type="radio"
+            name="type"
+            onChange={() => setWatchlistitems(watchlist)}
+            label={"Both"}
+          />
+        </div>
 
-        {filtered ? <input className={"filter"} type="checkbox" onClick={() => setFiltered(false)} label="Show watched items"/> :
-            <input type="checkbox" className={"filter"} onClick={() => setFiltered(true)} label="Hide watched items"/>}
-    </Select>
+        {filtered ? (
+          <input
+            className={"filter"}
+            type="checkbox"
+            onClick={() => setFiltered(false)}
+            label="Show watched items"
+          />
+        ) : (
+          <input
+            type="checkbox"
+            className={"filter"}
+            onClick={() => setFiltered(true)}
+            label="Hide watched items"
+          />
+        )}
+      </Select>
       {isLoading && <LoadingSpinner />}
       {type !== null &&
         watchlistitems.map((item) => (
@@ -63,19 +78,18 @@ export default function WatchlistPage() {
 }
 
 const Select = styled.div`
-  
   padding: 4px;
   border-radius: 3px;
   position: relative;
   width: 80vw;
   margin: auto;
 
-  .typeselectors{
+  .typeselectors {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-  };
-  
+  }
+
   input {
     height: 100%;
     width: 25vw;
@@ -99,15 +113,14 @@ const Select = styled.div`
     text-align: center;
     width: 100%;
   }
-  
+
   .filter {
     width: auto;
     margin-top: 1.5vh;
     background-image: linear-gradient(180deg, #48484a, #828282);
   }
-  
-   .filter:checked {
-      background-image: linear-gradient(180deg, #828282, #48484a);
+
+  .filter:checked {
+    background-image: linear-gradient(180deg, #828282, #48484a);
   }
-  
 `;

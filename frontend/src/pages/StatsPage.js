@@ -8,7 +8,7 @@ export default function StatsPage() {
   return (
     <div>
       <h2>Recommendation Stats</h2>
-        {isLoading && <LoadingSpinner />}
+      {isLoading && <LoadingSpinner />}
       {stats && stats.map((item) => <StatsCard recommendationDetails={item} />)}
     </div>
   );

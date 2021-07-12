@@ -30,7 +30,7 @@ export default function EpisodeCard({
           <p>{episode.air_date}</p>
           {onWatchHistory ? (
             <button
-                className={"remove"}
+              className={"remove"}
               onClick={() =>
                 removeEpisodeFromHistory(
                   imdbid,
@@ -43,7 +43,7 @@ export default function EpisodeCard({
             </button>
           ) : (
             <button
-                className={"add"}
+              className={"add"}
               onClick={() =>
                 addEpisodeToHistory(
                   imdbid,
@@ -59,7 +59,9 @@ export default function EpisodeCard({
       </div>
       {episode.overview && (
         <details>
-          <summary><b>Overview</b></summary>
+          <summary>
+            <b>Overview</b>
+          </summary>
           <p>{episode.overview}</p>
         </details>
       )}
@@ -129,7 +131,7 @@ const Episode = styled.div`
     top: 2px;
   }
 
-  details{
+  details {
     margin: 3vh;
   }
 `;

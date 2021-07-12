@@ -48,7 +48,9 @@ export default function SeasonCard({ season, tmdbid }) {
       </section>
       {season.overview && (
         <details>
-          <summary><b>Overview</b></summary>
+          <summary>
+            <b>Overview</b>
+          </summary>
           <p>{season.overview}</p>
         </details>
       )}
@@ -60,11 +62,11 @@ const Season = styled.div`
   width: 90vw;
   margin: 0 auto 5vh auto;
 
-  h3{
-    margin:0;
+  h3 {
+    margin: 0;
   }
-  p{
-    margin:0;
+  p {
+    margin: 0;
   }
 
   img {
@@ -78,8 +80,8 @@ const Season = styled.div`
     flex-direction: column;
     justify-content: space-between;
   }
-  
-  details{
+
+  details {
     margin: 3vh;
   }
 
@@ -103,11 +105,11 @@ const Season = styled.div`
       background-image: linear-gradient(180deg, #828282, #48484a);
       border-radius: 50px;
     }
-    ::-webkit-progress-bar{
+    ::-webkit-progress-bar {
       background-image: linear-gradient(180deg, #828282, #48484a);
       border-radius: 50px;
     }
-    ::-webkit-progress-value{
+    ::-webkit-progress-value {
       background-image: linear-gradient(180deg, #828282, #48484a);
       border-radius: 50px;
     }
@@ -145,10 +147,9 @@ const Season = styled.div`
     line-height: 1;
     position: relative;
   }
+`;
 
-` ;
-
-const StyledNavLink = styled(NavLink) ` 
+const StyledNavLink = styled(NavLink)` 
   text-decoration: none;
   color: #eae9f1;
 

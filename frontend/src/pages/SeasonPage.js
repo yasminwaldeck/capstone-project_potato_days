@@ -74,11 +74,11 @@ const SeasonOverview = styled.div`
       background-image: linear-gradient(180deg, #828282, #48484a);
       border-radius: 50px;
     }
-    ::-webkit-progress-bar{
+    ::-webkit-progress-bar {
       background-image: linear-gradient(180deg, #828282, #48484a);
       border-radius: 50px;
     }
-    ::-webkit-progress-value{
+    ::-webkit-progress-value {
       background-image: linear-gradient(180deg, #828282, #48484a);
       border-radius: 50px;
     }

@@ -8,7 +8,6 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import styled from "styled-components/macro";
 
 export default function WatchHistoryPage() {
-
   const { MOVIE, SERIES } = useContext(TypeAndAuthContext);
   const [type, setType] = useState(MOVIE);
   const { watchHistoryItems, setWatchHistoryItems, isLoading } =
@@ -18,28 +17,27 @@ export default function WatchHistoryPage() {
 
   return (
     <div>
-        <Select>
-            <input
-                type="radio"
-                name="type"
-                onChange={() => setType(MOVIE)}
-                defaultChecked
-                label={"Movie"}
-            />
-            <input
-                type="radio"
-                name="type"
-                onChange={() => setType(SERIES)}
-                label={"Series"}
-            />
-            <input
-                type="radio"
-                name="type"
-                onChange={() => setWatchHistoryItems(watchHistory)}
-                label={"Both"}
-            />
-
-        </Select>
+      <Select>
+        <input
+          type="radio"
+          name="type"
+          onChange={() => setType(MOVIE)}
+          defaultChecked
+          label={"Movie"}
+        />
+        <input
+          type="radio"
+          name="type"
+          onChange={() => setType(SERIES)}
+          label={"Series"}
+        />
+        <input
+          type="radio"
+          name="type"
+          onChange={() => setWatchHistoryItems(watchHistory)}
+          label={"Both"}
+        />
+      </Select>
       {isLoading && <LoadingSpinner />}
 
       {type !== null &&

@@ -48,7 +48,7 @@ function App() {
             <Route path={"/signup"}>
               <SignUpPage />
             </Route>
-            <PrivateRoute path={"/home"}>
+            <PrivateRoute path={["/home", "/"]}>
               <LandingPage />
             </PrivateRoute>
           </Switch>

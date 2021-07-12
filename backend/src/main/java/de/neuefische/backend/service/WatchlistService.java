@@ -50,7 +50,7 @@ public class WatchlistService {
 
     public String getNameFromWatchlist(String username, String imdbId){
         String id = imdbId + "_" + username;
-        if(movieAndSeriesRepo.findById(id).isEmpty()) {
+        if(!movieAndSeriesRepo.existsById(id)) {
             return null;
         }
         return movieAndSeriesRepo.findById(id).get().getRecommendedBy();
@@ -58,7 +58,7 @@ public class WatchlistService {
 
     public OmdbDetails addToWatchlist(String username, MovieAndSeries itemToAdd){
         String id = itemToAdd.getImdbID() + "_" + username;
-        if(movieAndSeriesRepo.findById(id).isEmpty()) {
+        if(!movieAndSeriesRepo.existsById(id)) {
             itemToAdd.setWatchlist(true);
             itemToAdd.setUsername(username);
             itemToAdd.setId(id);
@@ -73,7 +73,7 @@ public class WatchlistService {
 
     public String addNameToWatchlist(String username, MovieAndSeries itemToAdd){
         String id = itemToAdd.getImdbID() + "_" + username;
-        if(movieAndSeriesRepo.findById(id).isEmpty()) {
+        if(!movieAndSeriesRepo.existsById(id)) {
             return null;
         }
         MovieAndSeries movieAndSeries = movieAndSeriesRepo.findById(id).get();
@@ -84,7 +84,7 @@ public class WatchlistService {
 
     public void removeFromWatchlist(String username, String imdbId){
         String id = imdbId + "_" + username;
-        if(movieAndSeriesRepo.findById(id).isPresent()) {
+        if(movieAndSeriesRepo.existsById(id)) {
             MovieAndSeries movieAndSeries = movieAndSeriesRepo.findById(id).get();
             if (!(movieAndSeries.isWatchHistory() || movieAndSeries.isWatching())) {
                 movieAndSeriesRepo.deleteById(id);
@@ -97,9 +97,11 @@ public class WatchlistService {
 
     public void removeNameFromWatchlist(String username, String imdbId){
         String id = imdbId + "_" + username;
-        MovieAndSeries movieAndSeries = movieAndSeriesRepo.findById(id).get();
-        movieAndSeries.setRecommendedBy(null);
-        movieAndSeriesRepo.save(movieAndSeries);
+        if(movieAndSeriesRepo.existsById(id)) {
+            MovieAndSeries movieAndSeries = movieAndSeriesRepo.findById(id).get();
+            movieAndSeries.setRecommendedBy(null);
+            movieAndSeriesRepo.save(movieAndSeries);
+        }
     }
 
     public List<Stats> getRecommendedByStats(String username){
